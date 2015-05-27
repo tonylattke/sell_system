@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sellsystem</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <title>Sell System</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+
+  <%= javascript_include_tag 'application' %>
+
+  <%= stylesheet_link_tag "bootstrap" %>
+  
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <%= yield %>
+
+  <!-- JavaScript -->
+  <%= javascript_include_tag "jquery-1.10.2" %>
+  <%= javascript_include_tag "bootstrap" %>
 
 </body>
 </html>
