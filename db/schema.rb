@@ -17,10 +17,12 @@ ActiveRecord::Schema.define(version: 20150526235221) do
   enable_extension "plpgsql"
 
   create_table "clients", force: true do |t|
-    t.string "dni"
-    t.string "name"
-    t.date   "subscription_date"
-    t.float  "balance"
+    t.string "dni",                                      null: false
+    t.string "name",                                     null: false
+    t.date   "subscription_date", default: '2015-05-27', null: false
+    t.float  "balance",           default: 0.0,          null: false
   end
+
+  add_index "clients", ["dni"], name: "index_clients_on_dni", unique: true, using: :btree
 
 end
