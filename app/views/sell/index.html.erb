@@ -1,4 +1,116 @@
 <div ng-app='app.sellApp' ng-controller='SellCtrl'>
-  <p>Value from SellCtrl:</p>
-  <p>{{ clients }}</p>
+  <div class="row">  
+    
+    <div class="col-md-12">
+      <div class="row">      
+        
+        <div class="col-md-2">
+          <div class="col-md-offset-1 col-md-10 product-bestseller text-center">
+            <h5>Product 1</h5>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-12 search-engine sell-panel">
+      <textarea id="product-search" name="product-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Search product"></textarea>
+    </div>
+
+    <div class="col-md-12 sell-panel">
+      <div class="row">
+        
+        <div class="col-md-6 cart">
+            <h4 class="text-center">Cart</h4>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="col-md-offset-1 col-md-10 search-client">
+            <h4 class="text-center">Search clients</h4>
+        
+            <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Search client"></textarea>
+
+            </br>
+
+            <div class="row">
+              <div class="col-md-3">
+                <b>ID:</b>
+              </div> 
+              <div class="col-md-9">
+                07-41092
+              </div>
+              <div class="col-md-3">
+                <b>Name:</b>
+              </div> 
+              <div class="col-md-9">
+                Tony {{ clients }}
+              </div>
+              <div class="col-md-3">
+                <b>Balance:</b>
+              </div> 
+              <div class="col-md-9">
+                41092
+              </div>
+            </div>
+
+            <h4>Create new client</h4>
+
+            <div class="row">
+              <div class="col-md-12">
+                <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Client ID"></textarea>
+              </div>
+              <div class="col-md-12">
+                <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Client name"></textarea>
+              </div> 
+            </div>
+
+            <h4>Payment settings</h4>            
+            
+
+            <div class="row">
+              
+              <div class="col-md-12">
+                <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Cash amount"></textarea>
+              </div>
+              
+              </br></br>
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-10">
+                    <b>Use from account:</b>
+                  </div>
+                  <div class="col-md-2">
+                    0
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-10">
+                    <b>Recharge account:</b>
+                  </div>
+                  <div class="col-md-2">
+                    0
+                  </div>
+                </div>
+              </div>
+
+              </br></br>
+
+            </div>
+                
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-12 text-center sell-button">
+      <h3>Sell</h3>
+
+    </div>
+
+  </div>
 </div>
