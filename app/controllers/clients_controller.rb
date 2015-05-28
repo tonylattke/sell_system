@@ -7,9 +7,19 @@ class ClientsController < ApplicationController
     @clients = Client.all
   end
 
-  # GET /client/1
-  # GET /client/1.json
+  # GET /clients/:id
+  # GET /clients/:id.json
   def show
+  end
+
+  # GET /clients/search/:data
+  # GET /clients/search/:data.json
+  def search
+    @client = nil
+    clients = Client.search(params[:data])
+    if clients
+      @client = clients[0]
+    end
   end
 
   private

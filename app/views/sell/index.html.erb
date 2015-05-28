@@ -1,5 +1,5 @@
 <div ng-app='app.sellApp' ng-controller='SellCtrl'>
-  <div class="row">  
+  <div class="row">
     
     <div class="col-md-12">
       <div class="row">      
@@ -26,9 +26,8 @@
         
         <div class="col-md-6">
           <div class="col-md-offset-1 col-md-10 search-client">
-            <h4 class="text-center">Search clients</h4>
         
-            <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Search client"></textarea>
+            <input id="client-search" name="client-search" class="form-control" autofocus="autofocus" placeholder="Search client" ng-model="data_client" ng-change="searchClient()"/>
 
             </br>
 
@@ -36,24 +35,20 @@
               <div class="col-md-3">
                 <b>ID:</b>
               </div> 
-              <div class="col-md-9">
-                07-41092
-              </div>
+              <div class="col-md-9">{{client_dni}}</div>
+              </br>
               <div class="col-md-3">
                 <b>Name:</b>
               </div> 
-              <div class="col-md-9">
-                Tony {{ clients }}
-              </div>
+              <div class="col-md-9">{{client_name}}</div>
+              </br>
               <div class="col-md-3">
                 <b>Balance:</b>
               </div> 
-              <div class="col-md-9">
-                41092
-              </div>
+              <div class="col-md-9">{{client_balance}}</div>
             </div>
 
-            <h4>Create new client</h4>
+            <h4>Register a new client</h4>
 
             <div class="row">
               <div class="col-md-12">

@@ -3,4 +3,12 @@ class Client < ActiveRecord::Base
   validates :name, :presence => true, :length => { :minimum => 1 }
   validates :subscription_date, :presence => true
   validates :balance, :presence => true
+
+  def self.search(search)
+    if search
+      where('dni ILIKE ? or name ILIKE ?', "%#{search}%","%#{search}%")
+    else
+      scoped
+    end
+  end
 end
