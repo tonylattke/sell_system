@@ -6,9 +6,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $scope.client_name = "-"
     $scope.client_balance = 0
 
-    console.log $scope.clients
-    console.log 'sellCtrl running'
-
+    # Search
     $scope.searchClient = ->
       $scope.client_dni = "-"
       $scope.client_name = "-"
@@ -20,6 +18,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
           $scope.client_balance = data['balance']
       )
 
+    # Sell
     $scope.sell = ->
       $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
       

@@ -26,15 +26,27 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def create
-    @client = Client.new(client_params)
-    @client.save
-    respond_with @client
+    @client  = nil
+    aux_client = Client.find_by(dni: client_params[:dni])
+    if aux_client
+      respond_with @client
+    else
+      @client = Client.new(client_params)
+      @client.save
+      respond_with @client  
+    end
   end
 
   # POST /clients
   def update
-    @client.update(client_params)
-    respond_with @client
+    @client  = nil
+    aux_client = Client.find_by(dni: client_params[:dni])
+    if aux_client
+      respond_with @client
+    else
+      @client.update(client_params)
+      respond_with @client  
+    end
   end
 
   # Delete
