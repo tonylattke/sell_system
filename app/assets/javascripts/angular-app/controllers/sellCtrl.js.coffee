@@ -2,17 +2,23 @@ angular.module('app.sellApp').controller("SellCtrl", [
   '$scope','$http',
   ($scope,$http)->
 
+    $scope.client_id = null
     $scope.client_dni = "-"
     $scope.client_name = "-"
     $scope.client_balance = 0
+    $scope.total = 0
+    $scope.client_cash_used = $scope.total
+    
 
     # Search
     $scope.searchClient = ->
+      $scope.client_id = null
       $scope.client_dni = "-"
       $scope.client_name = "-"
       $scope.client_balance = 0
       $http.get('/api/clients/search/' + $scope.data_client).success((data) ->
         if data['dni']
+          $scope.client_id = data['id']
           $scope.client_dni = data['dni']
           $scope.client_name = data['name']
           $scope.client_balance = data['balance']

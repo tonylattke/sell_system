@@ -65,7 +65,14 @@
             <div class="row">
               
               <div class="col-md-12">
-                <input id="client-cash-used" name="client-cash-used" class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
+                <div class="row">
+                  <div class="col-md-4">
+                    <b>Cash amount</b>
+                  </div>
+                  <div class="col-md-8">
+                    <input id="client-cash-used" name="client-cash-used" class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
+                  </div>
+                </div>
               </div>
               
               </br></br>
@@ -76,7 +83,7 @@
                     <b>Use from account:</b>
                   </div>
                   <div class="col-md-2">
-                    0
+                    {{client_id && client_balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
                   </div>
                 </div>
               </div>
@@ -87,7 +94,7 @@
                     <b>Recharge account:</b>
                   </div>
                   <div class="col-md-2">
-                    0
+                    {{client_id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
                   </div>
                 </div>
               </div>
@@ -103,7 +110,7 @@
     </div>
 
     <div class="col-md-12 text-center sell-button" ng-click="sell()">
-      <h3>Sell</h3>
+      <h3>Sell total of {{total}}</h3>
 
     </div>
 
