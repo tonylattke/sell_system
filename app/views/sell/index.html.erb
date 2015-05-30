@@ -14,7 +14,7 @@
     </div>
 
     <div class="col-md-12 search-engine sell-panel">
-      <textarea id="product-search" name="product-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Search product"></textarea>
+      <input id="product-search" name="product-search" class="form-control" autofocus="autofocus" placeholder="Search product"/>
     </div>
 
     <div class="col-md-12 sell-panel">
@@ -52,10 +52,10 @@
 
             <div class="row">
               <div class="col-md-12">
-                <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Client ID"></textarea>
+                <input id="new-client-id" name="new-client-id" class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
               </div>
               <div class="col-md-12">
-                <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Client name"></textarea>
+                <input id="new-client-name" name="new-client-name" class="form-control" placeholder="Client name" ng-model="new_client_name"/>
               </div> 
             </div>
 
@@ -65,7 +65,7 @@
             <div class="row">
               
               <div class="col-md-12">
-                <textarea id="client-search" name="client-search" class="form-control" rows="1" autofocus="autofocus" placeholder="Cash amount"></textarea>
+                <input id="client-cash-used" name="client-cash-used" class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
               </div>
               
               </br></br>
@@ -102,7 +102,7 @@
       </div>
     </div>
 
-    <div class="col-md-12 text-center sell-button">
+    <div class="col-md-12 text-center sell-button" ng-click="sell()">
       <h3>Sell</h3>
 
     </div>

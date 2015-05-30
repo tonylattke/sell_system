@@ -6,12 +6,10 @@ Rails.application.routes.draw do
   get 'sell' => 'sell#index'
 
   # Cients
-  get 'clients/search/:data' => 'clients#search'
-  get 'clients/:id' => 'clients#show'
-  get 'clients' => 'clients#index' 
-  
-  
-  
+  scope "api" do
+    resources :clients, :defaults => {:format => "json"}
+    get 'clients/search/:data'  => 'clients#search', :defaults => {:format => "json"}
+  end  
 
   # Root
   root 'sell#index'

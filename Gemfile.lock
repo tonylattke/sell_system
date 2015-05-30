@@ -50,6 +50,7 @@ GEM
       railties (>= 3.1)
       sprockets
       tilt
+    angularjs-rails-resource (1.1.1)
     arel (5.0.1.20140414130214)
     bootstrap_form (2.3.0)
     bower-rails (0.9.2)
@@ -167,6 +168,7 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
+  angularjs-rails-resource (~> 1.1.1)
   bootstrap_form
   bower-rails
   coffee-rails (~> 4.0.0)

@@ -48,3 +48,5 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 # CSS 
 gem 'bootstrap_form'
+
+gem 'angularjs-rails-resource', '~> 1.1.1'
