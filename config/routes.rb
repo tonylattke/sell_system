@@ -5,10 +5,14 @@ Rails.application.routes.draw do
   # Sell
   get 'sell' => 'sell#index'
 
-  # Cients
   scope "api" do
+    # Cients
     resources :clients, :defaults => {:format => "json"}
     get 'clients/search/:data'  => 'clients#search', :defaults => {:format => "json"}
+
+    # Providers
+    resources :providers, :defaults => {:format => "json"}
+    get 'providers/search/:data'  => 'providers#search', :defaults => {:format => "json"}
   end  
 
   # Root

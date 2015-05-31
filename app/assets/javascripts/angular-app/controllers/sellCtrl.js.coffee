@@ -25,20 +25,27 @@ angular.module('app.sellApp').controller("SellCtrl", [
       )
 
     # Sell
-    $scope.sell = ->
-      $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-      
-      $http({
-          url: '/api/clients',
-          method: "POST",
-          data:  
-            'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-            'client' : 
-              'dni' : $scope.new_client_dni
-              'name': $scope.new_client_name
-              'balance' : $scope.client_cash_used
-      }).then((response) ->
-        console.log 'hola'
-      )
+    $scope.sell = ->      
+      # Client Exist
+      if $scope.client_id
+        console.log 'sell but not register'
+
+      # New Client ?
+      if $scope.new_client_dni and $scope.new_client_name
+        $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+        $http({
+            url: '/api/clients',
+            method: "POST",
+            data:  
+              'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+              'client' : 
+                'dni' : $scope.new_client_dni
+                'name': $scope.new_client_name
+                'balance' : $scope.client_cash_used
+        }).then((response) ->
+          console.log 'Client successfully registered'
+        )
+      else
+        console.log 'Transaction dont realized'
     
 ])
