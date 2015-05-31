@@ -40,6 +40,7 @@ gem 'unicorn'
 # gem 'debugger', group: [:development, :test]
 
 gem 'angular-rails-templates'
+gem 'angularjs-rails-resource', '~> 1.1.1'
 gem 'bower-rails'
 
 # Admin
@@ -49,4 +50,5 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 # CSS 
 gem 'bootstrap_form'
 
-gem 'angularjs-rails-resource', '~> 1.1.1'
+# photos
+gem 'paperclip'
