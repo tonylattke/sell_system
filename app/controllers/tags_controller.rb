@@ -16,12 +16,12 @@ class TagsController < ApplicationController
 
   # GET /tags/search/:data
   def search
-    @tag = nil
+    @tags = nil
     tags = Tag.search(params[:data])
     if tags
-      @tag = tags[0]
+      @tags = tags
     end
-    respond_with @tag
+    respond_with @tags
   end
 
   # POST /tags

@@ -16,12 +16,12 @@ class ProductsController < ApplicationController
 
   # GET /products/search/:data
   def search
-    @product = nil
+    @products = nil
     products = Product.search(params[:data])
     if products
-      @product = products[0]
+      @products = products
     end
-    respond_with @product
+    respond_with @products
   end
 
   # POST /products

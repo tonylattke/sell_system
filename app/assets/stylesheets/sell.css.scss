@@ -1,3 +1,12 @@
 // Place all the styles related to the Example controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#searched_articles {
+	background-color: #428bca;
+	position: absolute;
+    left: 0px;
+    top: 0px;
+    margin-top: 10px;
+	z-index: 5;
+}

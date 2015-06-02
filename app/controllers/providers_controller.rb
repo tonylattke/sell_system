@@ -16,12 +16,12 @@ class ProvidersController < ApplicationController
 
   # GET /providers/search/:data
   def search
-    @provider = nil
+    @providers = nil
     providers = Provider.search(params[:data])
     if providers
-      @provider = providers[0]
+      @providers = providers[0]
     end
-    respond_with @provider
+    respond_with @providers
   end
 
   # POST /providers

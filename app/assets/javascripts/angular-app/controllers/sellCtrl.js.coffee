@@ -8,9 +8,21 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $scope.client_balance = 0
     $scope.total = 0
     $scope.client_cash_used = $scope.total
-    
 
-    # Search
+    $scope.articles = []
+
+    $scope.articles_search = ""
+    $scope.articles_founded = []
+
+    # Search Products or combos
+    $scope.searchArticles = ->
+      $scope.articles_founded = []
+      $http.get('/api/products/search/' + $scope.articles_search).success((data) ->
+        if data
+          $scope.articles_founded = data
+      )
+
+    # Search Client
     $scope.searchClient = ->
       $scope.client_id = null
       $scope.client_dni = "-"

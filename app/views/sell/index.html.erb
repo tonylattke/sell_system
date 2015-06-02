@@ -4,23 +4,58 @@
     <div class="col-md-12">
       <div class="row">      
         
-        <div class="col-md-2">
-
-          <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
-
-            1
-            <h5>Product 1</h5>
+        <div ng-if="articles.length > 0">
+          <div class="col-md-2">
+            <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
+              1
+              <h5>Product 1</h5>
+            </div>
           </div>
-            
-          
-
+        </div>
+        <div ng-if="articles.length == 0">
+          No Products avaible
         </div>
 
       </div>
     </div>
 
     <div class="col-md-12 search-engine sell-panel">
-      <input id="product-search" name="product-search" class="form-control" autofocus="autofocus" placeholder="Search products or combos"/>
+      <div class="row">
+        
+        <div class="col-md-12">
+          <input id="article-search" name="articles-search" class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()"/>
+        </div>
+
+
+        <div class="col-md-12">
+          <div id="searched_articles">
+            
+            <div ng-if="articles_founded.length > 0">
+              <div class="row text-center">
+                <div class="col-md-12">
+                  1
+                </div>
+                <div class="col-md-12">
+                  2
+                </div>
+                <div class="col-md-12">
+                  3
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="articles_founded.length == 0 && articles_search.length != 0">
+              <div class="row text-center">
+                <div class="col-md-12">
+                  no founded
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <div class="col-md-12 sell-panel">
