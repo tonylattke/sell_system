@@ -4,16 +4,16 @@
     <div class="col-md-12">
       <div class="row">      
         
-        <div ng-if="articles.length > 0">
-          <div class="col-md-2">
+        <div ng-if="articles.products.length > 0 || articles.combos.length > 0 ">
+          <div ng-repeat="product in articles.products" class="col-md-2">
             <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
-              1
-              <h5>Product 1</h5>
+              <img src="{{product.photo}}" class="article_photo">
+              <h5>{{product.name}}</h5>
             </div>
           </div>
         </div>
-        <div ng-if="articles.length == 0">
-          No Products avaible
+        <div ng-if="articles.products.length == 0 && articles.combos.length == 0">
+          No Articles available
         </div>
 
       </div>
@@ -30,7 +30,7 @@
         <div class="col-md-12">
           <div id="searched_articles">
             
-            <div ng-if="articles_founded.length > 0">
+            <div ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
               <div class="row text-center">
                 <div class="col-md-12">
                   1
@@ -44,7 +44,7 @@
               </div>
             </div>
 
-            <div ng-if="articles_founded.length == 0 && articles_search.length != 0">
+            <div ng-if="articles_founded.products.length == 0 && articles_founded.combos.length == 0 && articles_search.length != 0">
               <div class="row text-center">
                 <div class="col-md-12">
                   no founded

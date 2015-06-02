@@ -9,18 +9,36 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $scope.total = 0
     $scope.client_cash_used = $scope.total
 
-    $scope.articles = []
+    $scope.articles = {
+      'products' : []
+      'combos' : []
+    }
 
     $scope.articles_search = ""
-    $scope.articles_founded = []
+    $scope.articles_founded = {
+      'products' : []
+      'combos' : []
+    }
+
+    $http.get('/api/products').success((data) ->
+      if data
+        $scope.articles['products'] = data
+    )
 
     # Search Products or combos
     $scope.searchArticles = ->
-      $scope.articles_founded = []
+      $scope.articles_founded = {
+        'products' : []
+        'combos' : []
+      }
       $http.get('/api/products/search/' + $scope.articles_search).success((data) ->
         if data
-          $scope.articles_founded = data
+          $scope.articles_founded['products'] = data
       )
+      #$http.get('/api/combos/search/' + $scope.articles_search).success((data) ->
+      #  if data
+      #    $scope.articles_founded['combos'] = data
+      #)
 
     # Search Client
     $scope.searchClient = ->
