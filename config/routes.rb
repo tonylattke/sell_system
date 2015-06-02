@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     # Tags
     resources :tags, :defaults => {:format => "json"}
     get 'tags/search/:data'  => 'tags#search', :defaults => {:format => "json"}
+
+    # Products
+    resources :products, :defaults => {:format => "json"}
+    get 'products/search/:data'  => 'products#search', :defaults => {:format => "json"}
   end  
 
   # Root
