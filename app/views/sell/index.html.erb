@@ -2,123 +2,163 @@
   ng-app='app.sellApp' ng-controller='SellCtrl'
 <% end %>
 
-<div ng-app='app.sellApp' ng-controller='SellCtrl'>
-  <div class="row">
-    
-    <div class="col-md-12">
-      <div class="row">      
-        
-        <div ng-if="articles.products.length > 0 || articles.combos.length > 0 ">
-          <div ng-repeat="product in articles.products" class="col-md-2">
-            <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
-              <img src="{{product.photo}}" class="article_photo">
-              <h5>{{product.name}}</h5>
-            </div>
-          </div>
-        </div>
-        <div ng-if="articles.products.length == 0 && articles.combos.length == 0">
-          No Articles available
-        </div>
-
-      </div>
-    </div>
-
-    <div class="col-md-12 sell-panel">
+<% content_for :seach_navbar do %>
+  <li class="page-scroll">
+    <div class="search-engine">
       <div class="row">
         
-        <div class="col-md-6 cart">
-            <h4 class="text-center">Cart</h4>
+        <div class="col-md-12">
+          <input class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()" size="50"/>
         </div>
-        
-        <div class="col-md-6">
-          <div class="col-md-offset-1 col-md-10 search-client">
-        
-            <input id="client-search" name="client-search" class="form-control" autofocus="autofocus" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
 
-            </br>
-
-            <div class="row">
-              <div class="col-md-3">
-                <b>ID:</b>
-              </div> 
-              <div class="col-md-9">{{client_dni}}</div>
-              </br>
-              <div class="col-md-3">
-                <b>Name:</b>
-              </div> 
-              <div class="col-md-9">{{client_name}}</div>
-              </br>
-              <div class="col-md-3">
-                <b>Balance:</b>
-              </div> 
-              <div class="col-md-9">{{client_balance}}</div>
-            </div>
-
-            <h4>Register a new client</h4>
-
-            <div class="row">
-              <div class="col-md-12">
-                <input id="new-client-id" name="new-client-id" class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
-              </div>
-              <div class="col-md-12">
-                <input id="new-client-name" name="new-client-name" class="form-control" placeholder="Client name" ng-model="new_client_name"/>
-              </div> 
-            </div>
-
-            <h4>Payment settings</h4>            
+        <div class="col-md-12">
+          <div id="searched_articles">
             
-
-            <div class="row">
-              
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-4">
-                    <b>Cash amount</b>
-                  </div>
-                  <div class="col-md-8">
-                    <input id="client-cash-used" name="client-cash-used" class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
-                  </div>
+            <div ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
+              <div class="row text-center">
+                <div class="col-md-12">
+                  1
+                </div>
+                <div class="col-md-12">
+                  2
+                </div>
+                <div class="col-md-12">
+                  3
                 </div>
               </div>
-              
-              </br></br>
-
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-10">
-                    <b>Use from account:</b>
-                  </div>
-                  <div class="col-md-2">
-                    {{client_id && client_balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-10">
-                    <b>Recharge account:</b>
-                  </div>
-                  <div class="col-md-2">
-                    {{client_id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
-                  </div>
-                </div>
-              </div>
-
-              </br></br>
-
             </div>
-                
+
+            <div ng-if="articles_founded.products.length == 0 && articles_founded.combos.length == 0 && articles_search.length != 0">
+              <div class="row text-center">
+                <div class="col-md-12">
+                  no founded
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
       </div>
     </div>
+  </li>
+<% end %>
 
-    <div class="col-md-12 text-center sell-button" ng-click="sell()">
-      <h3>Sell total of {{total}}</h3>
+<div class="row">
+  
+  <div class="col-md-12">
+    <div class="row">      
+      
+      <div ng-if="articles.products.length > 0 || articles.combos.length > 0 ">
+        <div ng-repeat="product in articles.products" class="col-md-2">
+          <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
+            <img src="{{product.photo}}" class="article_photo">
+            <h5>{{product.name}}</h5>
+          </div>
+        </div>
+      </div>
+      <div ng-if="articles.products.length == 0 && articles.combos.length == 0">
+        No Articles available
+      </div>
 
     </div>
+  </div>
+
+  <div class="col-md-12 sell-panel">
+    <div class="row">
+      
+      <div class="col-md-6 cart">
+          <h4 class="text-center">Cart</h4>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="col-md-offset-1 col-md-10 search-client">
+      
+          <input id="client-search" name="client-search" class="form-control" autofocus="autofocus" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
+
+          </br>
+
+          <div class="row">
+            <div class="col-md-3">
+              <b>ID:</b>
+            </div> 
+            <div class="col-md-9">{{client_dni}}</div>
+            </br>
+            <div class="col-md-3">
+              <b>Name:</b>
+            </div> 
+            <div class="col-md-9">{{client_name}}</div>
+            </br>
+            <div class="col-md-3">
+              <b>Balance:</b>
+            </div> 
+            <div class="col-md-9">{{client_balance}}</div>
+          </div>
+
+          <h4>Register a new client</h4>
+
+          <div class="row">
+            <div class="col-md-12">
+              <input id="new-client-id" name="new-client-id" class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
+            </div>
+            <div class="col-md-12">
+              <input id="new-client-name" name="new-client-name" class="form-control" placeholder="Client name" ng-model="new_client_name"/>
+            </div> 
+          </div>
+
+          <h4>Payment settings</h4>            
+          
+
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4">
+                  <b>Cash amount</b>
+                </div>
+                <div class="col-md-8">
+                  <input id="client-cash-used" name="client-cash-used" class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
+                </div>
+              </div>
+            </div>
+            
+            </br></br>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-10">
+                  <b>Use from account:</b>
+                </div>
+                <div class="col-md-2">
+                  {{client_id && client_balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-10">
+                  <b>Recharge account:</b>
+                </div>
+                <div class="col-md-2">
+                  {{client_id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
+                </div>
+              </div>
+            </div>
+
+            </br></br>
+
+          </div>
+              
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-12 text-center sell-button" ng-click="sell()">
+    <h3>Sell total of {{total}}</h3>
 
   </div>
+
 </div>

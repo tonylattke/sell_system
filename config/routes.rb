@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Sell
   get 'sell' => 'sell#index'
 
+  # Sell
+  get 'inventory' => 'inventory#index'
+
   scope "api" do
     # Cients
     resources :clients, :defaults => {:format => "json"}

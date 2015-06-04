@@ -1,0 +1,56 @@
+<% content_for :app_controller do %>
+  ng-app='app.sellApp' ng-controller='InventoryCtrl'
+<% end %>
+
+<% content_for :search_navbar do %>
+  <li class="page-scroll">
+    <div class="search-engine">
+      <div class="row">
+        <div class="col-md-12">
+          <input class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()" size="50"/>
+        </div>
+      </div>
+    </div>
+  </li>
+<% end %>
+
+<div class="row">
+  
+  <div class="col-md-12">
+    <div class="row">      
+      
+      <!-- Options -->
+      <div class="col-md-4 panel_options">
+        Add/Create list/Add inventory
+      </div>
+
+      <!-- Main content -->
+      <div class="col-md-8 main_content">
+        
+          <table class="table">
+            <thead>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Photo</th>
+              <th>Stock amount</th>
+              <th>Tags</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="product in articles.products">
+                <td>{{product.name}}</td>
+                <td>Price</td>
+                <td>image</td>
+                <td>{{product.stock_amount}}</td>
+                <td>Tags</td>
+                <td>Edit,Delete</td>
+              </tr>
+            </tbody>
+          </table>
+        
+      </div>
+
+    </div>
+  </div>
+
+</div>

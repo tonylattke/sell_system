@@ -13,6 +13,8 @@ $search-engine-color: #080808;
 $cart-color: #bbb;
 $search-client-color: #bbb;
 
+$panel-options-color: #ddd;
+
 .margen {
 	margin-top: 80px;
 }
@@ -52,7 +54,6 @@ $search-client-color: #bbb;
 
 .search-engine {
 	margin-top: 8px;
-	background-color: $search-engine-color;
 }
 
 .cart {
@@ -68,4 +69,8 @@ $search-client-color: #bbb;
 	margin-top: 20px;
 	background-color: #428bca;
 	color: white;
+}
+
+.panel_options {
+	background-color: $panel-options-color;
 }
