@@ -9,7 +9,7 @@
   
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body <%= yield :app_controller %>>
 
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -26,12 +26,65 @@
         <!-- Left options -->
         <ul class="nav navbar-nav">
           <li>
+            <a href="/transactions">Transactions</a>
+          </li>
+          <li>
+            <a href="/inventory">Inventory</a>
+          </li>
+          <li>
             <a href="/clients">Clients</a>
+          </li>
+          <li>
+            <a href="/manager">Manager</a>
           </li>
         </ul>
           
         <!-- Right options -->
         <ul class="nav navbar-nav navbar-right">
+          
+    <li class="page-scroll">
+      <div class="search-engine">
+      <div class="row">
+        <div class="col-md-12">
+          <input id="article-search" name="articles-search" class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()"/>
+        </div>
+
+
+        <div class="col-md-12">
+          <div id="searched_articles">
+            
+            <div ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
+              <div class="row text-center">
+                <div class="col-md-12">
+                  1
+                </div>
+                <div class="col-md-12">
+                  2
+                </div>
+                <div class="col-md-12">
+                  3
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="articles_founded.products.length == 0 && articles_founded.combos.length == 0 && articles_search.length != 0">
+              <div class="row text-center">
+                <div class="col-md-12">
+                  no founded
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    </li>
+
           <li class="page-scroll">
             <a href="/logout">Logout</a>
           </li>
