@@ -2,7 +2,7 @@
   ng-app='app.sellApp' ng-controller='InventoryCtrl'
 <% end %>
 
-<% content_for :search_navbar do %>
+<% content_for :seach_navbar do %>
   <li class="page-scroll">
     <div class="search-engine">
       <div class="row">
@@ -29,20 +29,28 @@
         
           <table class="table">
             <thead>
-              <th>Name</th>
-              <th>Price</th>
               <th>Photo</th>
+              <th>
+                Name 
+                <span class="dropup">
+                  <span class="caret" ng-click="orderCriteria('name')"></span>
+                </span>
+                <span class="caret" ng-click="orderCriteria('-name')"></span>
+              </th>
+              <th>Price</th>
               <th>Stock amount</th>
               <th>Tags</th>
+              <th>Provider</th>
               <th>Options</th>
             </thead>
             <tbody>
-              <tr ng-repeat="product in articles.products">
+              <tr ng-repeat="product in articles.products | orderBy:order_selected | filter:articles_search">
+                <td>image</td>
                 <td>{{product.name}}</td>
                 <td>Price</td>
-                <td>image</td>
                 <td>{{product.stock_amount}}</td>
                 <td>Tags</td>
+                <td>Providers</td>
                 <td>Edit,Delete</td>
               </tr>
             </tbody>

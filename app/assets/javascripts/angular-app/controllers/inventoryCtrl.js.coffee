@@ -14,5 +14,8 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     $scope.searchArticles = ->
       console.log 'Inventory'
+
+    $scope.orderCriteria = (order) ->
+      $scope.order_selected = order
     
 ])

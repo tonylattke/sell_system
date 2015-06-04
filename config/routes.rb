@@ -5,8 +5,17 @@ Rails.application.routes.draw do
   # Sell
   get 'sell' => 'sell#index'
 
-  # Sell
+  # Inventory
   get 'inventory' => 'inventory#index'
+
+  # Transactions & Bills
+  get 'transactions_bills' => 'sell#index'
+
+  # Costumers
+  get 'costumers' => 'sell#index'
+
+  # Manager
+  get 'manager' => 'sell#index'
 
   scope "api" do
     # Cients

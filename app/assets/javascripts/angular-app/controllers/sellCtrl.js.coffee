@@ -9,7 +9,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $scope.total = 0
     $scope.client_cash_used = $scope.total
 
-    $scope.articles = {
+    $scope.top_articles = {
       'products' : []
       'combos' : []
     }
@@ -22,7 +22,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
     $http.get('/api/products').success((data) ->
       if data
-        $scope.articles['products'] = data
+        $scope.top_articles['products'] = data
     )
 
     # Search Products or combos
