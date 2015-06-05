@@ -9,6 +9,12 @@ class ProductsController < ApplicationController
     respond_with @products
   end
 
+  # GET /products/bestsellers
+  def bestsellers
+    @products = Product.all[0,6]
+    respond_with @products
+  end
+
   # GET /products/:id
   def show
     respond_with @product

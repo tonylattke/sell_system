@@ -20,7 +20,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
       'combos' : []
     }
 
-    $http.get('/api/products').success((data) ->
+    $http.get('/api/products_bestsellers').success((data) ->
       if data
         $scope.top_articles['products'] = data
     )

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     # Products
     resources :products, :defaults => {:format => "json"}
     get 'products/search/:data'  => 'products#search', :defaults => {:format => "json"}
+    get 'products_bestsellers'  => 'products#bestsellers', :defaults => {:format => "json"}
   end  
 
   # Root

@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  # has_many :product_tags
+  # has_many :product_providers
 
   has_attached_file :photo, :styles => { :small => "108x108>" },
     :url  => "/assets/products/:id/:style/:basename.:extension",
@@ -19,4 +21,6 @@ class Product < ActiveRecord::Base
       scoped
     end
   end
+
+  default_scope { order('sales_amount DESC') }  
 end
