@@ -74,7 +74,7 @@
       <div class="col-md-6">
         <div class="col-md-offset-1 col-md-10 search-client">
       
-          <input id="client-search" name="client-search" class="form-control" autofocus="autofocus" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
+          <input class="form-control" autofocus="autofocus" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
 
           </br>
 
@@ -99,10 +99,10 @@
 
           <div class="row">
             <div class="col-md-12">
-              <input id="new-client-id" name="new-client-id" class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
+              <input class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
             </div>
             <div class="col-md-12">
-              <input id="new-client-name" name="new-client-name" class="form-control" placeholder="Client name" ng-model="new_client_name"/>
+              <input class="form-control" placeholder="Client name" ng-model="new_client_name"/>
             </div> 
           </div>
 
@@ -117,7 +117,7 @@
                   <b>Cash amount</b>
                 </div>
                 <div class="col-md-8">
-                  <input id="client-cash-used" name="client-cash-used" class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
+                  <input class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
                 </div>
               </div>
             </div>
@@ -156,8 +156,8 @@
     </div>
   </div>
 
-  <div class="col-md-12 text-center sell-button" ng-click="sell()">
-    <h3>Sell total of {{total}}</h3>
+  <div class="btn btn-lg btn-primary col-md-12" ng-click="sell()">
+    Sell total of {{total}}
 
   </div>
 

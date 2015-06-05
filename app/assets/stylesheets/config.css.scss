@@ -1,6 +1,4 @@
-// Place all the styles related to the Example controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// Colors
 
 $login-text-color: #fff;
 $color-border: #ccc;
@@ -14,6 +12,8 @@ $cart-color: #bbb;
 $search-client-color: #bbb;
 
 $panel-options-color: #ddd;
+
+/* Options */
 
 .margen {
 	margin-top: 80px;
@@ -65,12 +65,15 @@ $panel-options-color: #ddd;
 	padding-top: 20px;
 }
 
-.sell-button {
-	margin-top: 20px;
-	background-color: #428bca;
-	color: white;
-}
+/* Panel */
 
 .panel_options {
 	background-color: $panel-options-color;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.btn-panel {
+	margin-top: 10px;
 }

@@ -12,8 +12,17 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         $scope.articles['products'] = data
     )
 
-    $scope.searchArticles = ->
-      console.log 'Inventory'
+    $scope.CreateProduct = ->
+      console.log 'CreateProduct'
+
+    $scope.AddInventory = ->
+      console.log 'AddInventory'
+
+    $scope.CreateCombo = ->
+      console.log 'CreateCombo'
+
+    $scope.ExportList = ->
+      console.log 'ExportList'
 
     $scope.orderCriteria = (order) ->
       $scope.order_selected = order
