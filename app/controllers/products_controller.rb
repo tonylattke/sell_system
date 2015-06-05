@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
   # POST /products
   def create
     @product  = nil
-    aux_product = Product.find_by(dni: product_params[:dni])
+    aux_product = Product.find_by(name: product_params[:name])
     if aux_product
       respond_with @product
     else
@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
   # POST /products
   def update
     @product  = nil
-    aux_product = Product.find_by(dni: product_params[:dni])
+    aux_product = Product.find_by(name: product_params[:name])
     if aux_product
       respond_with @product
     else
@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:dni, :name, :stock_amount, :sales_amount, :photo)
+      params.require(:product).permit(:id, :name, :stock_amount, :sales_amount, :photo)
     end
 
 end

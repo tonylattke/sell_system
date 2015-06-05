@@ -1,14 +1,9 @@
 {
-  "lib": {
-    "name": "bower-rails generated lib assets",
-    "dependencies": {
-      "angular": "v1.2.25",
-      "angular-resource": "~1"
-    }
+  "name": "lib",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "v1.2.25",
+    "angular-file-model": ""
   },
-  "vendor": {
-    "name": "bower-rails generated vendor assets",
-    "dependencies": {
-    }
-  }
+  "devDependencies": {}
 }
