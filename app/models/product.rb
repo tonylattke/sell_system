@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
-  # has_many :product_tags
-  # has_many :product_providers
+  #has_many :product_tags
+  has_many :product_providers
 
   has_attached_file :photo, :styles => { :small => "108x108>" },
     :url  => "/assets/products/:id/:style/:basename.:extension",
@@ -13,6 +13,10 @@ class Product < ActiveRecord::Base
   validates :name, :presence => true, :length => { :minimum => 1 }
   validates :stock_amount, :presence => true
   validates :sales_amount, :presence => true
+
+  def to_s
+    return "#{@name}"
+  end
 
   def self.search(search)
     if search
