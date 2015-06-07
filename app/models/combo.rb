@@ -1,10 +1,7 @@
-class Product < ActiveRecord::Base
-  has_many :product_tags
-  has_many :product_providers
-
+class Combo < ActiveRecord::Base
   has_attached_file :photo, :styles => { :small => "108x108>", :original => "108x108>" },
-    :url  => "/assets/products/:id/:style/:basename.:extension",
-    :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
+    :url  => "/assets/combos/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/combos/:id/:style/:basename.:extension"
 
   validates_attachment_presence :photo
   validates_attachment_size :photo, :less_than => 5.megabytes

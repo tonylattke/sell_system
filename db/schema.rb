@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607061614) do
+ActiveRecord::Schema.define(version: 20150607065202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(version: 20150607061614) do
   end
 
   add_index "clients", ["dni"], name: "index_clients_on_dni", unique: true, using: :btree
+
+  create_table "combos", force: true do |t|
+    t.string   "name",                           null: false
+    t.integer  "stock_amount",       default: 0, null: false
+    t.integer  "sales_amount",       default: 0, null: false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+  end
+
+  add_index "combos", ["name"], name: "index_combos_on_name", unique: true, using: :btree
 
   create_table "product_providers", force: true do |t|
     t.integer "product_id",  null: false
