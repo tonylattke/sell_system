@@ -9,4 +9,12 @@ class ProductProvider < ActiveRecord::Base
       scoped
     end
   end
+
+  def self.search_by(type,data)
+    if data
+      where(type + ' = ?', data)
+    else
+      scoped
+    end
+  end
 end

@@ -37,6 +37,8 @@ Rails.application.routes.draw do
 
     # Product Providers
     resources :product_providers, :defaults => {:format => "json"}
+    get 'product_providers/search_by_product/:product_id'  => 'product_providers#search_by_product', :defaults => {:format => "json"}
+    get 'product_providers/search_by_provider/:provider_id'  => 'product_providers#search_by_provider', :defaults => {:format => "json"}
     get 'product_providers/search/:product_id/:provider_id'  => 'product_providers#search', :defaults => {:format => "json"}
   end  
 

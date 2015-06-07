@@ -15,7 +15,7 @@ class ProductProvidersController < ApplicationController
     respond_with @product_provider
   end
 
-  # GET /products/search/:product_id/:provider_id
+  # GET /product_providers/search/:product_id/:provider_id
   def search
     @product_providers = nil
     product_providers = ProductProvider.search(params[:product_id],params[:provider_id])
@@ -23,6 +23,25 @@ class ProductProvidersController < ApplicationController
       @product_providers = product_providers
     end
     respond_with @product_providers
+  end
+
+  def search_by(type,data)
+    @product_providers = nil
+    product_providers = ProductProvider.search_by(type,data)
+    if product_providers
+      @product_providers = product_providers
+    end
+    respond_with @product_providers
+  end
+
+  # GET /product_providers/search_by_product/:product_id
+  def search_by_product
+    return search_by('product_id',params[:product_id])
+  end
+
+  # GET /product_providers/search_by_provider/:provider_id
+  def search_by_provider
+    return search_by('provider_id',params[:provider_id])
   end
 
   # POST /product_providers
