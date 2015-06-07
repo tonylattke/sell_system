@@ -40,6 +40,12 @@ Rails.application.routes.draw do
     get 'product_providers/search_by_product/:product_id'  => 'product_providers#search_by_product', :defaults => {:format => "json"}
     get 'product_providers/search_by_provider/:provider_id'  => 'product_providers#search_by_provider', :defaults => {:format => "json"}
     get 'product_providers/search/:product_id/:provider_id'  => 'product_providers#search', :defaults => {:format => "json"}
+
+    # Product Tags
+    resources :product_tags, :defaults => {:format => "json"}
+    get 'product_tags/search_by_product/:product_id'  => 'product_tags#search_by_product', :defaults => {:format => "json"}
+    get 'product_tags/search_by_tag/:tag_id'  => 'product_tags#search_by_tag', :defaults => {:format => "json"}
+    get 'product_tags/search/:product_id/:tag_id'  => 'product_tags#search', :defaults => {:format => "json"}
   end  
 
   # Root
