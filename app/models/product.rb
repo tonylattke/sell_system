@@ -2,7 +2,7 @@ class Product < ActiveRecord::Base
   has_many :product_tags
   has_many :product_providers
 
-  has_attached_file :photo, :styles => { :small => "108x108>", :original => "108x108>" },
+  has_attached_file :photo, :styles => { :small => "108x108>", :original => "108x108>", :cropped_thumb => {:geometry => "108x108#", :jcrop => true} },
     :url  => "/assets/products/:id/:style/:basename.:extension",
     :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
 
