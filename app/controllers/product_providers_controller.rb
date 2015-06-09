@@ -3,7 +3,6 @@ class ProductProvidersController < ApplicationController
 
   respond_to :json
 
-
   # GET /product_providers
   def index
     @product_providers = ProductProvider.all
@@ -47,7 +46,7 @@ class ProductProvidersController < ApplicationController
   # POST /product_providers
   def create
     @product_provider  = nil
-    aux_product_providers = ProductProvider.search(params[:data])
+    aux_product_providers = ProductProvider.search(params[:product_id],params[:provider_id])
     if aux_product_providers
       respond_with @product_provider
     else
@@ -60,7 +59,7 @@ class ProductProvidersController < ApplicationController
   # POST /product_providers
   def update  
     @product_provider  = nil
-    aux_product_providers = ProductProvider.search(params[:data])
+    aux_product_providers = ProductProvider.search(params[:product_id],params[:provider_id])
     if aux_product_providers
       respond_with @product_provider
     else

@@ -47,7 +47,7 @@ class ProductTagsController < ApplicationController
   # POST /product_tags
   def create
     @product_tag  = nil
-    aux_product_tags = ProductTag.search(params[:data])
+    aux_product_tags = ProductTag.search(params[:product_id],params[:tag_id])
     if aux_product_tags
       respond_with @product_tag
     else
@@ -60,7 +60,7 @@ class ProductTagsController < ApplicationController
   # POST /product_tags
   def update  
     @product_tag  = nil
-    aux_product_tags = ProductTag.search(params[:data])
+    aux_product_tags = ProductTag.search(params[:product_id],params[:tag_id])
     if aux_product_tags
       respond_with @product_tag
     else

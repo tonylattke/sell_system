@@ -6,6 +6,7 @@ class ComboProduct < ActiveRecord::Base
 
   validates :product, :presence => true
   validates :combo, :presence => true
+  validates :product_amount, :presence => true
 
   def self.search(combo,product)
     if combo
