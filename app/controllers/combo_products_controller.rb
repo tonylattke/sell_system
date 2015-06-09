@@ -1,0 +1,2 @@
+class ComboProductsController < ApplicationController
+end
