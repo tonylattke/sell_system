@@ -4,6 +4,8 @@ $login-text-color: #fff;
 $color-border: #ccc;
 
 $bestseller-color: #aaa;
+$combo-bestseller-color: #999;
+$combo-bestseller-color-hover: #aaa;
 $product-bestseller-color: #ddd;
 $product-bestseller-color-hover: #eee;
 
@@ -34,6 +36,16 @@ $panel-options-color: #ddd;
 
 .bestseller {
 	background-color: $bestseller-color;
+}
+
+.combo-bestseller {
+	background-color: $combo-bestseller-color;
+	padding-top: 10px;
+}
+
+.combo-bestseller:hover {
+	background-color: $combo-bestseller-color-hover;
+	cursor: pointer;
 }
 
 .product-bestseller {
@@ -73,7 +85,6 @@ $panel-options-color: #ddd;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-
 
 .img-product {
 	height: 104px;

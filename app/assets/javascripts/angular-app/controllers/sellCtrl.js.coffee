@@ -2,6 +2,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
   '$scope','$http',
   ($scope,$http)->
 
+    # Initialize
     $scope.client_id = null
     $scope.client_dni = "-"
     $scope.client_name = "-"
@@ -20,9 +21,14 @@ angular.module('app.sellApp').controller("SellCtrl", [
       'combos' : []
     }
 
+    # Set Bestsellers 
+    $http.get('/api/combos_bestsellers').success((data) ->
+      if data
+        $scope.top_articles['combos'] = data
+    )
     $http.get('/api/products_bestsellers').success((data) ->
       if data
-        $scope.top_articles['products'] = data
+        $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
     )
 
     # Search Products or combos
@@ -31,14 +37,14 @@ angular.module('app.sellApp').controller("SellCtrl", [
         'products' : []
         'combos' : []
       }
+      $http.get('/api/combos/search/' + $scope.articles_search).success((data) ->
+        if data
+          $scope.articles_founded['combos'] = data
+      )
       $http.get('/api/products/search/' + $scope.articles_search).success((data) ->
         if data
           $scope.articles_founded['products'] = data
       )
-      #$http.get('/api/combos/search/' + $scope.articles_search).success((data) ->
-      #  if data
-      #    $scope.articles_founded['combos'] = data
-      #)
 
     # Search Client
     $scope.searchClient = ->

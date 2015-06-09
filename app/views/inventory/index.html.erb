@@ -70,8 +70,44 @@
 
       <!-- Main content -->
       <div class="col-md-8 main_content">
-        
-          <table id="table_inventory" class="table table-striped">
+          
+          <h2>Combos</h2>
+
+          <table id="table_combos" class="table table-striped">
+            <thead>
+              <th>Photo</th>
+              <th>
+                Name 
+                <span class="dropup">
+                  <span class="caret" ng-click="orderCriteria('name')"></span>
+                </span>
+                <span class="caret" ng-click="orderCriteria('-name')"></span>
+              </th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Tags</th>
+              <th>Provider</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="combo in articles.combos | orderBy:order_selected | filter:articles_search">
+                <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
+                <td>{{combo.name}}</td>
+                <td>Price</td>
+                <td>{{combo.stock_amount}}</td>
+                <td>Tags</td>
+                <td>Providers</td>
+                <td>
+                  <button type="button" class="btn btn-success">Edit</button>
+                  <button type="button" class="btn btn-danger">X</button  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Products</h2>
+
+          <table id="table_products" class="table table-striped">
             <thead>
               <th>Photo</th>
               <th>

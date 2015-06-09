@@ -15,6 +15,10 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       if data
         $scope.articles['products'] = data
     )
+    $http.get('/api/combos').success((data) ->
+      if data
+        $scope.articles['combos'] = data
+    )
 
     $scope.new_product = null
 

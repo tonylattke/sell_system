@@ -3,12 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #searched_articles {
-	background-color: #428bca;
+	background-color: #ccc;
 	position: absolute;
     left: 0px;
     top: 0px;
     margin-top: 10px;
 	z-index: 5;
+	height:225px;
+    overflow: auto;
+    overflow-x:hidden;
 }
 
 .article_photo {
