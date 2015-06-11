@@ -16,7 +16,7 @@ class PricesController < ApplicationController
 
   # POST /prices
   def create
-    @price = Provider.new(price_params)
+    @price = Price.new(price_params)
     @price.save
     respond_with @price
   end
@@ -55,7 +55,7 @@ class PricesController < ApplicationController
   private
     # Set price
     def set_price
-      @price = Provider.find_by(id: params[:id])
+      @price = Price.find_by(id: params[:id])
     end
 
     def price_params
