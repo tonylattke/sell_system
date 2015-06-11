@@ -47,10 +47,16 @@ ActiveRecord::Schema.define(version: 20150610070048) do
   add_index "combos", ["name"], name: "index_combos_on_name", unique: true, using: :btree
 
   create_table "prices", force: true do |t|
-    t.string "type_option",   limit: 2, default: "p",          null: false
-    t.float  "value",                   default: 1.0,          null: false
-    t.date   "creation_date",           default: '2015-06-10', null: false
+    t.string   "type_option", limit: 2, default: "p", null: false
+    t.float    "value",                 default: 1.0, null: false
+    t.integer  "product_id"
+    t.integer  "combo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "prices", ["combo_id"], name: "index_prices_on_combo_id", using: :btree
+  add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
   create_table "product_providers", force: true do |t|
     t.integer "product_id",  null: false
