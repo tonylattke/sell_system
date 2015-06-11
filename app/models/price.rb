@@ -9,5 +9,13 @@ class Price < ActiveRecord::Base
     return "#{@type_option} #{@value}"
   end
 
+  def self.search_by(type,data)
+    if data
+      where(type + ' = ?', data)
+    else
+      scoped
+    end
+  end
+
   default_scope { order('created_at DESC') }  
 end

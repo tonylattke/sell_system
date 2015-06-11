@@ -57,6 +57,11 @@ Rails.application.routes.draw do
     get 'combo_products/search_by_product/:product_id'  => 'combo_products#search_by_product', :defaults => {:format => "json"}
     get 'combo_products/search_by_combo/:combo_id'  => 'combo_products#search_by_combo', :defaults => {:format => "json"}
     get 'combo_products/search/:combo_id/:product_id'  => 'combo_products#search', :defaults => {:format => "json"}
+
+    # Prices
+    resources :prices, :defaults => {:format => "json"}
+    get 'prices/search_by_product/:product_id'  => 'prices#search_by_product', :defaults => {:format => "json"}
+    get 'prices/search_by_combo/:combo_id'  => 'prices#search_by_combo', :defaults => {:format => "json"}
   end  
 
   # Root
