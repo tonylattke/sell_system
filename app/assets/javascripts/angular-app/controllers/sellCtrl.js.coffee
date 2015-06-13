@@ -25,10 +25,20 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $http.get('/api/combos_bestsellers').success((data) ->
       if data
         $scope.top_articles['combos'] = data
+        for aux_combo in $scope.top_articles['combos']
+          $http.get('/api/prices/search_by_combo/' + aux_combo['id']).success((data_prices) ->
+            if data_prices
+              aux_combo['price'] = data_prices[0]['value']
+          )
     )
     $http.get('/api/products_bestsellers').success((data) ->
       if data
         $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
+        for aux_product in $scope.top_articles['products']
+          $http.get('/api/prices/search_by_product/' + aux_product['id']).success((data_prices) ->
+            if data_prices
+              aux_product['price'] = data_prices[0]['value']
+          )
     )
 
     # Search Products or combos
@@ -40,10 +50,20 @@ angular.module('app.sellApp').controller("SellCtrl", [
       $http.get('/api/combos/search/' + $scope.articles_search).success((data) ->
         if data
           $scope.articles_founded['combos'] = data
+          for aux_combo in $scope.articles_founded['combos']
+            $http.get('/api/prices/search_by_combo/' + aux_combo['id']).success((data_prices) ->
+              if data_prices
+                aux_combo['price'] = data_prices[0]['value']
+            )
       )
       $http.get('/api/products/search/' + $scope.articles_search).success((data) ->
         if data
           $scope.articles_founded['products'] = data
+          for aux_product in $scope.articles_founded['products']
+            $http.get('/api/prices/search_by_product/' + aux_product['id']).success((data_prices) ->
+              if data_prices
+                aux_product['price'] = data_prices[0]['value']
+            )
       )
 
     # Search Client
