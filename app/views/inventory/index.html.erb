@@ -27,22 +27,22 @@
             <form role="form" name="product_form">
               <div class="row">
                 <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productName.$invalid, 'has-success': product_form.productName.$valid}">
-                  <input class="form-control" type="text" placeholder="Name" ng-model="new_product_name" required/>
+                  <input class="form-control" type="text" placeholder="Name" ng-model="new_product_form.name" required/>
                 </div>
                 <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productPrice.$invalid, 'has-success': product_form.productPrice.$valid}">
-                  <input class="form-control" type="number" placeholder="Price" ng-model="new_product_price" required/>
+                  <input class="form-control" type="number" placeholder="Price" ng-model="new_product_form.price" required/>
                 </div>
                 <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productStockAmount.$invalid, 'has-success': product_form.productStockAmount.$valid}">
-                  <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_stock_amount" required/>
+                  <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_form.stock_amount" required/>
                 </div>
                 <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productTags.$invalid, 'has-success': product_form.productTags.$valid}">
-                  <input class="form-control" type="text" placeholder="Tags" ng-model="new_product_tags" required/>
+                  <input class="form-control" type="text" placeholder="Tags" ng-model="new_product_form.tags" required/>
                 </div>
                 <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productProviders.$invalid, 'has-success': product_form.productProviders.$valid}">
-                  <input class="form-control" type="text" placeholder="Providers" ng-model="new_product_providers" required/>
+                  <input class="form-control" type="text" placeholder="Providers" ng-model="new_product_form.providers" required/>
                 </div>
                 <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productPhoto.$invalid, 'has-success': product_form.productPhoto.$valid}">
-                  <input class="form-control" type="file" placeholder="Photo" file-model="new_product_photo"/>
+                  <input class="form-control" type="file" placeholder="Photo" file-model="new_product_form.photo"/>
                 </div> 
               </div>
               <div class="text-center">

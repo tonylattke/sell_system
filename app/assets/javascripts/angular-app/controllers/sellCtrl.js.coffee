@@ -3,19 +3,21 @@ angular.module('app.sellApp').controller("SellCtrl", [
   ($scope,$http)->
 
     # Initialize
-    $scope.client_id = null
-    $scope.client_dni = "-"
-    $scope.client_name = "-"
-    $scope.client_balance = 0
+    $scope.client = {
+      id : null
+      dni : "-"
+      name : "-"
+      balance : 0
+    }
     $scope.total = 0
     $scope.client_cash_used = $scope.total
+    $scope.articles_search = ""
 
     $scope.top_articles = {
       'products' : []
       'combos' : []
     }
 
-    $scope.articles_search = ""
     $scope.articles_founded = {
       'products' : []
       'combos' : []
@@ -68,22 +70,26 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
     # Search Client
     $scope.searchClient = ->
-      $scope.client_id = null
-      $scope.client_dni = "-"
-      $scope.client_name = "-"
-      $scope.client_balance = 0
+      $scope.client = {
+        id : null
+        dni : "-"
+        name : "-"
+        balance : 0
+      }
       $http.get('/api/clients/search/' + $scope.data_client).success((data) ->
         if data['dni']
-          $scope.client_id = data['id']
-          $scope.client_dni = data['dni']
-          $scope.client_name = data['name']
-          $scope.client_balance = data['balance']
+          $scope.client = {
+            id : data['id']
+            dni : data['dni']
+            name : data['name']
+            balance : data['balance']
+          }
       )
 
     # Sell
     $scope.sell = ->      
       # Client Exist
-      if $scope.client_id
+      if $scope.client['id']
         console.log 'sell but not register'
 
       # New Client ?

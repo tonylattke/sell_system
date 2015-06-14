@@ -38,12 +38,11 @@
           <li>
             <a href="/manager">Manager</a>
           </li>
+          <%= yield :seach_navbar %>
         </ul>
           
         <!-- Right options -->
         <ul class="nav navbar-nav navbar-right">
-          <%= yield :seach_navbar %>
-
           <li class="page-scroll">
             <a href="/logout">Logout</a>
           </li>

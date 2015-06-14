@@ -9,11 +9,29 @@
     top: 0px;
     margin-top: 10px;
 	z-index: 5;
-	height:225px;
+	max-height:200px;
     overflow: auto;
-    overflow-x:hidden;
+    overflow-x:hidden;    
 }
 
 .article_photo {
 	width: 100%;
+}
+
+@media (min-width: 992px) {
+	.article-searched {
+		width: 290px;	
+	}
+}
+
+@media (min-width: 1200px) {
+	.article-searched {
+		width: 290px;	
+	}
+}
+
+@media (min-width: 768px) {
+	.article-searched {
+		width: 260px;	
+	}
 }

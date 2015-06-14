@@ -34,13 +34,15 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     ################################   Helpers  ###############################
     resetForm = ->
-      $scope.new_product_name = null
-      $scope.new_product_photo = null
-      $scope.new_product_price = null
-      $scope.new_product_stock_amount = null
-      $scope.new_product_tags = null
-      $scope.new_product_providers = null
-
+      $scope.new_product_form = {
+        name : null
+        photo : null
+        price : null
+        stock_amount : null
+        tags : null
+        providers : null
+      }
+      
     saveProduct = ->
       $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
       $http({
@@ -49,14 +51,14 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         data:  
           'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
           'product' : 
-            'name': $scope.new_product_name
-            'stock_amount' : $scope.new_product_stock_amount
+            'name': $scope.new_product_form['name']
+            'stock_amount' : $scope.new_product_form['stock_amount']
             'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       }).then((response) ->
         $scope.new_product = response['data']
         $scope.articles['products'].push($scope.new_product)
-        tags = $scope.new_product_tags.split(",")
-        providers = $scope.new_product_providers.split(",")
+        tags = $scope.new_product_form['tags'].split(",")
+        providers = $scope.new_product_form['providers'].split(",")
 
         tags_saved = saveTags(tags)
         providers_saved = saveProviders(providers)
@@ -107,7 +109,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
           'price' : 
             'type_option': 'p'
-            'value' : $scope.new_product_price
+            'value' : $scope.new_product_form['price']
             'product_id' : $scope.new_product["id"]
       }).then((response) ->
         $scope.new_product['price'] = response['data']['value']

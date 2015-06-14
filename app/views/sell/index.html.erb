@@ -8,33 +8,48 @@
       <div class="row">
         
         <div class="col-md-12">
-          <input class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()" size="50"/>
+          <input class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()"/>
         </div>
 
         <div class="col-md-12">
           <div id="searched_articles">
-            
-            <div ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
-              <div class="row text-center">
-                <div ng-repeat="combo in articles_founded.combos" class="col-md-12">
-                  <img src="{{combo.photo}}" class="img-product img-thumbnail">{{combo.name}} - {{combo.price}}
+          
+            <div class="row text-center" ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
+              <div ng-repeat="combo in articles_founded.combos" class="col-md-12 article-searched">
+              
+              
+                <div class="row">
+                  <div class="col-md-5">
+                    <img src="{{combo.photo}}" class="img-product img-thumbnail">
+                  </div>
+                  <div class="col-md-7">
+                    <br>
+                    <h4>{{combo.name |limitTo:9}}</h4>
+                    <h4>{{combo.price}}</h4>
+                  </div>
                 </div>
-                <div ng-repeat="product in articles_founded.products" class="col-md-12">
-                  <img src="{{product.photo}}" class="img-product img-thumbnail">{{product.name}} - {{product.price}}
-                </div>
+                
+              </div>
+              <div ng-repeat="product in articles_founded.products" class="col-md-12 article-searched">
+                <div class="col-md-5"><img src="{{product.photo}}" class="img-product img-thumbnail"></div>
+                <div class="col-md-7">
+                  <br>
+                    <h4>{{product.name |limitTo:9}}</h4>
+                    <h4>{{product.price}}</h4>
+                  </div>
               </div>
             </div>
 
-            <div ng-if="articles_founded.products.length == 0 && articles_founded.combos.length == 0 && articles_search.length != 0">
-              <div class="row text-center">
-                <div class="col-md-12">
-                  no founded
-                </div>
+            <div ng-if="articles_founded.products.length == 0 && articles_founded.combos.length == 0 && articles_search.length != 0"  class="row text-center">
+              <div class="col-md-12  article-searched">
+                no founded
               </div>
             </div>
 
           </div>
         </div>
+
+
 
       </div>
     </div>
@@ -50,7 +65,7 @@
         <div ng-repeat="combo in top_articles.combos" class="col-md-2">
           <div class="col-md-offset-1 col-md-10 combo-bestseller  text-center">
             <img src="{{combo.photo}}" class="img-combo img-thumbnail">
-            <h5>{{combo.name}} - {{combo.price}}</h5>
+            <h5>{{combo.name|limitTo:9}} - {{combo.price}}</h5>
           </div>
         </div>
       </div>
@@ -79,7 +94,7 @@
       <div class="col-md-6">
         <div class="col-md-offset-1 col-md-10 search-client">
       
-          <input class="form-control" autofocus="autofocus" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
+          <input class="form-control" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
 
           </br>
 
@@ -87,17 +102,17 @@
             <div class="col-md-3">
               <b>ID:</b>
             </div> 
-            <div class="col-md-9">{{client_dni}}</div>
+            <div class="col-md-9">{{client.dni}}</div>
             </br>
             <div class="col-md-3">
               <b>Name:</b>
             </div> 
-            <div class="col-md-9">{{client_name}}</div>
+            <div class="col-md-9">{{client.name}}</div>
             </br>
             <div class="col-md-3">
               <b>Balance:</b>
             </div> 
-            <div class="col-md-9">{{client_balance}}</div>
+            <div class="col-md-9">{{client.balance}}</div>
           </div>
 
           <h4>Register a new client</h4>
@@ -135,7 +150,7 @@
                   <b>Use from account:</b>
                 </div>
                 <div class="col-md-2">
-                  {{client_id && client_balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
+                  {{client.id && client.balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
                 </div>
               </div>
             </div>
@@ -146,7 +161,7 @@
                   <b>Recharge account:</b>
                 </div>
                 <div class="col-md-2">
-                  {{client_id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
+                  {{client.id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
                 </div>
               </div>
             </div>
