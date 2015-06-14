@@ -18,6 +18,10 @@
 	width: 100%;
 }
 
+.article-searched {
+	cursor: pointer;
+}
+
 @media (min-width: 992px) {
 	.article-searched {
 		width: 290px;	
@@ -34,4 +38,9 @@
 	.article-searched {
 		width: 260px;	
 	}
+}
+
+.article-searched:hover {
+	background-color: #999;
+	color: white;
 }

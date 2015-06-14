@@ -15,9 +15,7 @@
           <div id="searched_articles">
           
             <div class="row text-center" ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
-              <div ng-repeat="combo in articles_founded.combos" class="col-md-12 article-searched">
-              
-              
+              <div ng-repeat="combo in articles_founded.combos" class="col-md-12 article-searched" ng-click="AddComboToCart(combo)">
                 <div class="row">
                   <div class="col-md-5">
                     <img src="{{combo.photo}}" class="img-product img-thumbnail">
@@ -28,15 +26,18 @@
                     <h4>{{combo.price}}</h4>
                   </div>
                 </div>
-                
               </div>
-              <div ng-repeat="product in articles_founded.products" class="col-md-12 article-searched">
-                <div class="col-md-5"><img src="{{product.photo}}" class="img-product img-thumbnail"></div>
-                <div class="col-md-7">
-                  <br>
-                    <h4>{{product.name |limitTo:9}}</h4>
-                    <h4>{{product.price}}</h4>
+              <div ng-repeat="product in articles_founded.products" class="col-md-12 article-searched" ng-click="AddProductToCart(product)">
+                <div class="row">
+                  <div class="col-md-5">
+                    <img src="{{product.photo}}" class="img-product img-thumbnail">
                   </div>
+                  <div class="col-md-7">
+                    <br>
+                      <h4>{{product.name |limitTo:9}}</h4>
+                      <h4>{{product.price}}</h4>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -49,8 +50,6 @@
           </div>
         </div>
 
-
-
       </div>
     </div>
   </li>
@@ -62,7 +61,7 @@
     <div class="row">      
       
       <div ng-if="top_articles.combos.length > 0">
-        <div ng-repeat="combo in top_articles.combos" class="col-md-2">
+        <div ng-repeat="combo in top_articles.combos" class="col-md-2"  ng-click="AddComboToCart(combo)">
           <div class="col-md-offset-1 col-md-10 combo-bestseller  text-center">
             <img src="{{combo.photo}}" class="img-combo img-thumbnail">
             <h5>{{combo.name|limitTo:9}} - {{combo.price}}</h5>
@@ -70,7 +69,7 @@
         </div>
       </div>
       <div ng-if="top_articles.products.length > 0">
-        <div ng-repeat="product in top_articles.products" class="col-md-2">
+        <div ng-repeat="product in top_articles.products" class="col-md-2" ng-click="AddProductToCart(product)">
           <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
             <img src="{{product.photo}}" class="img-product img-thumbnail">
             <h5>{{product.name}} - {{product.price}}</h5>
@@ -88,7 +87,38 @@
     <div class="row">
       
       <div class="col-md-6 cart">
-          <h4 class="text-center">Cart</h4>
+        <h4 class="text-center">Cart</h4>
+
+          <table id="table_cart" class="table table-striped">
+            <thead>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="combo in cart_articles.combos | orderBy:order_selected | filter:articles_search">
+                <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
+                <td>{{combo.name}}</td>
+                <td>{{combo.price}}</td>
+                <td><input type="number"  class="form-control" value="{{combo.amount}}"></td>
+                <td>
+                  <button type="button" class="btn btn-danger">X</button  >
+                </td>
+              </tr>
+              <tr ng-repeat="product in cart_articles.products | orderBy:order_selected | filter:articles_search">
+                <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td><input type="number"  class="form-control" value="{{product.amount}}"></td>
+                <td>
+                  <button type="button" class="btn btn-danger">X</button  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
       </div>
       
       <div class="col-md-6">

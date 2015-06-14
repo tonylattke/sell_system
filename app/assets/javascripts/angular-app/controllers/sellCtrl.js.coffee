@@ -23,11 +23,17 @@ angular.module('app.sellApp').controller("SellCtrl", [
       'combos' : []
     }
 
+    $scope.cart_articles = {
+      'products' : []
+      'combos' : []
+    }
+
     # Set Bestsellers 
     $http.get('/api/combos_bestsellers').success((data) ->
       if data
         $scope.top_articles['combos'] = data
         for aux_combo in $scope.top_articles['combos']
+          aux_combo['amount'] = 1
           $http.get('/api/prices/search_by_combo/' + aux_combo['id']).success((data_prices) ->
             if data_prices
               aux_combo['price'] = data_prices[0]['value']
@@ -37,6 +43,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
       if data
         $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
         for aux_product in $scope.top_articles['products']
+          aux_product['amount'] = 1
           $http.get('/api/prices/search_by_product/' + aux_product['id']).success((data_prices) ->
             if data_prices
               aux_product['price'] = data_prices[0]['value']
@@ -53,6 +60,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
         if data
           $scope.articles_founded['combos'] = data
           for aux_combo in $scope.articles_founded['combos']
+            aux_combo['amount'] = 1
             $http.get('/api/prices/search_by_combo/' + aux_combo['id']).success((data_prices) ->
               if data_prices
                 aux_combo['price'] = data_prices[0]['value']
@@ -62,6 +70,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
         if data
           $scope.articles_founded['products'] = data
           for aux_product in $scope.articles_founded['products']
+            aux_product['amount'] = 1
             $http.get('/api/prices/search_by_product/' + aux_product['id']).success((data_prices) ->
               if data_prices
                 aux_product['price'] = data_prices[0]['value']
@@ -110,4 +119,23 @@ angular.module('app.sellApp').controller("SellCtrl", [
       else
         console.log 'Transaction dont realized'
     
+    $scope.AddComboToCart = (item) ->
+      exist = false
+      for aux_combo in $scope.cart_articles['combos']
+        if aux_combo['id'] == item['id']
+          exist = true
+          aux_combo['amount'] = aux_combo['amount'] + 1
+          break
+      if not exist
+        $scope.cart_articles['combos'].push(item)
+
+    $scope.AddProductToCart = (item) ->
+      exist = false
+      for aux_product in $scope.cart_articles['products']
+        if aux_product['id'] == item['id']
+          exist = true
+          aux_product['amount'] = aux_product['amount'] + 1
+          break
+      if not exist
+        $scope.cart_articles['products'].push(item)
 ])
