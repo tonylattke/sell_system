@@ -5,11 +5,10 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $scope.dato = clients
     $scope.testclients = []
 
-    getClients = ->
+    $scope.getClients = ->
       $scope.dato.getClients().success((data) ->
-        $scope.testclients = data
-      ).error(
-        console.log 'asd error'
+        if data
+          $scope.testclients = data
       )
     
     # Initialize

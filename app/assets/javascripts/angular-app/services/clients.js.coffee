@@ -18,5 +18,8 @@ sellApp.factory 'clients', ['$http', ($http) ->
 	dataFactory.deleteClient = (id) ->
 		return $http.delete(urlBase + '/' + id)
 
+	dataFactory.searchClients = (info) ->
+		return $http.get(urlBase + '/search/' + info)
+
 	return dataFactory
 ]
