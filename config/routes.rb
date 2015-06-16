@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'manager' => 'sell#index'
 
   scope "api" do
-    # Cients
+    # Clients
     resources :clients, :defaults => {:format => "json"}
     get 'clients/search/:data'  => 'clients#search', :defaults => {:format => "json"}
 
