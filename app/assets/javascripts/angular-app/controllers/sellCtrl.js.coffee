@@ -1,7 +1,17 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http',
-  ($scope,$http)->
+  '$scope','$http', 'clients'
+  ($scope,$http,clients)->
 
+    $scope.dato = clients
+    $scope.testclients = []
+
+    getClients = ->
+      $scope.dato.getClients().success((data) ->
+        $scope.testclients = data
+      ).error(
+        console.log 'asd error'
+      )
+    
     # Initialize
     $scope.client = {
       id : null
