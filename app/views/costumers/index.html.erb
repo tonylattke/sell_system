@@ -1,0 +1,50 @@
+<% content_for :app_controller do %>
+  ng-app='app.sellApp' ng-controller='CostumersCtrl'
+<% end %>
+
+<% content_for :seach_navbar do %>
+  <li class="page-scroll">
+    <div class="search-engine">
+      <div class="row">
+        <div class="col-md-12">
+          <input class="form-control" autofocus="autofocus" placeholder="Search clients" ng-model="clients_search"/>
+        </div>
+      </div>
+    </div>
+  </li>
+<% end %>
+
+<div class="row">
+  
+  <div class="col-md-12">
+    <div class="row">
+      
+      <!-- Options -->
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-12 panel_options ">
+            <h3>Register a new Client</h3>
+            
+          </div>
+          
+          <div class="col-md-12 panel_options">
+            <div class="text-center">
+              <div class="btn btn-lg btn-primary col-md-12" ng-click="ExportList()">Export List</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="col-md-8 main_content">
+          
+          <h2>Clients</h2>
+
+          
+        
+      </div>
+
+    </div>
+  </div>
+
+</div>

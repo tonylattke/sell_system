@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'transactions_bills' => 'sell#index'
 
   # Costumers
-  get 'costumers' => 'sell#index'
+  get 'costumers' => 'costumers#index'
 
   # Manager
   get 'manager' => 'sell#index'
