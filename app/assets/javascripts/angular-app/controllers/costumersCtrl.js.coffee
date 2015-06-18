@@ -2,8 +2,8 @@
 #  $('#table_inventory').dataTable()
 
 angular.module('app.sellApp').controller("CostumersCtrl", [
-  '$scope','$http',
-  ($scope,$http)->
+  '$scope','$http','clients'
+  ($scope,$http,clients)->
 
     ################################ Initialize ###############################
     $scope.clients = []
@@ -12,13 +12,24 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
 
     ################################   Helpers  ###############################
     
+    getClients = ->
+      clients.getClients().success((data) ->
+        if data
+          $scope.clients = data
+      )
+
+    resetForm = ->
+      $scope.new_client_form = {
+        name : null
+        dni : null
+      }
 
     ############################ Buttons operations ###########################
 
+    getClients()
+
     $scope.CreateClient = ->
-      console.log 'CreateClient'
-    
-        
+      console.log 'CreateClient'        
       console.log 'Operation finished'
 
     $scope.ExportList = ->

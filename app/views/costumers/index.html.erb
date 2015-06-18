@@ -24,7 +24,19 @@
         <div class="row">
           <div class="col-md-12 panel_options ">
             <h3>Register a new Client</h3>
-            
+            <form role="form" name="client_form">
+              <div class="row">
+                <div class="col-md-12 form-group" ng-class="{'has-error': client_form.clientName.$invalid, 'has-success': client_form.clientName.$valid}">
+                  <input class="form-control" type="text" placeholder="Name" ng-model="new_client_form.name" required/>
+                </div>
+                <div class="col-md-12 form-group" ng-class="{'has-error': client_form.clientDNI.$invalid, 'has-success': client_form.clientDNI.$valid}">
+                  <input class="form-control" type="text" placeholder="DNI" ng-model="new_client_form.dni" required/>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="btn btn-lg btn-primary col-md-12" ng-disabled="client_form.$invalid" ng-click="CreateClient()">Done</div>
+              </div>
+            </form>
           </div>
           
           <div class="col-md-12 panel_options">
@@ -40,7 +52,33 @@
           
           <h2>Clients</h2>
 
-          
+        <table id="table_combos" class="table table-striped">
+            <thead>
+              <th>
+                Name 
+                <span class="dropup">
+                  <span class="caret" ng-click="orderCriteria('name')"></span>
+                </span>
+                <span class="caret" ng-click="orderCriteria('-name')"></span>
+              </th>
+              <th>DNI</th>
+              <th>Balance</th>
+              <th>Subscription date</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="client in clients | orderBy:order_selected | filter:clients_search">
+                <td>{{client.name}}</td>
+                <td>{{client.dni}}</td>
+                <td>{{client.balance}}</td>
+                <td>{{client.subscription_date}}</td>
+                <td>
+                  <button type="button" class="btn btn-success">Edit</button>
+                  <button type="button" class="btn btn-danger">X</button  >
+                </td>
+              </tr>
+            </tbody>
+          </table>          
         
       </div>
 
