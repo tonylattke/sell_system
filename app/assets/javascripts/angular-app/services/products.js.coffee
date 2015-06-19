@@ -19,7 +19,7 @@ sellApp.factory 'products', ['$http', ($http) ->
 		return $http.delete(urlBase + '/' + id)
 
 	dataFactory.getProductsBestsellers = ->
-		return $http.get('/api/combos_bestsellers')
+		return $http.get('/api/products_bestsellers')
 
 	dataFactory.searchProducts = (info) ->
 		return $http.get(urlBase + '/search/' + info)

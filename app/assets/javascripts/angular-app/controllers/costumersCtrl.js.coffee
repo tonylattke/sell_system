@@ -6,6 +6,7 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
   ($scope,$http,clients)->
 
     ################################ Initialize ###############################
+
     $scope.clients = []
 
     $scope.new_client = null
@@ -26,16 +27,26 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
 
     ############################ Buttons operations ###########################
 
-    getClients()
-
     $scope.CreateClient = ->
-      console.log 'CreateClient'        
-      console.log 'Operation finished'
+      clients.createClient({  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'client' : 
+          'name': $scope.new_client_form['name']
+          'dni': $scope.new_client_form['dni']
+      }).then((response) ->
+        $scope.new_client = response['data']
+        $scope.clients.push($scope.new_client)
+        resetForm()
+      )
 
     $scope.ExportList = ->
       console.log 'ExportList'
 
     $scope.orderCriteria = (order) ->
       $scope.order_selected = order
+
+    ###############################     Main     ##############################
+
+    getClients()
     
 ])

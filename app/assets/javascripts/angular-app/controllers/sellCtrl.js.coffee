@@ -1,17 +1,9 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http', 'clients'
-  ($scope,$http,clients)->
+  '$scope','$http','clients','combos','products'
+  ($scope,$http,clients,combos,products)->
 
-    $scope.dato = clients
-    $scope.testclients = []
+    #################################### Initialize #####################################
 
-    $scope.getClients = ->
-      $scope.dato.getClients().success((data) ->
-        if data
-          $scope.testclients = data
-      )
-    
-    # Initialize
     $scope.client = {
       id : null
       dni : "-"
@@ -37,27 +29,31 @@ angular.module('app.sellApp').controller("SellCtrl", [
       'combos' : []
     }
 
-    # Set Bestsellers 
-    $http.get('/api/combos_bestsellers').success((data) ->
-      if data
-        $scope.top_articles['combos'] = data
-        for aux_combo in $scope.top_articles['combos']
-          aux_combo['amount'] = 1
-          $http.get('/api/prices/search_by_combo/' + aux_combo['id']).success((data_prices) ->
-            if data_prices
-              aux_combo['price'] = data_prices[0]['value']
-          )
-    )
-    $http.get('/api/products_bestsellers').success((data) ->
-      if data
-        $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
-        for aux_product in $scope.top_articles['products']
-          aux_product['amount'] = 1
-          $http.get('/api/prices/search_by_product/' + aux_product['id']).success((data_prices) ->
-            if data_prices
-              aux_product['price'] = data_prices[0]['value']
-          )
-    )
+    ################################   Helpers  ###############################
+
+    setBestsellers = ->
+      combos.getCombosBestsellers().success((data) ->
+        if data
+          $scope.top_articles['combos'] = data
+          for aux_combo in $scope.top_articles['combos']
+            aux_combo['amount'] = 1
+            prices.searchPriceByCombo(aux_combo['id']).success((data_prices) ->
+              if data_prices
+                aux_combo['price'] = data_prices[0]['value']
+            )
+      )
+      products.getProductsBestsellers().success((data) ->
+        if data
+          $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
+          for aux_product in $scope.top_articles['products']
+            aux_product['amount'] = 1
+            products.searchPriceByProduct(aux_product['id']).success((data_prices) ->
+              if data_prices
+                aux_product['price'] = data_prices[0]['value']
+            )
+      )
+
+    ############################ Buttons operations ###########################
 
     # Search Products or combos
     $scope.searchArticles = ->
@@ -65,17 +61,17 @@ angular.module('app.sellApp').controller("SellCtrl", [
         'products' : []
         'combos' : []
       }
-      $http.get('/api/combos/search/' + $scope.articles_search).success((data) ->
+      combos.searchCombos($scope.articles_search).success((data) ->
         if data
           $scope.articles_founded['combos'] = data
           for aux_combo in $scope.articles_founded['combos']
             aux_combo['amount'] = 1
-            $http.get('/api/prices/search_by_combo/' + aux_combo['id']).success((data_prices) ->
+            prices.searchPriceByCombo(aux_combo['id']).success((data_prices) ->
               if data_prices
                 aux_combo['price'] = data_prices[0]['value']
             )
       )
-      $http.get('/api/products/search/' + $scope.articles_search).success((data) ->
+      products.searchProducts($scope.articles_search).success((data) ->
         if data
           $scope.articles_founded['products'] = data
           for aux_product in $scope.articles_founded['products']
@@ -94,7 +90,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
         name : "-"
         balance : 0
       }
-      $http.get('/api/clients/search/' + $scope.data_client).success((data) ->
+      clients.searchClients($scope.data_client).success((data) ->
         if data['dni']
           $scope.client = {
             id : data['id']
@@ -112,16 +108,12 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
       # New Client ?
       if $scope.new_client_dni and $scope.new_client_name
-        $http.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-        $http({
-            url: '/api/clients',
-            method: "POST",
-            data:  
-              'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-              'client' : 
-                'dni' : $scope.new_client_dni
-                'name': $scope.new_client_name
-                'balance' : $scope.client_cash_used
+        clients.createClient({
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'client' : 
+            'dni' : $scope.new_client_dni
+            'name': $scope.new_client_name
+            'balance' : $scope.client_cash_used
         }).then((response) ->
           console.log 'Client successfully registered'
         )
@@ -147,4 +139,6 @@ angular.module('app.sellApp').controller("SellCtrl", [
           break
       if not exist
         $scope.cart_articles['products'].push(item)
+
+    setBestsellers()
 ])
