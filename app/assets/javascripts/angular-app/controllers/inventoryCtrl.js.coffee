@@ -105,20 +105,20 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
     
     ###############################     Main     ##############################
 
-    products.getProducts().success((data) ->
+    products.getProducts().then((data) ->
       if data
         $scope.articles['products'] = data
         for aux_product in $scope.articles['products']
-          prices.searchPriceByProduct(aux_product['id']).success((data_prices) ->
+          prices.searchPriceByProduct(aux_product['id']).then((data_prices) ->
             if data_prices
               aux_product['price'] = data_prices[0]['value']
           )
     )
-    combos.getCombos().success((data) ->
+    combos.getCombos().then((data) ->
       if data
         $scope.articles['combos'] = data
         for aux_combo in $scope.articles['combos']
-          prices.searchPriceByCombo(aux_combo['id']).success((data_prices) ->
+          prices.searchPriceByCombo(aux_combo['id']).then((data_prices) ->
             if data_prices
               aux_combo['price'] = data_prices[0]['value']
           )

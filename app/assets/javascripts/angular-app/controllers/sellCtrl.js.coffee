@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http','clients','combos','products'
-  ($scope,$http,clients,combos,products)->
+  '$scope','$http','clients','combos','products','prices'
+  ($scope,$http,clients,combos,products,prices)->
 
     #################################### Initialize #####################################
 
@@ -32,26 +32,29 @@ angular.module('app.sellApp').controller("SellCtrl", [
     ################################   Helpers  ###############################
 
     setBestsellers = ->
-      combos.getCombosBestsellers().success((data) ->
+      # Combos
+      combos.getCombosBestsellers().then((data) ->
         if data
           $scope.top_articles['combos'] = data
           for aux_combo in $scope.top_articles['combos']
             aux_combo['amount'] = 1
-            prices.searchPriceByCombo(aux_combo['id']).success((data_prices) ->
+            prices.searchPriceByCombo(aux_combo['id']).then((data_prices) ->
               if data_prices
                 aux_combo['price'] = data_prices[0]['value']
             )
       )
-      products.getProductsBestsellers().success((data) ->
+      # Products
+      products.getProductsBestsellers().then((data) ->
         if data
           $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
           for aux_product in $scope.top_articles['products']
             aux_product['amount'] = 1
-            products.searchPriceByProduct(aux_product['id']).success((data_prices) ->
+            prices.searchPriceByProduct(aux_product['id']).then((data_prices) ->
               if data_prices
                 aux_product['price'] = data_prices[0]['value']
             )
       )
+      
 
     ############################ Buttons operations ###########################
 
@@ -61,17 +64,19 @@ angular.module('app.sellApp').controller("SellCtrl", [
         'products' : []
         'combos' : []
       }
-      combos.searchCombos($scope.articles_search).success((data) ->
+      # Combos
+      combos.searchCombos($scope.articles_search).then((data) ->
         if data
           $scope.articles_founded['combos'] = data
-          for aux_combo in $scope.articles_founded['combos']
-            aux_combo['amount'] = 1
-            prices.searchPriceByCombo(aux_combo['id']).success((data_prices) ->
-              if data_prices
-                aux_combo['price'] = data_prices[0]['value']
-            )
       )
-      products.searchProducts($scope.articles_search).success((data) ->
+      for aux_combo in $scope.articles_founded['combos']
+        aux_combo['amount'] = 1
+        prices.searchPriceByCombo(aux_combo['id']).then((data_prices) ->
+          if data_prices
+            aux_combo['price'] = data_prices[0]['value']
+        )
+      # Products
+      products.searchProducts($scope.articles_search).then((data) ->
         if data
           $scope.articles_founded['products'] = data
           for aux_product in $scope.articles_founded['products']
@@ -81,6 +86,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
                 aux_product['price'] = data_prices[0]['value']
             )
       )
+      
 
     # Search Client
     $scope.searchClient = ->
@@ -141,4 +147,11 @@ angular.module('app.sellApp').controller("SellCtrl", [
         $scope.cart_articles['products'].push(item)
 
     setBestsellers()
+    
+    
+
+    prices.getPrices().then((data) ->
+      console.log data
+    )
+    
 ])

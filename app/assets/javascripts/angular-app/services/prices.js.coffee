@@ -1,28 +1,56 @@
-sellApp.factory 'prices', ['$http', ($http) ->
+sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 	
 	urlBase = '/api/prices'
 	dataFactory = {}
 
 	dataFactory.getPrices = ->
-		return $http.get(urlBase)
+		def = $q.defer()
+		$http.get(urlBase).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.getPrice = (id) ->
-		return $http.get(urlBase + '/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.createPrice = (info) ->
-		return $http.post(urlBase,info)
+		def = $q.defer()
+		$http.post(urlBase,info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.updatePrice = (id) ->
-		return $http.put(urlBase + '/' + id)
+		def = $q.defer()
+		$http.put(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.deletePrice = (id) ->
-		return $http.delete(urlBase + '/' + id)
+		def = $q.defer()
+		$http.delete(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.searchPriceByProduct = (id) ->
-		return $http.get(urlBase + '/search_by_product/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/search_by_product/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.searchPriceByCombo = (id) ->
-		return $http.get(urlBase + '/search_by_combo/' + id)	
+		def = $q.defer()
+		$http.get(urlBase + '/search_by_combo/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	return dataFactory
 ]
