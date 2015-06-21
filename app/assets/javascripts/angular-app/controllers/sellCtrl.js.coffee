@@ -54,7 +54,8 @@ angular.module('app.sellApp').controller("SellCtrl", [
       for aux_item in list
         if aux_item['id'] == item['id']
           exist = true
-          aux_item['amount'] = aux_item['amount'] + 1
+          if aux_item['amount'] < aux_item['stock_amount']
+            aux_item['amount'] = aux_item['amount'] + 1
           break
       if not exist
         list.push(item)
@@ -67,6 +68,13 @@ angular.module('app.sellApp').controller("SellCtrl", [
           list.splice(i, 1)
           break
         i++
+
+    UpdateTotal = ->
+      $scope.total = 0
+      for combo in $scope.cart_articles['combos']
+        $scope.total += combo['amount']*combo['price']
+      for product in $scope.cart_articles['products']
+        $scope.total += product['amount']*product['price']
 
     ############################ Buttons operations ###########################
 
@@ -133,21 +141,22 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
     $scope.AddComboToCart = (item) ->
       AddItemToCart(item,$scope.cart_articles['combos'])
+      UpdateTotal()
 
     $scope.AddProductToCart = (item) ->
       AddItemToCart(item,$scope.cart_articles['products'])
+      UpdateTotal()
 
     $scope.DeleteComboOfCart = (item) ->
       DeleteItemOfCart(item,$scope.cart_articles['combos'])
+      UpdateTotal()
 
     $scope.DeleteProductOfCart = (item) ->
       DeleteItemOfCart(item,$scope.cart_articles['products'])
+      UpdateTotal()
 
-    $scope.ItemAmountControl = (item) ->
-      if item['amount'] < 1
-        item['amount'] = 1
-      if item['amount'] > item['stock_amount']
-        item['amount'] = item['stock_amount']
+    $scope.UpdateAmount = ->
+      UpdateTotal()
 
     setBestsellers()
     

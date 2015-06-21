@@ -85,131 +85,143 @@
     </div>
   </div>
 
-  <div class="col-md-12 sell-panel">
-    <div class="row">
-      
-      <div class="col-md-6 cart">
-        <h4 class="text-center">Cart</h4>
+  <form role="form" name="sell_form">
 
-          <table id="table_cart" class="table table-striped">
-            <thead>
-              <th>Photo</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Amount</th>
-              <th>Options</th>
-            </thead>
-            <tbody>
-              <tr ng-repeat="combo in cart_articles.combos | orderBy:order_selected | filter:articles_search">
-                <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
-                <td>{{combo.name}}</td>
-                <td>{{combo.price}}</td>
-                <td><input type="number"  class="form-control" value="{{combo.amount}}" ng-change="ItemAmountControl(combo)"></td>
-                <td>
-                  <button type="button" class="btn btn-danger">X</button  >
-                </td>
-              </tr>
-              <tr ng-repeat="product in cart_articles.products | orderBy:order_selected | filter:articles_search">
-                <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
-                <td>{{product.name}}</td>
-                <td>{{product.price}}</td>
-                <td><input type="number"  class="form-control" value="{{product.amount}}" ng-model="product.amount" ng-change="ItemAmountControl(product)"></td>
-                <td>
-                  <button type="button" class="btn btn-danger" ng-click="DeleteProductOfCart(product)">X</button  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="col-md-12 sell-panel">
+      <div class="row">
+        
+        <div class="col-md-6 cart">
+          <h4 class="text-center">Cart</h4>
 
-      </div>
-      
-      <div class="col-md-6">
-        <div class="col-md-offset-1 col-md-10 search-client">
-      
-          <input class="form-control" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
-
-          </br>
-
-          <div class="row">
-            <div class="col-md-3">
-              <b>ID:</b>
-            </div> 
-            <div class="col-md-9">{{client.dni}}</div>
-            </br>
-            <div class="col-md-3">
-              <b>Name:</b>
-            </div> 
-            <div class="col-md-9">{{client.name}}</div>
-            </br>
-            <div class="col-md-3">
-              <b>Balance:</b>
-            </div> 
-            <div class="col-md-9">{{client.balance}}</div>
-          </div>
-
-          <h4>Register a new client</h4>
-
-          <div class="row">
-            <div class="col-md-12">
-              <input class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
+            <table id="table_cart" class="table table-striped">
+              <thead>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Options</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="combo in cart_articles.combos">
+                  <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
+                  <td>{{combo.name}}</td>
+                  <td>{{combo.price}}</td>
+                  <td><input type="number" name="article_number" class="form-control" ng-model="combo.amount" min="1" max="{{combo.stock_amount}}"></td>
+                  <td>
+                    <button type="button" class="btn btn-danger">X</button  >
+                  </td>
+                </tr>
+                <tr ng-repeat="product in cart_articles.products">
+                  <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
+                  <td>{{product.name}}</td>
+                  <td>{{product.price}}</td>
+                  <td>
+                    <div class="col-md-12 form-group" ng-class="{'has-error': sell_form.article_number.$invalid, 'has-success': sell_form.article_number.$valid}">
+                      <input class="form-control" type="number" min="1" max="{{product.stock_amount}}" placeholder="amount" ng-model="product.amount" ng-change="UpdateAmount()" required/>
+                    </div>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" ng-click="DeleteProductOfCart(product)">X</button  >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div role="alert">
+              <span class="error" ng-show="sell_form.article_number.$error.required">
+                Required!</span>
+              <span class="error" ng-show="sell_form.article_number.$error.number">
+                Not valid number!</span>
             </div>
-            <div class="col-md-12">
-              <input class="form-control" placeholder="Client name" ng-model="new_client_name"/>
-            </div> 
-          </div>
-
-          <h4>Payment settings</h4>            
-          
-
-          <div class="row">
-            
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-4">
-                  <b>Cash amount</b>
-                </div>
-                <div class="col-md-8">
-                  <input class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
-                </div>
-              </div>
-            </div>
-            
-            </br></br>
-
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-10">
-                  <b>Use from account:</b>
-                </div>
-                <div class="col-md-2">
-                  {{client.id && client.balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-10">
-                  <b>Recharge account:</b>
-                </div>
-                <div class="col-md-2">
-                  {{client.id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
-                </div>
-              </div>
-            </div>
-
-            </br></br>
-
-          </div>
-              
         </div>
+        
+        <div class="col-md-6">
+          <div class="col-md-offset-1 col-md-10 search-client">
+        
+            <input class="form-control" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
+
+            </br>
+
+            <div class="row">
+              <div class="col-md-3">
+                <b>ID:</b>
+              </div> 
+              <div class="col-md-9">{{client.dni}}</div>
+              </br>
+              <div class="col-md-3">
+                <b>Name:</b>
+              </div> 
+              <div class="col-md-9">{{client.name}}</div>
+              </br>
+              <div class="col-md-3">
+                <b>Balance:</b>
+              </div> 
+              <div class="col-md-9">{{client.balance}}</div>
+            </div>
+
+            <h4>Register a new client</h4>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
+              </div>
+              <div class="col-md-12">
+                <input class="form-control" placeholder="Client name" ng-model="new_client_name"/>
+              </div> 
+            </div>
+
+            <h4>Payment settings</h4>            
+            
+
+            <div class="row">
+              
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-4">
+                    <b>Cash amount</b>
+                  </div>
+                  <div class="col-md-8">
+                    <input class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
+                  </div>
+                </div>
+              </div>
+              
+              </br></br>
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-10">
+                    <b>Use from account:</b>
+                  </div>
+                  <div class="col-md-2">
+                    {{client.id && client.balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-10">
+                    <b>Recharge account:</b>
+                  </div>
+                  <div class="col-md-2">
+                    {{client.id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
+                  </div>
+                </div>
+              </div>
+
+              </br></br>
+
+            </div>
+                
+          </div>
+        </div>
+
       </div>
-
     </div>
-  </div>
 
-  <div class="btn btn-lg btn-primary col-md-12" ng-click="sell()">
-    Sell total of {{total}}
-  </div>
+    <div class="btn btn-lg btn-primary col-md-12" ng-disabled="sell_form.$invalid" ng-click="sell()">
+      Sell total of {{total}}
+    </div>
+  </form>
 
 </div>
