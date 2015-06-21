@@ -64,7 +64,8 @@
         <div ng-repeat="combo in top_articles.combos" class="col-md-2"  ng-click="AddComboToCart(combo)">
           <div class="col-md-offset-1 col-md-10 combo-bestseller  text-center">
             <img src="{{combo.photo}}" class="img-combo img-thumbnail">
-            <h5>{{combo.name|limitTo:9}} - {{combo.price}}</h5>
+            <h5>{{combo.name|limitTo:9}}</h5>
+            <h6>{{combo.price}}</h6>
           </div>
         </div>
       </div>
@@ -72,7 +73,8 @@
         <div ng-repeat="product in top_articles.products" class="col-md-2" ng-click="AddProductToCart(product)">
           <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
             <img src="{{product.photo}}" class="img-product img-thumbnail">
-            <h5>{{product.name}} - {{product.price}}</h5>
+            <h5>{{product.name}}</h5>
+            <h6>{{product.price}}</h6>
           </div>
         </div>
       </div>

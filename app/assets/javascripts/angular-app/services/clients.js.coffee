@@ -1,25 +1,48 @@
-sellApp.factory 'clients', ['$http', ($http) ->
+sellApp.factory 'clients', ['$http','$q', ($http,$q) ->
 	
 	urlBase = '/api/clients'
 	dataFactory = {}
 
 	dataFactory.getClients = ->
-		return $http.get(urlBase)
+		def = $q.defer()
+		$http.get(urlBase).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.getClient = (id) ->
-		return $http.get(urlBase + '/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.createClient = (info) ->
-		return $http.post(urlBase,info)
+		def = $q.defer()
+		$http.post(urlBase,info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.updateClient = (id) ->
-		return $http.put(urlBase + '/' + id)
+		def = $q.defer()
+		$http.put(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
 
 	dataFactory.deleteClient = (id) ->
-		return $http.delete(urlBase + '/' + id)
+		def = $q.defer()
+		$http.delete(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.searchClients = (info) ->
-		return $http.get(urlBase + '/search/' + info)
+		def = $q.defer()
+		$http.get(urlBase + '/search/' + info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	return dataFactory
 ]

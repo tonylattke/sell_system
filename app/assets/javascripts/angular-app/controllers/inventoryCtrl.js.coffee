@@ -34,8 +34,9 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'stock_amount' : $scope.new_product_form['stock_amount']
           'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       }).then((response) ->
-        $scope.new_product = response['data']
+        $scope.new_product = response
         $scope.articles['products'].push($scope.new_product)
+        
         list_tags = $scope.new_product_form['tags'].split(",")
         list_providers = $scope.new_product_form['providers'].split(",")
 
@@ -55,7 +56,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'tag': 
             'name' : tag_name
         }).then((response) ->
-          tags_saved.push(response['data'])
+          tags_saved.push(response)
         )
       return tags_saved
 
@@ -67,7 +68,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'provider': 
             'name' : provider_name
         }).then((response) ->
-          providers_saved.push(response['data'])
+          providers_saved.push(response)
         )
       return providers_saved
 
@@ -79,7 +80,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'value' : $scope.new_product_form['price']
           'product_id' : $scope.new_product["id"]
       }).then((response) ->
-        $scope.new_product['price'] = response['data']['value']
+        $scope.new_product['price'] = response['value']
       )
 
     ############################ Buttons operations ###########################
@@ -105,22 +106,18 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
     
     ###############################     Main     ##############################
 
-    products.getProducts().then((data) ->
-      if data
-        $scope.articles['products'] = data
-        for aux_product in $scope.articles['products']
-          prices.searchPriceByProduct(aux_product['id']).then((data_prices) ->
-            if data_prices
-              aux_product['price'] = data_prices[0]['value']
-          )
-    )
     combos.getCombos().then((data) ->
       if data
         $scope.articles['combos'] = data
         for aux_combo in $scope.articles['combos']
-          prices.searchPriceByCombo(aux_combo['id']).then((data_prices) ->
-            if data_prices
-              aux_combo['price'] = data_prices[0]['value']
-          )
+          aux_combo['price'] = aux_combo['prices'][0]['value']
     )
+
+    products.getProducts().then((data) ->
+      if data
+        $scope.articles['products'] = data
+        for aux_product in $scope.articles['products']
+          aux_product['price'] = aux_product['prices'][0]['value']
+    )
+    
 ])

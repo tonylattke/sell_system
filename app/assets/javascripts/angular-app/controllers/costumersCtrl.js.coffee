@@ -14,7 +14,7 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
     ################################   Helpers  ###############################
     
     getClients = ->
-      clients.getClients().success((data) ->
+      clients.getClients().then((data) ->
         if data
           $scope.clients = data
       )
@@ -34,7 +34,7 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
           'name': $scope.new_client_form['name']
           'dni': $scope.new_client_form['dni']
       }).then((response) ->
-        $scope.new_client = response['data']
+        $scope.new_client = response
         $scope.clients.push($scope.new_client)
         resetForm()
       )

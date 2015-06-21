@@ -1,4 +1,6 @@
 class Combo < ActiveRecord::Base
+  has_many :prices
+  
   has_attached_file :photo, :styles => { :small => "108x108>", :original => "108x108>", :cropped_thumb => {:geometry => "108x108#", :jcrop => true} },
     :url  => "/assets/combos/:id/:style/:basename.:extension",
     :path => ":rails_root/public/assets/combos/:id/:style/:basename.:extension"
