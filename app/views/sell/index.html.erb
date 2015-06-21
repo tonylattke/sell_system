@@ -104,7 +104,7 @@
                 <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
                 <td>{{combo.name}}</td>
                 <td>{{combo.price}}</td>
-                <td><input type="number"  class="form-control" value="{{combo.amount}}"></td>
+                <td><input type="number"  class="form-control" value="{{combo.amount}}" ng-change="ItemAmountControl(combo)"></td>
                 <td>
                   <button type="button" class="btn btn-danger">X</button  >
                 </td>
@@ -113,9 +113,9 @@
                 <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
                 <td>{{product.name}}</td>
                 <td>{{product.price}}</td>
-                <td><input type="number"  class="form-control" value="{{product.amount}}"></td>
+                <td><input type="number"  class="form-control" value="{{product.amount}}" ng-model="product.amount" ng-change="ItemAmountControl(product)"></td>
                 <td>
-                  <button type="button" class="btn btn-danger">X</button  >
+                  <button type="button" class="btn btn-danger" ng-click="DeleteProductOfCart(product)">X</button  >
                 </td>
               </tr>
             </tbody>

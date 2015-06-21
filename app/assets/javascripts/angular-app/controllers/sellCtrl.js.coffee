@@ -48,7 +48,25 @@ angular.module('app.sellApp').controller("SellCtrl", [
             aux_product['amount'] = 1
             aux_product['price'] = aux_product['prices'][0]['value']
       )
-      
+    
+    AddItemToCart = (item,list) ->
+      exist = false
+      for aux_item in list
+        if aux_item['id'] == item['id']
+          exist = true
+          aux_item['amount'] = aux_item['amount'] + 1
+          break
+      if not exist
+        list.push(item)
+
+    DeleteItemOfCart = (item,list) ->
+      item['amount'] = 1
+      i = 0
+      for aux_item in list
+        if aux_item['id'] == item['id']
+          list.splice(i, 1)
+          break
+        i++
 
     ############################ Buttons operations ###########################
 
@@ -112,26 +130,24 @@ angular.module('app.sellApp').controller("SellCtrl", [
         )
       else
         console.log 'Transaction dont realized'
-    
+
     $scope.AddComboToCart = (item) ->
-      exist = false
-      for aux_combo in $scope.cart_articles['combos']
-        if aux_combo['id'] == item['id']
-          exist = true
-          aux_combo['amount'] = aux_combo['amount'] + 1
-          break
-      if not exist
-        $scope.cart_articles['combos'].push(item)
+      AddItemToCart(item,$scope.cart_articles['combos'])
 
     $scope.AddProductToCart = (item) ->
-      exist = false
-      for aux_product in $scope.cart_articles['products']
-        if aux_product['id'] == item['id']
-          exist = true
-          aux_product['amount'] = aux_product['amount'] + 1
-          break
-      if not exist
-        $scope.cart_articles['products'].push(item)
+      AddItemToCart(item,$scope.cart_articles['products'])
+
+    $scope.DeleteComboOfCart = (item) ->
+      DeleteItemOfCart(item,$scope.cart_articles['combos'])
+
+    $scope.DeleteProductOfCart = (item) ->
+      DeleteItemOfCart(item,$scope.cart_articles['products'])
+
+    $scope.ItemAmountControl = (item) ->
+      if item['amount'] < 1
+        item['amount'] = 1
+      if item['amount'] > item['stock_amount']
+        item['amount'] = item['stock_amount']
 
     setBestsellers()
     
