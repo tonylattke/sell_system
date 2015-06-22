@@ -92,6 +92,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     $scope.DeleteProduct = (product) ->
       inventory.deleteProductTags(product['id'])
+      inventory.deleteProductProviders(product['id'])
       products.deleteProduct(product['id'])
       i = 0
       for aux_item in $scope.articles['products']

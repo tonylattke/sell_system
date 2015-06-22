@@ -23,5 +23,12 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.deleteProductProviders = (product) ->
+		def = $q.defer()
+		$http.delete('/inventory_delete_providers/' + product).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
+
 	return dataFactory
 ]

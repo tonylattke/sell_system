@@ -72,5 +72,18 @@ class InventoryController < ApplicationController
     end
   end
 
+  def delete_product_providers
+    product_id = params[:product].to_i
+
+    product_providers = ProductProvider.search_by('product_id',product_id)
+    for product_provider in product_providers
+      product_provider.destroy
+    end
+
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Post was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
 end

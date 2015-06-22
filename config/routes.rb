@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post 'inventory_save_tags' => 'inventory#save_product_tags', :defaults => {:format => "json"}
   post 'inventory_save_providers' => 'inventory#save_product_providers', :defaults => {:format => "json"}
   delete 'inventory_delete_tags/:product' => 'inventory#delete_product_tags', :defaults => {:format => "json"}
+  delete 'inventory_delete_providers/:product' => 'inventory#delete_product_providers', :defaults => {:format => "json"}
 
   # Transactions & Bills
   get 'transactions_bills' => 'sell#index'
