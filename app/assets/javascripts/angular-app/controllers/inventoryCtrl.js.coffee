@@ -2,8 +2,8 @@
 #  $('#table_inventory').dataTable()
 
 angular.module('app.sellApp').controller("InventoryCtrl", [
-  '$scope','$http','products','combos','prices','tags','providers'
-  ($scope,$http,products,combos,prices,tags,providers)->
+  '$scope','$http','products','combos','prices','tags','providers','inventory'
+  ($scope,$http,products,combos,prices,tags,providers,inventory)->
 
     ################################ Initialize ###############################
 
@@ -40,36 +40,36 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         list_tags = $scope.new_product_form['tags'].split(",")
         list_providers = $scope.new_product_form['providers'].split(",")
 
-        tags_saved = saveTags(list_tags)
-        providers_saved = saveProviders(list_providers)
+        tags_saved = saveTags($scope.new_product,list_tags)
+        providers_saved = saveProviders($scope.new_product,list_providers)
 
         createPriceToProduct()
         
         resetForm()
       )
 
-    saveTags = (list_tags) ->
+    saveTags = (product,list_tags) ->
       tags_saved = []
-      for tag_name in list_tags
-        tags.createTag({
-          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-          'tag': 
-            'name' : tag_name
-        }).then((response) ->
-          tags_saved.push(response)
-        )
+      inventory.createTagsWithProduct({
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'inventory':
+          'tags': list_tags
+          'product_id': product['id']
+      }).then((response) ->
+        tags_saved.push(response)
+      )
       return tags_saved
 
-    saveProviders = (list_providers) ->
+    saveProviders = (product,list_providers) ->
       providers_saved = []
-      for provider_name in list_providers
-        providers.createProvider({
-          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-          'provider': 
-            'name' : provider_name
-        }).then((response) ->
-          providers_saved.push(response)
-        )
+      inventory.createProvidersWithProduct({
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'inventory':
+          'providers': list_providers
+          'product_id': product['id']
+      }).then((response) ->
+        providers_saved.push(response)
+      )
       return providers_saved
 
     createPriceToProduct = ->

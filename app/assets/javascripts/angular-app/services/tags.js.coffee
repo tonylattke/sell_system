@@ -1,25 +1,49 @@
-sellApp.factory 'tags', ['$http', ($http) ->
+sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 	
 	urlBase = '/api/tags'
 	dataFactory = {}
 
 	dataFactory.getTags = ->
-		return $http.get(urlBase)
+		def = $q.defer()
+		$http.get(urlBase).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.getTag = (id) ->
-		return $http.get(urlBase + '/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.createTag = (info) ->
-		return $http.post(urlBase,info)
+		def = $q.defer()
+		$http.post(urlBase,info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.updateTag = (id) ->
-		return $http.put(urlBase + '/' + id)
+		def = $q.defer()
+		$http.put(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.deleteTag = (id) ->
-		return $http.delete(urlBase + '/' + id)
+		def = $q.defer()
+		$http.delete(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
-	dataFactory.searchTag = (id) ->
-		return $http.get(urlBase + '/search/' + id)
+	dataFactory.searchTag = (info) ->
+		def = $q.defer()
+		$http.get(urlBase + '/search/' + info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	return dataFactory
 ]

@@ -1,31 +1,63 @@
-sellApp.factory 'product_providers', ['$http', ($http) ->
+sellApp.factory 'product_providers', ['$http','$q', ($http,$q) ->
 	
 	urlBase = '/api/product_providers'
 	dataFactory = {}
 
 	dataFactory.getProductProviders = ->
-		return $http.get(urlBase)
+		def = $q.defer()
+		$http.get(urlBase).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.getProductProvider = (id) ->
-		return $http.get(urlBase + '/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.createProductProvider = (info) ->
-		return $http.post(urlBase,info)
+		def = $q.defer()
+		$http.post(urlBase,info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.updateProductProvider = (id) ->
-		return $http.put(urlBase + '/' + id)
+		def = $q.defer()
+		$http.put(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.deleteProductProvider = (id) ->
-		return $http.delete(urlBase + '/' + id)
+		def = $q.defer()
+		$http.delete(urlBase + '/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.searchProductProviders = (provider,product) ->
-		return $http.get(urlBase + '/search/' + provider + '/' + product)
+		def = $q.defer()
+		$http.get(urlBase + '/search/' + provider + '/' + product).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.searchProductProvidersByProvider = (id) ->
-		return $http.get(urlBase + '/search_by_provider/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/search_by_provider/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	dataFactory.searchProductProvidersByProduct = (id) ->
-		return $http.get(urlBase + '/search_by_product/' + id)
+		def = $q.defer()
+		$http.get(urlBase + '/search_by_product/' + id).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
 
 	return dataFactory
 ]
