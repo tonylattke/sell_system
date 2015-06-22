@@ -16,5 +16,12 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.deleteProductTags = (product) ->
+		def = $q.defer()
+		$http.delete('/inventory_delete_tags/' + product).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
+
 	return dataFactory
 ]

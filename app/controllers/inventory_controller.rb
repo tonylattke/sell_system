@@ -58,4 +58,19 @@ class InventoryController < ApplicationController
 
   end
 
+  def delete_product_tags
+    product_id = params[:product].to_i
+
+    product_tags = ProductTag.search_by('product_id',product_id)
+    for product_tag in product_tags
+      product_tag.destroy
+    end
+
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Post was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+
 end

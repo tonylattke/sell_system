@@ -86,11 +86,19 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
     ############################ Buttons operations ###########################
 
     $scope.CreateProduct = ->
-      console.log 'CreateProduct'
-      
+      console.log 'Create Product'
       saveProduct()
-      
       console.log 'Operation finished'
+
+    $scope.DeleteProduct = (product) ->
+      inventory.deleteProductTags(product['id'])
+      products.deleteProduct(product['id'])
+      i = 0
+      for aux_item in $scope.articles['products']
+        if aux_item['id'] == product['id']
+          $scope.articles['products'].splice(i, 1)
+          break
+        i++
 
     $scope.AddInventory = ->
       console.log 'AddInventory'
