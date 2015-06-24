@@ -49,7 +49,10 @@ class PricesController < ApplicationController
   # Delete
   def destroy
     @price.destroy
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Post was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private
