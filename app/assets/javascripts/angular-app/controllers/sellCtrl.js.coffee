@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http','clients','combos','products','prices'
-  ($scope,$http,clients,combos,products,prices)->
+  '$scope','$http','clients','combos','products','prices','sell'
+  ($scope,$http,clients,combos,products,prices,sell)->
 
     #################################### Initialize #####################################
 
@@ -99,6 +99,22 @@ angular.module('app.sellApp').controller("SellCtrl", [
           for aux_product in $scope.articles_founded['products']
             aux_product['amount'] = 1
             aux_product['price'] = aux_product['prices'][0]['value']
+      )
+      # Search by Tag
+      sell.searchProductsByTag($scope.articles_search).then((data) ->
+        if data
+          for aux_product in data
+            exists = false
+            i = 0
+            for aux_item in $scope.articles_founded['products']
+              if aux_item['id'] == aux_product['id']
+                exists = true
+                break
+              i++
+            if not exists
+              aux_product['amount'] = 1
+              aux_product['price'] = aux_product['prices'][0]['value']
+              $scope.articles_founded['products'].push(aux_product)
       )
 
     # Search Client
