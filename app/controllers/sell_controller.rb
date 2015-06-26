@@ -2,7 +2,7 @@ class SellController < ApplicationController
   def index
   end
 
-  def search_products_by_tag
+  def search_articles_by_tag
     @products = []
     tags = Tag.search(params[:data])
     for tag in tags
@@ -12,6 +12,8 @@ class SellController < ApplicationController
         @products.push(product)
       end
     end
+
+    @combos = []
   end
-  
+
 end

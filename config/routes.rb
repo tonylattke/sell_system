@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Sell
   get 'sell' => 'sell#index'
 
-  get 'sell/search_products_by_tag/:data' => 'sell#search_products_by_tag', :defaults => {:format => "json"}
+  get 'sell/search_articles_by_tag/:data' => 'sell#search_articles_by_tag', :defaults => {:format => "json"}
 
   # Inventory
   get 'inventory' => 'inventory#index'

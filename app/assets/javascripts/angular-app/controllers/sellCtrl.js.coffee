@@ -101,9 +101,9 @@ angular.module('app.sellApp').controller("SellCtrl", [
             aux_product['price'] = aux_product['prices'][0]['value']
       )
       # Search by Tag
-      sell.searchProductsByTag($scope.articles_search).then((data) ->
+      sell.searchArticlesByTag($scope.articles_search).then((data) ->
         if data
-          for aux_product in data
+          for aux_product in data['products']
             exists = false
             i = 0
             for aux_item in $scope.articles_founded['products']
@@ -115,6 +115,8 @@ angular.module('app.sellApp').controller("SellCtrl", [
               aux_product['amount'] = 1
               aux_product['price'] = aux_product['prices'][0]['value']
               $scope.articles_founded['products'].push(aux_product)
+          for aux_combo in data['combos']
+            console.log 'TODO add combo'
       )
 
     # Search Client
