@@ -80,7 +80,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'value' : $scope.new_product_form['price']
           'product_id' : $scope.new_product["id"]
       }).then((response) ->
-        $scope.new_product['price'] = response['value']
+        $scope.new_product['price'] = response
       )
 
     ############################ Buttons operations ###########################
@@ -119,14 +119,14 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       if data
         $scope.articles['combos'] = data
         for aux_combo in $scope.articles['combos']
-          aux_combo['price'] = aux_combo['prices'][0]['value']
+          aux_combo['price'] = aux_combo['prices'][0]
     )
 
     products.getProducts().then((data) ->
       if data
         $scope.articles['products'] = data
         for aux_product in $scope.articles['products']
-          aux_product['price'] = aux_product['prices'][0]['value']
+          aux_product['price'] = aux_product['prices'][0]
     )
     
 ])

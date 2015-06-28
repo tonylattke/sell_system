@@ -38,7 +38,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
           $scope.top_articles['combos'] = data
           for aux_combo in $scope.top_articles['combos']
             aux_combo['amount'] = 1
-            aux_combo['price'] = aux_combo['prices'][0]['value']
+            aux_combo['price'] = aux_combo['prices'][0]
       )
       # Products
       products.getProductsBestsellers().then((data) ->
@@ -46,7 +46,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
           $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
           for aux_product in $scope.top_articles['products']
             aux_product['amount'] = 1
-            aux_product['price'] = aux_product['prices'][0]['value']
+            aux_product['price'] = aux_product['prices'][0]
       )
     
     AddItemToCart = (item,list) ->
@@ -72,9 +72,9 @@ angular.module('app.sellApp').controller("SellCtrl", [
     UpdateTotal = ->
       $scope.total = 0
       for combo in $scope.cart_articles['combos']
-        $scope.total += combo['amount']*combo['price']
+        $scope.total += combo['amount']*combo['price']['value']
       for product in $scope.cart_articles['products']
-        $scope.total += product['amount']*product['price']
+        $scope.total += product['amount']*product['price']['value']
 
     ############################ Buttons operations ###########################
 
@@ -90,7 +90,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
           $scope.articles_founded['combos'] = data
           for aux_combo in $scope.articles_founded['combos']
             aux_combo['amount'] = 1
-            aux_combo['price'] = aux_combo['prices'][0]['value']
+            aux_combo['price'] = aux_combo['prices'][0]
       )
       # Products
       products.searchProducts($scope.articles_search).then((data) ->
@@ -98,7 +98,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
           $scope.articles_founded['products'] = data
           for aux_product in $scope.articles_founded['products']
             aux_product['amount'] = 1
-            aux_product['price'] = aux_product['prices'][0]['value']
+            aux_product['price'] = aux_product['prices'][0]
       )
       # Search by Tag
       sell.searchArticlesByTag($scope.articles_search).then((data) ->
@@ -113,7 +113,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
               i++
             if not exists
               aux_product['amount'] = 1
-              aux_product['price'] = aux_product['prices'][0]['value']
+              aux_product['price'] = aux_product['prices'][0]
               $scope.articles_founded['products'].push(aux_product)
           for aux_combo in data['combos']
             console.log 'TODO add combo'

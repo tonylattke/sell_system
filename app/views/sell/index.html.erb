@@ -23,7 +23,7 @@
                   <div class="col-md-7">
                     <br>
                     <h4>{{combo.name |limitTo:9}}</h4>
-                    <h4>{{combo.price}}</h4>
+                    <h4>{{combo.price.value}}</h4>
                   </div>
                 </div>
               </div>
@@ -35,7 +35,7 @@
                   <div class="col-md-7">
                     <br>
                       <h4>{{product.name |limitTo:9}}</h4>
-                      <h4>{{product.price}}</h4>
+                      <h4>{{product.price.value}}</h4>
                   </div>
                 </div>
               </div>
@@ -65,7 +65,7 @@
           <div class="col-md-offset-1 col-md-10 combo-bestseller  text-center">
             <img src="{{combo.photo}}" class="img-combo img-thumbnail">
             <h5>{{combo.name|limitTo:9}}</h5>
-            <h6>{{combo.price}}</h6>
+            <h6>{{combo.price.value}}</h6>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
           <div class="col-md-offset-1 col-md-10 product-bestseller  text-center">
             <img src="{{product.photo}}" class="img-product img-thumbnail">
             <h5>{{product.name}}</h5>
-            <h6>{{product.price}}</h6>
+            <h6>{{product.price.value}}</h6>
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@
                 <tr ng-repeat="combo in cart_articles.combos">
                   <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
                   <td>{{combo.name}}</td>
-                  <td>{{combo.price}}</td>
+                  <td>{{combo.price.value}}</td>
                   <td><input type="number" name="article_number" class="form-control" ng-model="combo.amount" min="1" max="{{combo.stock_amount}}"></td>
                   <td>
                     <button type="button" class="btn btn-danger">X</button  >
@@ -114,7 +114,7 @@
                 <tr ng-repeat="product in cart_articles.products">
                   <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
                   <td>{{product.name}}</td>
-                  <td>{{product.price}}</td>
+                  <td>{{product.price.value}}</td>
                   <td>
                     <div class="col-md-12 form-group" ng-class="{'has-error': sell_form.article_number.$invalid, 'has-success': sell_form.article_number.$valid}">
                       <input class="form-control" type="number" min="1" max="{{product.stock_amount}}" placeholder="amount" ng-model="product.amount" ng-change="UpdateAmount()" required/>
