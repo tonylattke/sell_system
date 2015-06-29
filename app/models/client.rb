@@ -10,7 +10,7 @@ class Client < ActiveRecord::Base
   
   def self.search(search)
     if search
-      where('dni ILIKE ? or name ILIKE ?', "%#{search}%","%#{search}%")
+      where('(dni ILIKE ? or name ILIKE ?) and active=true', "%#{search}%","%#{search}%")
     else
       scoped
     end

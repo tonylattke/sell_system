@@ -11,7 +11,7 @@ class CombosController < ApplicationController
 
   # GET /combos/bestsellers
   def bestsellers
-    @combos = Combo.all[0,6]
+    @combos = Combo.searchBestsellers()[0,6]
     respond_with @combos
   end
 

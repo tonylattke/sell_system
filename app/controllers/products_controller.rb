@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
 
   # GET /products/bestsellers
   def bestsellers
-    @products = Product.all[0,6]
+    @products = Product.searchBestsellers()[0,6]
     respond_with @products
   end
 
@@ -71,7 +71,7 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:id, :name, :stock_amount, :sales_amount, :photo)
+      params.require(:product).permit(:id, :name, :stock_amount, :sales_amount, :photo, :active)
     end
 
 end

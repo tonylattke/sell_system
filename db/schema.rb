@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610070048) do
+ActiveRecord::Schema.define(version: 20150629091741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clients", force: true do |t|
-    t.string "dni",                                      null: false
-    t.string "name",                                     null: false
-    t.date   "subscription_date", default: '2015-05-27', null: false
-    t.float  "balance",           default: 0.0,          null: false
+    t.string  "dni",                                      null: false
+    t.string  "name",                                     null: false
+    t.date    "subscription_date", default: '2015-05-27', null: false
+    t.float   "balance",           default: 0.0,          null: false
+    t.boolean "active",            default: true
   end
 
   add_index "clients", ["dni"], name: "index_clients_on_dni", unique: true, using: :btree
@@ -35,13 +36,14 @@ ActiveRecord::Schema.define(version: 20150610070048) do
   add_index "combo_products", ["product_id"], name: "index_combo_products_on_product_id", using: :btree
 
   create_table "combos", force: true do |t|
-    t.string   "name",                           null: false
-    t.integer  "stock_amount",       default: 0, null: false
-    t.integer  "sales_amount",       default: 0, null: false
+    t.string   "name",                              null: false
+    t.integer  "stock_amount",       default: 0,    null: false
+    t.integer  "sales_amount",       default: 0,    null: false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.boolean  "active",             default: true
   end
 
   add_index "combos", ["name"], name: "index_combos_on_name", unique: true, using: :btree
@@ -75,13 +77,14 @@ ActiveRecord::Schema.define(version: 20150610070048) do
   add_index "product_tags", ["tag_id"], name: "index_product_tags_on_tag_id", using: :btree
 
   create_table "products", force: true do |t|
-    t.string   "name",                           null: false
-    t.integer  "stock_amount",       default: 0, null: false
-    t.integer  "sales_amount",       default: 0, null: false
+    t.string   "name",                              null: false
+    t.integer  "stock_amount",       default: 0,    null: false
+    t.integer  "sales_amount",       default: 0,    null: false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.boolean  "active",             default: true
   end
 
   add_index "products", ["name"], name: "index_products_on_name", unique: true, using: :btree

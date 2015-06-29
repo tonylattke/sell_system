@@ -21,10 +21,14 @@ class Product < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where('name ILIKE ?', "%#{search}%")
+      where('name ILIKE ? and active=true and stock_amount > 0', "%#{search}%")
     else
       scoped
     end
+  end
+
+  def self.searchBestsellers()
+    return where('active=true and stock_amount > 0')
   end
 
   default_scope { order('sales_amount DESC') }  

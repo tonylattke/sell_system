@@ -91,15 +91,17 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       console.log 'Operation finished'
 
     $scope.DeleteProduct = (product) ->
-      inventory.deleteProductTags(product['id'])
-      inventory.deleteProductProviders(product['id'])
-      products.deleteProduct(product['id'])
-      i = 0
-      for aux_item in $scope.articles['products']
-        if aux_item['id'] == product['id']
-          $scope.articles['products'].splice(i, 1)
-          break
-        i++
+      conf = confirm("Are you sure?")
+      if conf
+        inventory.deleteProductTags(product['id'])
+        inventory.deleteProductProviders(product['id'])
+        products.deleteProduct(product['id'])
+        i = 0
+        for aux_item in $scope.articles['products']
+          if aux_item['id'] == product['id']
+            $scope.articles['products'].splice(i, 1)
+            break
+          i++
 
     $scope.AddInventory = ->
       console.log 'AddInventory'
