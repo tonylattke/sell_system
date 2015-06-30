@@ -45,7 +45,6 @@ class ProductProvidersController < ApplicationController
 
   # POST /product_providers
   def create
-    @product_provider  = nil
     aux_product_providers = ProductProvider.search(params[:product_id],params[:provider_id])
     if aux_product_providers
       respond_with @product_provider
@@ -58,9 +57,8 @@ class ProductProvidersController < ApplicationController
 
   # POST /product_providers
   def update  
-    @product_provider  = nil
     aux_product_providers = ProductProvider.search(params[:product_id],params[:provider_id])
-    if aux_product_providers
+    if aux_product_providers  && (aux_product_providers[0][:id] != product_provider_params[:id])
       respond_with @product_provider
     else
       @product_provider.update(product_provider_params)

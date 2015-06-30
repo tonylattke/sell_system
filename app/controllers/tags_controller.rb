@@ -39,9 +39,8 @@ class TagsController < ApplicationController
 
   # POST /tags
   def update
-    @tag  = nil
     aux_tag = Tag.find_by(name: tag_params[:name])
-    if aux_tag
+    if aux_tag && (aux_tag[:id] != tag_params[:id])
       respond_with @tag
     else
       @tag.update(tag_params)
@@ -65,7 +64,7 @@ class TagsController < ApplicationController
     end
 
     def tag_params
-      params.require(:tag).permit(:name)
+      params.require(:tag).permit(:name,:id)
     end
 
 end

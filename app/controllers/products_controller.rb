@@ -45,9 +45,8 @@ class ProductsController < ApplicationController
 
   # POST /products
   def update
-    @product  = nil
     aux_product = Product.find_by(name: product_params[:name])
-    if aux_product
+    if aux_product && (aux_product[:id] != product[:id])
       respond_with @product
     else
       @product.update(product_params)

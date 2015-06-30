@@ -39,6 +39,17 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
         resetForm()
       )
 
+    $scope.activate = (client) ->
+      clients.updateClient(client['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'client' : 
+          'id': client['id']
+          'dni': client['dni']
+          'active':true
+      }).then((response) ->
+        client['active'] = true
+      )
+
     $scope.ExportList = ->
       console.log 'ExportList'
 

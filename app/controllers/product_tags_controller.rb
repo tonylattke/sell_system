@@ -59,9 +59,8 @@ class ProductTagsController < ApplicationController
 
   # POST /product_tags
   def update  
-    @product_tag  = nil
     aux_product_tags = ProductTag.search(params[:product_id],params[:tag_id])
-    if aux_product_tags
+    if aux_product_tags && (aux_product_tags[0][:id] != product_tag[:id])
       respond_with @product_tag
     else
       @product_tag.update(product_tag_params)

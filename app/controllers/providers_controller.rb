@@ -39,9 +39,8 @@ class ProvidersController < ApplicationController
 
   # POST /providers
   def update
-    @provider  = nil
     aux_provider = Provider.find_by(name: provider_params[:name])
-    if aux_provider
+    if aux_provider && (aux_provider[:id] != provider_params[:id])
       respond_with @provider
     else
       @provider.update(provider_params)
@@ -65,7 +64,7 @@ class ProvidersController < ApplicationController
     end
 
     def provider_params
-      params.require(:provider).permit(:name)
+      params.require(:provider).permit(:name,:id)
     end
 
 end

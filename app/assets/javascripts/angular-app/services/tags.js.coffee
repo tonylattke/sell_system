@@ -24,9 +24,9 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
-	dataFactory.updateTag = (id) ->
+	dataFactory.updateTag = (id,info) ->
 		def = $q.defer()
-		$http.put(urlBase + '/' + id).success((data) ->
+		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		)
 		return def.promise

@@ -39,9 +39,8 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def update
-    @client  = nil
     aux_client = Client.find_by(dni: client_params[:dni])
-    if aux_client
+    if aux_client && (aux_client[:id] != client_params[:id])
       respond_with @client
     else
       @client.update(client_params)
@@ -65,7 +64,7 @@ class ClientsController < ApplicationController
     end
 
     def client_params
-      params.require(:client).permit(:dni, :name, :balance)
+      params.require(:client).permit(:id, :dni, :name, :balance, :active)
     end
 
 end

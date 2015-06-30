@@ -24,9 +24,9 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
-	dataFactory.updatePrice = (id) ->
+	dataFactory.updatePrice = (id,info) ->
 		def = $q.defer()
-		$http.put(urlBase + '/' + id).success((data) ->
+		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		)
 		return def.promise

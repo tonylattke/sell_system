@@ -24,9 +24,9 @@ sellApp.factory 'combo_products', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
-	dataFactory.updateComboProduct = (id) ->
+	dataFactory.updateComboProduct = (id,info) ->
 		def = $q.defer()
-		$http.put(urlBase + '/' + id).success((data) ->
+		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		)
 		return def.promise

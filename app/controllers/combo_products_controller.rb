@@ -58,7 +58,6 @@ class ComboProductsController < ApplicationController
 
   # POST /combo_products
   def update  
-    @combo_product  = nil
     aux_combo_products = ComboProduct.search(params[:combo_id],params[:product_id])
     if aux_combo_products
       respond_with @combo_product

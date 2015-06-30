@@ -32,9 +32,8 @@ class CombosController < ApplicationController
 
   # POST /combos
   def create
-    @combo  = nil
     aux_combo = Combo.find_by(name: combo_params[:name])
-    if aux_combo
+    if aux_combo && (aux_combo[:id] != combo_params[:id])
       respond_with @combo
     else
       @combo = Combo.new(combo_params)
@@ -45,9 +44,8 @@ class CombosController < ApplicationController
 
   # POST /combos
   def update
-    @combo  = nil
     aux_combo = Combo.find_by(name: combo_params[:name])
-    if aux_combo
+    if aux_combo && (aux_combo[:id] != combo_params[:id])
       respond_with @combo
     else
       @combo.update(combo_params)
