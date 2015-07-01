@@ -103,6 +103,29 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
             break
           i++
 
+    $scope.ActivateCombo = (combo) ->
+      combos.updateCombo(combo['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'combo' : 
+          'id': combo['id']
+          'active':true
+      }).then((response) ->
+        combo['active'] = true
+      )
+    
+    $scope.ActivateProduct = (product) ->
+      products.updateProduct(product['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'product' : 
+          'id': product['id']
+          'active':true
+      }).then((response) ->
+        product['active'] = true
+      )
+
+    $scope.DeleteCombo = (combo) ->
+      console.log 'Delete combo'
+
     $scope.AddInventory = ->
       console.log 'AddInventory'
 
