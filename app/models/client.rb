@@ -1,4 +1,6 @@
 class Client < ActiveRecord::Base
+  has_many :bills
+
   validates :dni, :presence => true, :length => { :minimum => 1 }
   validates :name, :presence => true, :length => { :minimum => 1 }
   validates :subscription_date, :presence => true

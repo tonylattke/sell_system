@@ -70,6 +70,9 @@ Rails.application.routes.draw do
     resources :prices, :defaults => {:format => "json"}
     get 'prices/search_by_product/:product_id'  => 'prices#search_by_product', :defaults => {:format => "json"}
     get 'prices/search_by_combo/:combo_id'  => 'prices#search_by_combo', :defaults => {:format => "json"}
+
+    # Bills
+    resources :bills, :defaults => {:format => "json"}
   end  
 
   # Root
