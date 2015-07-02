@@ -29,6 +29,8 @@ angular.module('app.sellApp').controller("SellCtrl", [
       'combos' : []
     }
 
+    $scope.use_from_account = 0
+    $scope.recharge_amount = 0
     ################################   Helpers  ###############################
 
     setBestsellers = ->
@@ -75,6 +77,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
         $scope.total += combo['amount']*combo['price']['value']
       for product in $scope.cart_articles['products']
         $scope.total += product['amount']*product['price']['value']
+      $scope.client_cash_used = $scope.total
 
     ############################ Buttons operations ###########################
 
@@ -135,7 +138,9 @@ angular.module('app.sellApp').controller("SellCtrl", [
             name : data['name']
             balance : data['balance']
           }
+          $scope.cashUsed()
       )
+      
 
     # Sell
     $scope.sell = ->      
@@ -160,21 +165,35 @@ angular.module('app.sellApp').controller("SellCtrl", [
     $scope.AddComboToCart = (item) ->
       AddItemToCart(item,$scope.cart_articles['combos'])
       UpdateTotal()
+      $scope.cashUsed()
 
     $scope.AddProductToCart = (item) ->
       AddItemToCart(item,$scope.cart_articles['products'])
       UpdateTotal()
+      $scope.cashUsed()
 
     $scope.DeleteComboOfCart = (item) ->
       DeleteItemOfCart(item,$scope.cart_articles['combos'])
       UpdateTotal()
+      $scope.cashUsed()
 
     $scope.DeleteProductOfCart = (item) ->
       DeleteItemOfCart(item,$scope.cart_articles['products'])
       UpdateTotal()
+      $scope.cashUsed()
 
     $scope.UpdateAmount = ->
       UpdateTotal()
+      $scope.cashUsed()
+
+    $scope.cashUsed = ->
+      $scope.use_from_account = 0
+      $scope.recharge_amount = 0
+      if $scope.client['id']
+        if $scope.client_cash_used < $scope.total && ($scope.client['balance'] >= $scope.total - $scope.client_cash_used)
+          $scope.use_from_account = $scope.total - $scope.client_cash_used
+        if $scope.client_cash_used - $scope.total > 0
+          $scope.recharge_amount = $scope.client_cash_used - $scope.total
 
     setBestsellers()
     

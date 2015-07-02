@@ -180,7 +180,7 @@
                     <b>Cash amount</b>
                   </div>
                   <div class="col-md-8">
-                    <input class="form-control" placeholder="Cash amount" ng-model="client_cash_used">
+                    <input class="form-control" placeholder="Cash amount" ng-model="client_cash_used" ng-change="cashUsed()" type="number">
                   </div>
                 </div>
               </div>
@@ -189,22 +189,22 @@
 
               <div class="col-md-6">
                 <div class="row">
-                  <div class="col-md-10">
+                  <div class="col-md-6">
                     <b>Use from account:</b>
                   </div>
-                  <div class="col-md-2">
-                    {{client.id && client.balance > 0 &&(total - client_cash_used > 0) ? total - client_cash_used : 0}}
+                  <div class="col-md-6 text-right">
+                    {{use_from_account | number: 2}}
                   </div>
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="row">
-                  <div class="col-md-10">
+                  <div class="col-md-6">
                     <b>Recharge account:</b>
                   </div>
-                  <div class="col-md-2">
-                    {{client.id && (client_cash_used - total > 0) ? client_cash_used - total : 0}}
+                  <div class="col-md-6 text-right">
+                    {{recharge_amount | number: 2}}
                   </div>
                 </div>
               </div>

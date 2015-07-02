@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702083137) do
+ActiveRecord::Schema.define(version: 20150702125310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bill_combos", force: true do |t|
+    t.integer "bill_id",              null: false
+    t.integer "amount",   default: 1, null: false
+    t.integer "price_id",             null: false
+  end
+
+  add_index "bill_combos", ["bill_id"], name: "index_bill_combos_on_bill_id", using: :btree
+  add_index "bill_combos", ["price_id"], name: "index_bill_combos_on_price_id", using: :btree
 
   create_table "bills", force: true do |t|
     t.integer  "client_id",  null: false
