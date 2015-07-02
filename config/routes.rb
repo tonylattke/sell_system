@@ -73,6 +73,9 @@ Rails.application.routes.draw do
 
     # Bills
     resources :bills, :defaults => {:format => "json"}
+
+    # Bill Articles
+    resources :bill_articles, :defaults => {:format => "json"}
   end  
 
   # Root
