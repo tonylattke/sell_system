@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20150702125310) do
   add_index "bill_articles", ["price_id"], name: "index_bill_articles_on_price_id", using: :btree
 
   create_table "bills", force: true do |t|
-    t.integer  "client_id",  null: false
+    t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,37 +1,44 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http','clients','combos','products','prices','sell'
-  ($scope,$http,clients,combos,products,prices,sell)->
+  '$scope','$http','clients','combos','products','prices','sell','bills'
+  ($scope,$http,clients,combos,products,prices,sell,bills)->
 
-    #################################### Initialize #####################################
-
-    $scope.client = {
-      id : null
-      dni : "-"
-      name : "-"
-      balance : 0
-    }
-    $scope.total = 0
-    $scope.client_cash_used = $scope.total
-    $scope.articles_search = ""
-
-    $scope.top_articles = {
-      'products' : []
-      'combos' : []
-    }
-
-    $scope.articles_founded = {
-      'products' : []
-      'combos' : []
-    }
-
-    $scope.cart_articles = {
-      'products' : []
-      'combos' : []
-    }
-
-    $scope.use_from_account = 0
-    $scope.recharge_amount = 0
     ################################   Helpers  ###############################
+
+    Initialize = ->
+      $scope.client = {
+        id : null
+        dni : "-"
+        name : "-"
+        balance : 0
+      }
+      $scope.total = 0
+      $scope.client_cash_used = $scope.total
+      $scope.articles_search = ""
+
+      $scope.top_articles = {
+        'products' : []
+        'combos' : []
+      }
+
+      $scope.articles_founded = {
+        'products' : []
+        'combos' : []
+      }
+
+      $scope.cart_articles = {
+        'products' : []
+        'combos' : []
+      }
+
+      $scope.use_from_account = 0
+      $scope.recharge_amount = 0
+
+      $scope.data_client = ""
+
+      $scope.new_client_dni = ""
+      $scope.new_client_name = ""
+
+      rebootClient()
 
     setBestsellers = ->
       # Combos
@@ -79,6 +86,14 @@ angular.module('app.sellApp').controller("SellCtrl", [
         $scope.total += product['amount']*product['price']['value']
       $scope.client_cash_used = $scope.total
 
+    rebootClient = ->
+      $scope.client = {
+        id : null
+        dni : "-"
+        name : "-"
+        balance : 0
+      }
+
     ############################ Buttons operations ###########################
 
     # Search Products or combos
@@ -124,12 +139,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
     # Search Client
     $scope.searchClient = ->
-      $scope.client = {
-        id : null
-        dni : "-"
-        name : "-"
-        balance : 0
-      }
+      rebootClient()
       clients.searchClients($scope.data_client).then((data) ->
         if data['dni']
           $scope.client = {
@@ -139,28 +149,49 @@ angular.module('app.sellApp').controller("SellCtrl", [
             balance : data['balance']
           }
           $scope.cashUsed()
-      )
-      
+      )    
 
     # Sell
     $scope.sell = ->      
-      # Client Exist
-      if $scope.client['id']
-        console.log 'sell but not register'
+      valid_operation = true
 
-      # New Client ?
-      if $scope.new_client_dni and $scope.new_client_name
-        clients.createClient({
+      # Client Exist
+      if $scope.client['id'] and ($scope.new_client_dni or $scope.new_client_name)
+        valid_operation = false
+        alert 'New or old User?'
+
+      if not $scope.client['id'] and (((not $scope.new_client_dni) and  $scope.new_client_name) or ($scope.new_client_dni and  (not $scope.new_client_name)))
+        valid_operation = false
+        alert 'New User need DNI and Name!'
+
+      if valid_operation
+        # New Client ?
+        if $scope.new_client_dni and $scope.new_client_name
+          clients.createClient({
+            'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+            'client' : 
+              'dni' : $scope.new_client_dni
+              'name': $scope.new_client_name
+              'balance' : $scope.recharge_amount
+          }).then((response) ->
+            $scope.client = response
+            console.log 'Client successfully registered'
+          )
+
+        data_bill = {
           'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-          'client' : 
-            'dni' : $scope.new_client_dni
-            'name': $scope.new_client_name
-            'balance' : $scope.client_cash_used
-        }).then((response) ->
-          console.log 'Client successfully registered'
+          'bill':
+            'client_id': $scope.client['id']
+        }
+
+        bills.createBill(data_bill).then((response) ->
+          $scope.bill = response
+          console.log 'Bill registered'
         )
-      else
-        console.log 'Transaction dont realized'
+
+        # Reboot    
+        Initialize()
+        setBestsellers()
 
     $scope.AddComboToCart = (item) ->
       AddItemToCart(item,$scope.cart_articles['combos'])
@@ -195,6 +226,9 @@ angular.module('app.sellApp').controller("SellCtrl", [
         if $scope.client_cash_used - $scope.total > 0
           $scope.recharge_amount = $scope.client_cash_used - $scope.total
 
+    #################################### Initialize #####################################
+
+    Initialize()
     setBestsellers()
     
 ])
