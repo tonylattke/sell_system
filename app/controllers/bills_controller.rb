@@ -36,6 +36,11 @@ class BillsController < ApplicationController
     end
   end
 
+  def today
+    @bills = Bill.where('created_at BETWEEN ? AND ?', DateTime.now.beginning_of_day, DateTime.now.end_of_day).all
+    respond_with @bills
+  end
+
   private
     # Set Bill
     def set_bill

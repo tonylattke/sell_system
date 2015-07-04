@@ -38,5 +38,12 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.getBillsToday = ->
+		def = $q.defer()
+		$http.get(urlBase + '/today').success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
+
 	return dataFactory
 ]

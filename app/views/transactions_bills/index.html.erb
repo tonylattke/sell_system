@@ -8,6 +8,58 @@
 
 <div class="row">
   
-  <h1>Test</h1>
+  <div class="col-md-12">
+    <div class="row">
+      
+      <!-- Options -->
+      <div class="col-md-4">
+        <div class="row">
+          
+          <div class="col-md-12 panel_options ">
+            <h3>Consult movements and bills</h3>
+            <form role="form" name="consult_form">
+              <div class="row">
+                
+              </div>
+              <div class="text-center">
+                <div class="btn btn-lg btn-primary col-md-12" ng-disabled="consult_form.$invalid" ng-click="Consult()">Done</div>
+              </div>
+            </form>
+          </div>
+          
+          <div class="col-md-12 panel_options ">
+            <h3>Create a cash transaction</h3>
+            <form role="form" name="consult_form">
+              <div class="row">
+                
+              </div>
+              <div class="text-center">
+                <div class="btn btn-lg btn-primary col-md-12" ng-disabled="transaction_form.$invalid" ng-click="CreateTransaction()">Done</div>
+              </div>
+            </form>
+          </div>          
+          
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="col-md-8 main_content">
+          
+          <h2>Bills</h2>
+
+          <ul>
+            <li ng-repeat="bill in bills" ng-click="ConsultBill(bill)">
+                {{bill.id}} - {{bill.created_at}}
+            </li>
+          </ul>
+
+          <h2>Transactions</h2>
+
+          
+        
+      </div>
+
+    </div>
+  </div>
 
 </div>

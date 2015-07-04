@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   # Transactions & Bills
   get 'transactions_bills' => 'transactions_bills#index'
+  get 'transactions_bills/consult_bill/:id' => 'transactions_bills#consult_bill', :defaults => {:format => "json"}
 
   # Costumers
   get 'costumers' => 'costumers#index'
@@ -72,6 +73,7 @@ Rails.application.routes.draw do
     get 'prices/search_by_combo/:combo_id'  => 'prices#search_by_combo', :defaults => {:format => "json"}
 
     # Bills
+    get 'bills/today'  => 'bills#today', :defaults => {:format => "json"}
     resources :bills, :defaults => {:format => "json"}
 
     # Bill Articles
