@@ -85,6 +85,7 @@
               </th>
               <th>Price</th>
               <th>Stock</th>
+              <th>Sales</th>
               <th>Options</th>
             </thead>
             <tbody>
@@ -93,9 +94,10 @@
                 <td>{{combo.name}}</td>
                 <td>{{combo.price.value}}</td>
                 <td>{{combo.stock_amount}}</td>
+                <td>{{combo.sales_amount}}</td>
                 <td ng-if="combo.active">
                   <button type="button" class="btn btn-success">Edit</button>
-                  <button type="button" class="btn btn-danger"  ng-click="DeleteCombo(combo)">X</button  >
+                  <button type="button" class="btn btn-danger"  ng-click="DeactivateCombo(combo)">X</button>
                 </td>
                 <td ng-if="! combo.active">
                   <button type="button" class="btn btn-success" ng-click="ActivateCombo(combo)">Activate</button>
@@ -118,6 +120,7 @@
               </th>
               <th>Price</th>
               <th>Stock</th>
+              <th>Sales</th>
               <th>Options</th>
             </thead>
             <tbody>
@@ -126,9 +129,10 @@
                 <td>{{product.name}}</td>
                 <td>{{product.price.value}}</td>
                 <td>{{product.stock_amount}}</td>
+                <td>{{product.sales_amount}}</td>
                 <td ng-if="product.active">
                   <button type="button" class="btn btn-success">Edit</button>
-                  <button type="button" class="btn btn-danger"  ng-click="DeleteProduct(product)">X</button  >
+                  <button type="button" class="btn btn-danger"  ng-click="DeactivateProduct(product)">X</button>
                 </td>
                 <td ng-if="! product.active">
                   <button type="button" class="btn btn-success" ng-click="ActivateProduct(product)">Activate</button>

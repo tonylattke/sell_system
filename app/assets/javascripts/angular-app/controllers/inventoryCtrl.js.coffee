@@ -83,6 +83,26 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         $scope.new_product['price'] = response
       )
 
+    updateActiveInCombo = (combo,active_value) ->
+      combos.updateCombo(combo['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'combo' : 
+          'id': combo['id']
+          'active':active_value
+      }).then((response) ->
+        combo['active'] = active_value
+      )
+
+    updateActiveInProduct = (product,active_value) ->
+      products.updateProduct(product['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'product' : 
+          'id': product['id']
+          'active': active_value
+      }).then((response) ->
+        product['active'] = active_value
+      )
+
     ############################ Buttons operations ###########################
 
     $scope.CreateProduct = ->
@@ -91,8 +111,10 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       console.log 'Operation finished'
 
     $scope.DeleteProduct = (product) ->
-      conf = confirm("Are you sure?")
-      if conf
+      console.log 'Delete product'
+      # Review
+      # conf = confirm("Are you sure?")
+      if false
         inventory.deleteProductTags(product['id'])
         inventory.deleteProductProviders(product['id'])
         products.deleteProduct(product['id'])
@@ -104,24 +126,16 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           i++
 
     $scope.ActivateCombo = (combo) ->
-      combos.updateCombo(combo['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'combo' : 
-          'id': combo['id']
-          'active':true
-      }).then((response) ->
-        combo['active'] = true
-      )
+      updateActiveInCombo(combo,true)
     
+    $scope.DeactivateCombo = (combo) ->
+      updateActiveInCombo(combo,false)
+
     $scope.ActivateProduct = (product) ->
-      products.updateProduct(product['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'product' : 
-          'id': product['id']
-          'active':true
-      }).then((response) ->
-        product['active'] = true
-      )
+      updateActiveInProduct(product,true)
+
+    $scope.DeactivateProduct = (product) ->
+      updateActiveInProduct(product,false)
 
     $scope.DeleteCombo = (combo) ->
       console.log 'Delete combo'

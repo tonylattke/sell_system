@@ -179,8 +179,9 @@ angular.module('app.sellApp').controller("SellCtrl", [
             'client' : 
               'dni' : $scope.new_client_dni
               'name': $scope.new_client_name
-              'balance' : $scope.recharge_amount
           }
+        data['recharge_amount'] = $scope.recharge_amount
+        data['use_from_account'] = $scope.use_from_account
 
         if $scope.client['id']
           data['client'] = {

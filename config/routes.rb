@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   delete 'inventory/delete_providers/:product' => 'inventory#delete_product_providers', :defaults => {:format => "json"}
 
   # Transactions & Bills
-  get 'transactions_bills' => 'sell#index'
+  get 'transactions_bills' => 'transactions_bills#index'
 
   # Costumers
   get 'costumers' => 'costumers#index'

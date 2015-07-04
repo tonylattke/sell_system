@@ -2,6 +2,8 @@ class Price < ActiveRecord::Base
   belongs_to :product, :class_name => 'Product'
   belongs_to :combo, :class_name => 'Combo'
 
+  has_many :bill_articles
+
   validates :value, :presence => true
   validates :type_option, :presence => true
   
