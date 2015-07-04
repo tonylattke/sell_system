@@ -1,11 +1,13 @@
 class ClientsController < ApplicationController
+  include ClientHelper
+
   before_action :set_client
 
   respond_to :json
 
   # GET /clients
   def index
-    @clients = Client.all
+    @clients = clients_list
     respond_with @clients
   end
 
@@ -26,15 +28,8 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def create
-    @client  = nil
-    aux_client = Client.find_by(dni: client_params[:dni])
-    if aux_client
-      respond_with @client
-    else
-      @client = Client.new(client_params)
-      @client.save
-      respond_with @client  
-    end
+    @client = client_create(client_params)
+    respond_with @client
   end
 
   # POST /clients
@@ -52,7 +47,7 @@ class ClientsController < ApplicationController
   def destroy
     @client.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

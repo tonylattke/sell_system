@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http','clients','combos','products','prices','sell','bills'
-  ($scope,$http,clients,combos,products,prices,sell,bills)->
+  '$scope','$http','clients','combos','products','prices','bills','sell'
+  ($scope,$http,clients,combos,products,prices,bills,sell)->
 
     ################################   Helpers  ###############################
 
@@ -94,6 +94,18 @@ angular.module('app.sellApp').controller("SellCtrl", [
         balance : 0
       }
 
+    validOperation = ->      
+      # Client Exist
+      if $scope.client['id'] and ($scope.new_client_dni or $scope.new_client_name)
+        return false
+        alert 'New or old User?'
+
+      if not $scope.client['id'] and (((not $scope.new_client_dni) and  $scope.new_client_name) or ($scope.new_client_dni and  (not $scope.new_client_name)))
+        return false
+        alert 'New User need DNI and Name!'
+
+      return true
+
     ############################ Buttons operations ###########################
 
     # Search Products or combos
@@ -153,39 +165,33 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
     # Sell
     $scope.sell = ->      
-      valid_operation = true
+      
+      if validOperation()
+        data = {
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        }
 
-      # Client Exist
-      if $scope.client['id'] and ($scope.new_client_dni or $scope.new_client_name)
-        valid_operation = false
-        alert 'New or old User?'
-
-      if not $scope.client['id'] and (((not $scope.new_client_dni) and  $scope.new_client_name) or ($scope.new_client_dni and  (not $scope.new_client_name)))
-        valid_operation = false
-        alert 'New User need DNI and Name!'
-
-      if valid_operation
+        data['client_new'] = false
         # New Client ?
         if $scope.new_client_dni and $scope.new_client_name
-          clients.createClient({
-            'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          data['client_new'] = true
+          data['client'] = {
             'client' : 
               'dni' : $scope.new_client_dni
               'name': $scope.new_client_name
               'balance' : $scope.recharge_amount
-          }).then((response) ->
-            $scope.client = response
-            console.log 'Client successfully registered'
-          )
+          }
 
-        data_bill = {
-          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-          'bill':
-            'client_id': $scope.client['id']
-        }
+        if $scope.client['id']
+          data['client'] = {
+            'id' : $scope.client['id']
+          }
+        else
+          data['client'] = null
 
-        bills.createBill(data_bill).then((response) ->
-          $scope.bill = response
+        data['cart'] = $scope.cart_articles
+
+        sell.generateSell(data).then((response) ->
           console.log 'Bill registered'
         )
 

@@ -9,5 +9,12 @@ sellApp.factory 'sell', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
-	return dataFactory
+	dataFactory.generateSell = (info) ->
+		def = $q.defer()
+		$http.post('/sell/generate_sell', info).success((data) ->
+			def.resolve(data)
+		)
+		return def.promise
+
+	return dataFactory	
 ]
