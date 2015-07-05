@@ -41,6 +41,14 @@ class BillsController < ApplicationController
     respond_with @bills
   end
 
+  def from_to
+    from = DateTime.new(params[:fy].to_i, params[:fm].to_i, params[:fd].to_i)
+    to = DateTime.new(params[:ty].to_i, params[:tm].to_i, params[:td].to_i).end_of_day()
+    
+    @bills = Bill.where('created_at BETWEEN ? AND ?', from, to)
+    respond_with @bills
+  end
+
   private
     # Set Bill
     def set_bill

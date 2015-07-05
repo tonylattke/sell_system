@@ -74,6 +74,7 @@ Rails.application.routes.draw do
 
     # Bills
     get 'bills/today'  => 'bills#today', :defaults => {:format => "json"}
+    get 'bills/from/:fy-:fm-:fd/to/:ty-:tm-:td' => 'bills#from_to', :defaults => {:format => "json"}
     resources :bills, :defaults => {:format => "json"}
 
     # Bill Articles

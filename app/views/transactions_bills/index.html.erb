@@ -19,7 +19,14 @@
             <h3>Consult movements and bills</h3>
             <form role="form" name="consult_form">
               <div class="row">
-                
+                <div class="col-md-12 form-group" ng-class="{'has-error': consult_form.dateFrom.$invalid, 'has-success': consult_form.dateFrom.$valid}">
+                  <h5>From:</h5>
+                  <input type="date" class="form-control" ng-model="consult_from" required>
+                </div>
+                <div class="col-md-12 form-group" ng-class="{'has-error': consult_form.dateTo.$invalid, 'has-success': consult_form.dateTo.$valid}">
+                  <h5>To:</h5>
+                  <input type="date" class="form-control" ng-model="consult_to" required>
+                </div>
               </div>
               <div class="text-center">
                 <div class="btn btn-lg btn-primary col-md-12" ng-disabled="consult_form.$invalid" ng-click="Consult()">Done</div>
@@ -49,7 +56,7 @@
 
           <ul>
             <li ng-repeat="bill in bills" ng-click="ConsultBill(bill)">
-                {{bill.id}} - {{bill.created_at}}
+                {{bill.id}} - {{bill.created_at}}  {{bill.extra_data}}
             </li>
           </ul>
 
