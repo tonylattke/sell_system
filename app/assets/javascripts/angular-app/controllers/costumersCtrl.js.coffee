@@ -25,6 +25,17 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
         dni : null
       }
 
+    UpdateActivateInClient = (client,active_value) ->
+      clients.updateClient(client['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'client' : 
+          'id': client['id']
+          'dni': client['dni']
+          'active':active_value
+      }).then((response) ->
+        client['active'] = active_value
+      )
+
     ############################ Buttons operations ###########################
 
     $scope.CreateClient = ->
@@ -40,15 +51,10 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
       )
 
     $scope.activate = (client) ->
-      clients.updateClient(client['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'client' : 
-          'id': client['id']
-          'dni': client['dni']
-          'active':true
-      }).then((response) ->
-        client['active'] = true
-      )
+      UpdateActivateInClient(client,true)
+
+    $scope.deactivate = (client) ->
+      UpdateActivateInClient(client,false)
 
     $scope.ExportList = ->
       console.log 'ExportList'

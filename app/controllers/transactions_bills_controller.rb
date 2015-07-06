@@ -17,6 +17,7 @@ class TransactionsBillsController < ApplicationController
         aux_combo = {
           'id'    => combo.id,
           'photo' => combo.photo,
+          'name'  => combo.name,
           'price' => price.value,
           'amount'=> bill_article.amount
         }
@@ -26,17 +27,25 @@ class TransactionsBillsController < ApplicationController
         aux_product = {
           'id' => product.id,
           'photo' => product.photo,
+          'name'  => product.name,
           'price' => price.value,
           'amount'=> bill_article.amount
         }
         products.push(aux_product)
       end
     end
+
+    client_name = nil
+    if bill.client_id
+      client = Client.find_by(id: bill.client_id)
+      client_name = client.name
+    end
   
     @data_exit = {
-      'bill_id'   => bill.id,
-      'products'  => products,
-      'combos'    => combos
+      'bill_id'     => bill.id,
+      'client_name' => client_name,
+      'products'    => products,
+      'combos'      => combos
     }
 
     render json: @data_exit

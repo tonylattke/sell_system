@@ -114,40 +114,41 @@ angular.module('app.sellApp').controller("SellCtrl", [
         'products' : []
         'combos' : []
       }
-      # Combos
-      combos.searchCombos($scope.articles_search).then((data) ->
-        if data
-          $scope.articles_founded['combos'] = data
-          for aux_combo in $scope.articles_founded['combos']
-            aux_combo['amount'] = 1
-            aux_combo['price'] = aux_combo['prices'][0]
-      )
-      # Products
-      products.searchProducts($scope.articles_search).then((data) ->
-        if data
-          $scope.articles_founded['products'] = data
-          for aux_product in $scope.articles_founded['products']
-            aux_product['amount'] = 1
-            aux_product['price'] = aux_product['prices'][0]
-      )
-      # Search by Tag
-      sell.searchArticlesByTag($scope.articles_search).then((data) ->
-        if data
-          for aux_product in data['products']
-            exists = false
-            i = 0
-            for aux_item in $scope.articles_founded['products']
-              if aux_item['id'] == aux_product['id']
-                exists = true
-                break
-              i++
-            if not exists
+      if $scope.articles_search != ""
+        # Combos
+        combos.searchCombos($scope.articles_search).then((data) ->
+          if data
+            $scope.articles_founded['combos'] = data
+            for aux_combo in $scope.articles_founded['combos']
+              aux_combo['amount'] = 1
+              aux_combo['price'] = aux_combo['prices'][0]
+        )
+        # Products
+        products.searchProducts($scope.articles_search).then((data) ->
+          if data
+            $scope.articles_founded['products'] = data
+            for aux_product in $scope.articles_founded['products']
               aux_product['amount'] = 1
               aux_product['price'] = aux_product['prices'][0]
-              $scope.articles_founded['products'].push(aux_product)
-          for aux_combo in data['combos']
-            console.log 'TODO add combo'
-      )
+        )
+        # Search by Tag
+        sell.searchArticlesByTag($scope.articles_search).then((data) ->
+          if data
+            for aux_product in data['products']
+              exists = false
+              i = 0
+              for aux_item in $scope.articles_founded['products']
+                if aux_item['id'] == aux_product['id']
+                  exists = true
+                  break
+                i++
+              if not exists
+                aux_product['amount'] = 1
+                aux_product['price'] = aux_product['prices'][0]
+                $scope.articles_founded['products'].push(aux_product)
+            for aux_combo in data['combos']
+              console.log 'TODO add combo'
+        )
 
     # Search Client
     $scope.searchClient = ->
