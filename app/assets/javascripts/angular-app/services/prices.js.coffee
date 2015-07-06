@@ -7,6 +7,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.get(urlBase).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Prices cannot be listed")
 		)
 		return def.promise
 
@@ -14,6 +16,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.get(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Price cannot be found")
 		)
 		return def.promise
 
@@ -21,6 +25,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.post(urlBase,info).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Price cannot be created")
 		)
 		return def.promise
 
@@ -28,6 +34,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Price cannot be updated")
 		)
 		return def.promise
 
@@ -35,6 +43,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.delete(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Price cannot be deleted")
 		)
 		return def.promise
 
@@ -42,6 +52,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.get(urlBase + '/search_by_product/' + id).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Price searched by product cannot be found")
 		)
 		return def.promise
 
@@ -49,6 +61,8 @@ sellApp.factory 'prices', ['$http','$q', ($http,$q) ->
 		def = $q.defer()
 		$http.get(urlBase + '/search_by_combo/' + id).success((data) ->
 			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Price searched by combo cannot be found")
 		)
 		return def.promise
 
