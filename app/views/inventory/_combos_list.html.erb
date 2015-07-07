@@ -1,0 +1,34 @@
+<h2>Combos</h2>
+
+<table id="table_combos" class="table table-striped">
+  <thead>
+    <th>Photo</th>
+    <th>
+      Name 
+      <span class="dropup">
+        <span class="caret" ng-click="orderCriteria('name')"></span>
+      </span>
+      <span class="caret" ng-click="orderCriteria('-name')"></span>
+    </th>
+    <th>Price</th>
+    <th>Stock</th>
+    <th>Sales</th>
+    <th>Options</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="combo in articles.combos | orderBy:order_selected | filter:articles_search">
+      <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
+      <td>{{combo.name}}</td>
+      <td>{{combo.price.value}}</td>
+      <td>{{combo.stock_amount}}</td>
+      <td>{{combo.sales_amount}}</td>
+      <td ng-if="combo.active">
+        <button type="button" class="btn btn-success">Edit</button>
+        <button type="button" class="btn btn-danger"  ng-click="DeactivateCombo(combo)">X</button>
+      </td>
+      <td ng-if="! combo.active">
+        <button type="button" class="btn btn-success" ng-click="ActivateCombo(combo)">Activate</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

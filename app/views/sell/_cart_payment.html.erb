@@ -1,0 +1,138 @@
+<form role="form" name="sell_form">
+
+  <div class="col-md-12 sell-panel">
+    <div class="row">
+      
+      <div class="col-md-6 cart">
+        <h4 class="text-center">Cart</h4>
+
+          <table id="table_cart" class="table table-striped">
+            <thead>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="combo in cart_articles.combos">
+                <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
+                <td>{{combo.name}}</td>
+                <td>{{combo.price.value}}</td>
+                <td><input type="number" name="article_number" class="form-control" ng-model="combo.amount" min="1" max="{{combo.stock_amount}}"></td>
+                <td>
+                  <button type="button" class="btn btn-danger">X</button  >
+                </td>
+              </tr>
+              <tr ng-repeat="product in cart_articles.products">
+                <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
+                <td>{{product.name}}</td>
+                <td>{{product.price.value}}</td>
+                <td>
+                  <div class="col-md-12 form-group" ng-class="{'has-error': sell_form.article_number.$invalid, 'has-success': sell_form.article_number.$valid}">
+                    <input class="form-control" type="number" min="1" max="{{product.stock_amount}}" placeholder="amount" ng-model="product.amount" ng-change="UpdateAmount()" required/>
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger" ng-click="DeleteProductOfCart(product)">X</button  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div role="alert">
+            <span class="error" ng-show="sell_form.article_number.$error.required">
+              Required!</span>
+            <span class="error" ng-show="sell_form.article_number.$error.number">
+              Not valid number!</span>
+          </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="col-md-offset-1 col-md-10 search-client">
+      
+          <input class="form-control" placeholder="Search clients" ng-model="data_client" ng-change="searchClient()"/>
+
+          </br>
+
+          <div class="row">
+            <div class="col-md-3">
+              <b>ID:</b>
+            </div> 
+            <div class="col-md-9">{{client.dni}}</div>
+            </br>
+            <div class="col-md-3">
+              <b>Name:</b>
+            </div> 
+            <div class="col-md-9">{{client.name}}</div>
+            </br>
+            <div class="col-md-3">
+              <b>Balance:</b>
+            </div> 
+            <div class="col-md-9">{{client.balance}}</div>
+          </div>
+
+          <h4>Register a new client</h4>
+
+          <div class="row">
+            <div class="col-md-12">
+              <input class="form-control" placeholder="Client ID" ng-model="new_client_dni"/>
+            </div>
+            <div class="col-md-12">
+              <input class="form-control" placeholder="Client name" ng-model="new_client_name"/>
+            </div> 
+          </div>
+
+          <h4>Payment settings</h4>            
+          
+
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4">
+                  <b>Cash amount</b>
+                </div>
+                <div class="col-md-8">
+                  <input class="form-control" placeholder="Cash amount" ng-model="client_cash_used" ng-change="cashUsed()" type="number">
+                </div>
+              </div>
+            </div>
+            
+            </br></br>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <b>Use from account:</b>
+                </div>
+                <div class="col-md-6 text-right">
+                  {{use_from_account | number: 2}}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <b>Recharge account:</b>
+                </div>
+                <div class="col-md-6 text-right">
+                  {{recharge_amount | number: 2}}
+                </div>
+              </div>
+            </div>
+
+            </br></br>
+
+          </div>
+              
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="sell_form.$invalid" ng-click="sell()">
+    Sell total of {{total}}
+  </div>
+</form>

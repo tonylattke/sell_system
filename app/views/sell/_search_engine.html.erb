@@ -1,0 +1,50 @@
+<li class="page-scroll">
+  <div class="search-engine">
+    <div class="row">
+      
+      <div class="col-md-12">
+        <input class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search" ng-change="searchArticles()"/>
+      </div>
+
+      <div class="col-md-12">
+        <div id="searched_articles">
+        
+          <div class="row text-center" ng-if="articles_founded.products.length > 0 || articles_founded.combos.length > 0">
+            <div ng-repeat="combo in articles_founded.combos" class="col-md-12 article-searched" ng-click="AddComboToCart(combo)">
+              <div class="row">
+                <div class="col-md-5">
+                  <img src="{{combo.photo}}" class="img-product img-thumbnail">
+                </div>
+                <div class="col-md-7">
+                  <br>
+                  <h4>{{combo.name |limitTo:9}}</h4>
+                  <h4>{{combo.price.value}}</h4>
+                </div>
+              </div>
+            </div>
+            <div ng-repeat="product in articles_founded.products" class="col-md-12 article-searched" ng-click="AddProductToCart(product)">
+              <div class="row">
+                <div class="col-md-5">
+                  <img src="{{product.photo}}" class="img-product img-thumbnail">
+                </div>
+                <div class="col-md-7">
+                  <br>
+                    <h4>{{product.name |limitTo:9}}</h4>
+                    <h4>{{product.price.value}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="articles_founded.products.length == 0 && articles_founded.combos.length == 0 && articles_search.length != 0"  class="row text-center">
+            <div class="col-md-12  article-searched">
+              no founded
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</li>

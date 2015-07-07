@@ -3,15 +3,7 @@
 <% end %>
 
 <% content_for :seach_navbar do %>
-  <li class="page-scroll">
-    <div class="search-engine">
-      <div class="row">
-        <div class="col-md-12">
-          <input class="form-control" autofocus="autofocus" placeholder="Search products or combos" ng-model="articles_search"/>
-        </div>
-      </div>
-    </div>
-  </li>
+  <%= render 'search_engine' %>
 <% end %>
 
 <div class="row">
@@ -22,125 +14,14 @@
       <!-- Options -->
       <div class="col-md-4">
         <div class="row">
-          <div class="col-md-12 panel_options ">
-            <h3>Create a new Product</h3>
-            <form role="form" name="product_form">
-              <div class="row">
-                <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productName.$invalid, 'has-success': product_form.productName.$valid}">
-                  <input class="form-control" type="text" placeholder="Name" ng-model="new_product_form.name" required/>
-                </div>
-                <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productPrice.$invalid, 'has-success': product_form.productPrice.$valid}">
-                  <input class="form-control" type="number" placeholder="Price" ng-model="new_product_form.price" required/>
-                </div>
-                <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productStockAmount.$invalid, 'has-success': product_form.productStockAmount.$valid}">
-                  <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_form.stock_amount" required/>
-                </div>
-                <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productTags.$invalid, 'has-success': product_form.productTags.$valid}">
-                  <input class="form-control" type="text" placeholder="Tags" ng-model="new_product_form.tags" required/>
-                </div>
-                <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productProviders.$invalid, 'has-success': product_form.productProviders.$valid}">
-                  <input class="form-control" type="text" placeholder="Providers" ng-model="new_product_form.providers" required/>
-                </div>
-                <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productPhoto.$invalid, 'has-success': product_form.productPhoto.$valid}">
-                  <input class="form-control" type="file" placeholder="Photo" file-model="new_product_form.photo"/>
-                </div> 
-              </div>
-              <div class="text-center">
-                <div class="btn btn-lg btn-primary col-md-12" ng-disabled="product_form.$invalid" ng-click="CreateProduct()">Done</div>
-              </div>
-            </form>
-          </div>
-          <div class="col-md-12 panel_options">
-            <div class="text-center">
-              <div class="btn btn-lg btn-primary col-md-12" ng-click="AddInventory()">Add product to inventory</div>
-            </div>
-          </div>
-          <div class="col-md-12 panel_options">
-            <div class="text-center">
-              <div class="btn btn-lg btn-primary col-md-12" ng-click="CreateCombo()">Create Combo</div>
-            </div>
-          </div>
-          <div class="col-md-12 panel_options">
-            <div class="text-center">
-              <div class="btn btn-lg btn-primary col-md-12" ng-click="ExportList()">Export List</div>
-            </div>
-          </div>
+          <%= render 'options' %>
         </div>
       </div>
 
       <!-- Main content -->
       <div class="col-md-8 main_content">
-          
-          <h2>Combos</h2>
-
-          <table id="table_combos" class="table table-striped">
-            <thead>
-              <th>Photo</th>
-              <th>
-                Name 
-                <span class="dropup">
-                  <span class="caret" ng-click="orderCriteria('name')"></span>
-                </span>
-                <span class="caret" ng-click="orderCriteria('-name')"></span>
-              </th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Sales</th>
-              <th>Options</th>
-            </thead>
-            <tbody>
-              <tr ng-repeat="combo in articles.combos | orderBy:order_selected | filter:articles_search">
-                <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
-                <td>{{combo.name}}</td>
-                <td>{{combo.price.value}}</td>
-                <td>{{combo.stock_amount}}</td>
-                <td>{{combo.sales_amount}}</td>
-                <td ng-if="combo.active">
-                  <button type="button" class="btn btn-success">Edit</button>
-                  <button type="button" class="btn btn-danger"  ng-click="DeactivateCombo(combo)">X</button>
-                </td>
-                <td ng-if="! combo.active">
-                  <button type="button" class="btn btn-success" ng-click="ActivateCombo(combo)">Activate</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h2>Products</h2>
-
-          <table id="table_products" class="table table-striped">
-            <thead>
-              <th>Photo</th>
-              <th>
-                Name 
-                <span class="dropup">
-                  <span class="caret" ng-click="orderCriteria('name')"></span>
-                </span>
-                <span class="caret" ng-click="orderCriteria('-name')"></span>
-              </th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Sales</th>
-              <th>Options</th>
-            </thead>
-            <tbody>
-              <tr ng-repeat="product in articles.products | orderBy:order_selected | filter:articles_search">
-                <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
-                <td>{{product.name}}</td>
-                <td>{{product.price.value}}</td>
-                <td>{{product.stock_amount}}</td>
-                <td>{{product.sales_amount}}</td>
-                <td ng-if="product.active">
-                  <button type="button" class="btn btn-success">Edit</button>
-                  <button type="button" class="btn btn-danger"  ng-click="DeactivateProduct(product)">X</button>
-                </td>
-                <td ng-if="! product.active">
-                  <button type="button" class="btn btn-success" ng-click="ActivateProduct(product)">Activate</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        
+        <%= render 'combos_list' %>
+        <%= render 'products_list' %>
       </div>
 
     </div>
