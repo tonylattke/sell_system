@@ -15,8 +15,31 @@
       
       <!-- Options -->
       <div class="col-md-4">
-        <div class="row" ng-if="costumers_mode == 'list'  || costumers_mode == 'client_edit'">
-          <%= render 'options' %>
+        <div class="col-md-12 panel_options ">
+          <h3>Register a new Client</h3>
+          <form role="form" name="client_form">
+            <div class="row">
+              <!-- Name -->
+              <div class="col-md-12 form-group" ng-class="{'has-error': client_form.clientName.$invalid, 'has-success': client_form.clientName.$valid}">
+                <input class="form-control" type="text" placeholder="Name" ng-model="new_client_form.name" required/>
+              </div>
+              <!-- DNI -->
+              <div class="col-md-12 form-group" ng-class="{'has-error': client_form.clientDNI.$invalid, 'has-success': client_form.clientDNI.$valid}">
+                <input class="form-control" type="text" placeholder="DNI" ng-model="new_client_form.dni" required/>
+              </div>
+            </div>
+            <!-- Done -->
+            <div class="text-center">
+              <div class="btn btn-lg btn-primary col-md-12" ng-disabled="client_form.$invalid" ng-click="CreateClient()">Done</div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-md-12 panel_options">
+          <!-- Export List -->
+          <div class="text-center">
+            <div class="btn btn-lg btn-primary col-md-12" ng-click="ExportList()">Export List</div>
+          </div>
         </div>
       </div>
 

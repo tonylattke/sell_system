@@ -19,7 +19,9 @@
                 <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
                 <td>{{combo.name}}</td>
                 <td>{{combo.price.value}}</td>
-                <td><input type="number" name="article_number" class="form-control" ng-model="combo.amount" min="1" max="{{combo.stock_amount}}"></td>
+                <td>
+                  <input type="number" name="article_number" class="form-control" ng-model="combo.amount" min="1" max="{{combo.stock_amount}}">
+                </td>
                 <td>
                   <button type="button" class="btn btn-danger">X</button  >
                 </td>
@@ -30,7 +32,7 @@
                 <td>{{product.price.value}}</td>
                 <td>
                   <div class="col-md-12 form-group" ng-class="{'has-error': sell_form.article_number.$invalid, 'has-success': sell_form.article_number.$valid}">
-                    <input class="form-control" type="number" min="1" max="{{product.stock_amount}}" placeholder="amount" ng-model="product.amount" ng-change="UpdateAmount()" required/>
+                    <input class="form-control" type="number" min="1" max="{{product.stock_amount}}" placeholder="amount" ng-model="product.amount" ng-change="UpdateAmount(product)" integer required/>
                   </div>
                 </td>
                 <td>

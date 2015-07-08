@@ -8,13 +8,13 @@
     <!-- Price -->
     <div class="col-md-12 form-group" ng-class="{'has-error': edit_product_form.productPrice.$invalid, 'has-success': edit_product_form.productPrice.$valid}">
       Actual price was set in {{edit_product.price.created_at | date:'medium'}}
-      <input class="form-control" type="number" placeholder="Price" ng-model="edit_product.price.value" required/>
+      <input class="form-control" type="number" placeholder="Price" ng-model="edit_product.price.value" min="0" required/>
     </div>
     <!-- Photo -->
-    <div class="col-md-12 form-group" ng-class="{'has-error': edit_product_form.productPhoto.$invalid, 'has-success': edit_product_form.productPhoto.$valid}">
+    <div class="col-md-12 form-group">
       Actual photo -- TODO
       <img src="{{edit_product.photo}}" class="img-product img-thumbnail">
-      <input class="form-control" type="file" class="form-control" type="file" placeholder="Photo" file-model="edit_product.photo" value="{{edit_product.photo}}"/>
+      <input class="form-control" type="url" class="form-control" placeholder="Photo URL" accept="image/png,image/gif,image/jpeg" ng-model="edit_product.photo_new"/>
     </div>
   </div>
   <!-- Done -->

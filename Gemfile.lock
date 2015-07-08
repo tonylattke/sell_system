@@ -50,11 +50,17 @@ GEM
       railties (>= 3.1)
       sprockets
       tilt
+    angularjs-file-upload-rails (1.1.6)
     angularjs-rails-resource (1.1.1)
     arel (5.0.1.20140414130214)
     bootstrap_form (2.3.0)
     bower-rails (0.9.2)
     builder (3.2.2)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.5)
@@ -177,9 +183,11 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
+  angularjs-file-upload-rails (~> 1.1.6)
   angularjs-rails-resource (~> 1.1.1)
   bootstrap_form
   bower-rails
+  carrierwave
   coffee-rails (~> 4.0.0)
   fastercsv
   jbuilder (~> 2.0)

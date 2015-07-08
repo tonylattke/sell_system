@@ -213,7 +213,8 @@ angular.module('app.sellApp').controller("SellCtrl", [
       UpdateTotal()
       $scope.cashUsed()
 
-    $scope.UpdateAmount = ->
+    $scope.UpdateAmount = (product) ->
+      product['amount'] = parseInt(product['amount'], 10);
       UpdateTotal()
       $scope.cashUsed()
 

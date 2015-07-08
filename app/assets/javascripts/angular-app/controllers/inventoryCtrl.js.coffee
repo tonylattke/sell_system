@@ -20,7 +20,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     ################################   Helpers  ###############################
       
-    saveProduct = ->     
+    saveProduct = ->
       products.createProduct({
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'product' : 
@@ -127,7 +127,19 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       $scope.order_selected = order
 
     $scope.EditProduct = (product) ->
-      $scope.edit_product = product
+      $scope.edit_product = {
+        'id'    : product['id'],
+        'name'  : product['name'],
+        'photo'  : product['photo'],
+        'active'  : product['active'],
+        'stock_amount': product['stock_amount'],
+        'sales_amount': product['sales_amount'],
+        'price' : {
+          'id'    : product['price']['id'],
+          'value'  : product['price']['value']
+        }
+      }
+      $scope.edit_product_backup = product
       # Search Providers & Tags
       $scope.inventory_mode = 'product_edit'
 
@@ -138,18 +150,49 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       $scope.inventory_mode = 'list'
 
     $scope.EditProductSubmit = ->
-      products.updateProduct($scope.edit_product['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'product' :
-          'id': $scope.edit_product['id']
-          'name': $scope.edit_product['name']
-      }).then((response) ->
-        for aux_product in $scope.articles['products']
-          if aux_product['id'] == $scope.edit_product['id']
-            aux_product = $scope.edit_product
-            break
-        $scope.edit_product = inventory_helpers.resetForm()
+      product_info = {
+        'id': $scope.edit_product['id']
+      }
+      product_change = false
+      
+      product_info['name'] =  $scope.edit_product['name']
+      if ($scope.edit_product['name'] != $scope.edit_product_backup['name'])
+        product_change = true
+      
+      if $scope.edit_product['photo_new'] 
+        product_info['photo'] = $scope.edit_product['photo_new'] 
+        product_change = true
+      
+      if product_change
+        products.updateProduct($scope.edit_product['id'],{  
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'product' : product_info
+        }).then((response) ->
+          if response['error']
+            alert 'Update name or photo is not posible. Name is unique and phot must be valid'
+        )
+      
+      if ($scope.edit_product['price']['value'] != $scope.edit_product_backup['price']['value'])
+        prices.createPrice({
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'price' :
+            'type_option' : 'p'
+            'value' : $scope.edit_product['price']['value']
+            'product_id' : $scope.edit_product['id']
+        }).then((response) ->
+          if response['error']
+            alert 'Update price is not posible'
+        )
+      
+      $scope.edit_product = inventory_helpers.resetForm()
+
+      products.getProducts().then((data) ->
+        if data
+          $scope.articles['products'] = data
+          for aux_product in $scope.articles['products']
+            aux_product['price'] = aux_product['prices'][0]
       )
+
       $scope.inventory_mode = 'list'
 
     ###############################     Main     ##############################

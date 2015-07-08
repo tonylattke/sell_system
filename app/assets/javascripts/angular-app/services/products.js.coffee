@@ -35,7 +35,10 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Product cannot be updated")
+			malasnoticias = {
+				'error' : true
+			}
+			def.resolve(malasnoticias)
 		)
 		return def.promise
 

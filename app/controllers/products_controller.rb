@@ -45,13 +45,14 @@ class ProductsController < ApplicationController
 
   # POST /products
   def update
-    aux_product = Product.find_by(name: product_params[:name])
-    if aux_product && (aux_product[:id] != product[:id])
-      respond_with @product
-    else
-      @product.update(product_params)
-      respond_with @product  
-    end
+    # aux_product = Product.find_by(name: product_params[:name])
+    # if aux_product.nil?
+    #   @product.update(product_params)
+    # elsif (!aux_product.nil?) && aux_product[:id] != @product[:id]
+    #   @product.update(product_params)
+    # end
+    @product.update(product_params)
+    #@product.update(:photo => params[:product][:photo])
   end
 
   # Delete

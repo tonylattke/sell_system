@@ -8,11 +8,11 @@
       </div>
       <!-- Price -->
       <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productPrice.$invalid, 'has-success': product_form.productPrice.$valid}">
-        <input class="form-control" type="number" placeholder="Price" ng-model="new_product_form.price" required/>
+        <input class="form-control" type="number" placeholder="Price" ng-model="new_product_form.price" min="0" required/>
       </div>
       <!-- Stock amount -->
       <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productStockAmount.$invalid, 'has-success': product_form.productStockAmount.$valid}">
-        <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_form.stock_amount" required/>
+        <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_form.stock_amount" min="0" required/>
       </div>
       <!-- Tags -->
       <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productTags.$invalid, 'has-success': product_form.productTags.$valid}">
