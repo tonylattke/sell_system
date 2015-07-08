@@ -2,15 +2,18 @@
   <h3>Consult movements and bills</h3>
   <form role="form" name="consult_form">
     <div class="row">
+      <!-- Consult From -->
       <div class="col-md-12 form-group" ng-class="{'has-error': consult_form.dateFrom.$invalid, 'has-success': consult_form.dateFrom.$valid}">
         <h5>From:</h5>
         <input type="date" class="form-control" ng-model="consult_from" required>
       </div>
+      <!-- Consult To -->
       <div class="col-md-12 form-group" ng-class="{'has-error': consult_form.dateTo.$invalid, 'has-success': consult_form.dateTo.$valid}">
         <h5>To:</h5>
         <input type="date" class="form-control" ng-model="consult_to" required>
       </div>
     </div>
+    <!-- Done -->
     <div class="text-center">
       <div class="btn btn-lg btn-primary col-md-12" ng-disabled="consult_form.$invalid" ng-click="Consult()">Done</div>
     </div>
@@ -21,8 +24,9 @@
   <h3>Create a cash transaction</h3>
   <form role="form" name="consult_form">
     <div class="row">
-      
+      <!-- -->
     </div>
+    <!-- Done -->
     <div class="text-center">
       <div class="btn btn-lg btn-primary col-md-12" ng-disabled="transaction_form.$invalid" ng-click="CreateTransaction()">Done</div>
     </div>

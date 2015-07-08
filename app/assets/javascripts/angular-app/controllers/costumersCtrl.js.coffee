@@ -7,11 +7,11 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
 
     ################################ Initialize ###############################
 
+    $scope.costumers_mode = 'list'
+
     $scope.clients = []
 
     $scope.new_client = null
-
-    $scope.costumers_mode = 'list'
 
     $scope.edit_client = null
 
@@ -65,7 +65,7 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
       $scope.edit_client = costumers_helpers.resetForm()
       $scope.costumers_mode = 'list'
 
-    $scope.EditClientUpdate = ->
+    $scope.EditClientSubmit = ->
       clients.updateClient($scope.edit_client['id'],{  
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'client' : 

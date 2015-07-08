@@ -1,17 +1,17 @@
 <h3>Edit Client</h3>
 <form role="form" name="edit_client_form">
   <div class="row">
+    <!-- Name -->
     <div class="col-md-12 form-group" ng-class="{'has-error': edit_client_form.clientName.$invalid, 'has-success': edit_client_form.clientName.$valid}">
       <input class="form-control" type="text" placeholder="Name" ng-model="edit_client.name" required/>
     </div>
+    <!-- DNI -->
     <div class="col-md-12 form-group" ng-class="{'has-error': edit_client_form.clientDNI.$invalid, 'has-success': edit_client_form.clientDNI.$valid}">
       <input class="form-control" type="text" placeholder="DNI" ng-model="edit_client.dni" required/>
     </div>
   </div>
-  <div>
-    <div class="btn btn-lg btn-primary col-md-12" ng-disabled="edit_client_form.$invalid" ng-click="EditClientUpdate()">Done</div>
-  </div>
-  <div>
-    <div class="btn btn-lg btn-danger col-md-12" ng-disabled="edit_client_form.$invalid" ng-click="EditClientCancel()">Cancel</div>
-  </div>
+  <!-- Done -->
+  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="edit_client_form.$invalid" ng-click="EditClientSubmit()">Done</div>
+  <!-- Cancel -->
+  <div class="btn btn-lg btn-danger col-md-12" ng-disabled="edit_client_form.$invalid" ng-click="EditClientCancel()">Cancel</div>
 </form>

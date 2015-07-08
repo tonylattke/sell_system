@@ -7,12 +7,16 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     ################################ Initialize ###############################
 
+    $scope.inventory_mode = 'list'
+
     $scope.articles = {
       'products' : []
       'combos' : []
     }
 
     $scope.new_product = null
+
+    $scope.edit_product = null
 
     ################################   Helpers  ###############################
       
@@ -76,6 +80,8 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     ############################ Buttons operations ###########################
 
+    # List products & combos
+
     $scope.CreateProduct = ->
       console.log 'Create Product'
       saveProduct()
@@ -119,7 +125,33 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     $scope.orderCriteria = (order) ->
       $scope.order_selected = order
-    
+
+    $scope.EditProduct = (product) ->
+      $scope.edit_product = product
+      # Search Providers & Tags
+      $scope.inventory_mode = 'product_edit'
+
+    # Edit Product
+
+    $scope.EditProductCancel = ->
+      $scope.edit_product = inventory_helpers.resetForm()
+      $scope.inventory_mode = 'list'
+
+    $scope.EditProductSubmit = ->
+      products.updateProduct($scope.edit_product['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'product' :
+          'id': $scope.edit_product['id']
+          'name': $scope.edit_product['name']
+      }).then((response) ->
+        for aux_product in $scope.articles['products']
+          if aux_product['id'] == $scope.edit_product['id']
+            aux_product = $scope.edit_product
+            break
+        $scope.edit_product = inventory_helpers.resetForm()
+      )
+      $scope.inventory_mode = 'list'
+
     ###############################     Main     ##############################
 
     combos.getCombos().then((data) ->
@@ -135,5 +167,5 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         for aux_product in $scope.articles['products']
           aux_product['price'] = aux_product['prices'][0]
     )
-    
+
 ])

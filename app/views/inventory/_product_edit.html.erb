@@ -1,0 +1,24 @@
+<h3>Edit Product</h3>
+<form role="form" name="edit_product_form">
+  <div class="row">
+    <!-- Name -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': edit_product_form.productName.$invalid, 'has-success': edit_product_form.productName.$valid}">
+      <input class="form-control" type="text" placeholder="Name" ng-model="edit_product.name" required/>
+    </div>
+    <!-- Price -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': edit_product_form.productPrice.$invalid, 'has-success': edit_product_form.productPrice.$valid}">
+      Actual price was set in {{edit_product.price.created_at | date:'medium'}}
+      <input class="form-control" type="number" placeholder="Price" ng-model="edit_product.price.value" required/>
+    </div>
+    <!-- Photo -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': edit_product_form.productPhoto.$invalid, 'has-success': edit_product_form.productPhoto.$valid}">
+      Actual photo -- TODO
+      <img src="{{edit_product.photo}}" class="img-product img-thumbnail">
+      <input class="form-control" type="file" class="form-control" type="file" placeholder="Photo" file-model="edit_product.photo" value="{{edit_product.photo}}"/>
+    </div>
+  </div>
+  <!-- Done -->
+  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="edit_product_form.$invalid" ng-click="EditProductSubmit()">Done</div>
+  <!-- Cancel -->
+  <div class="btn btn-lg btn-danger col-md-12" ng-disabled="edit_product_form.$invalid" ng-click="EditProductCancel()">Cancel</div>
+</form>
