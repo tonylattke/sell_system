@@ -2,14 +2,18 @@
 #  $('#table_inventory').dataTable()
 
 angular.module('app.sellApp').controller("CostumersCtrl", [
-  '$scope','$http','clients'
-  ($scope,$http,clients)->
+  '$scope','$http','clients','costumers_helpers'
+  ($scope,$http,clients,costumers_helpers)->
 
     ################################ Initialize ###############################
 
     $scope.clients = []
 
     $scope.new_client = null
+
+    $scope.costumers_mode = 'list'
+
+    $scope.edit_client = null
 
     ################################   Helpers  ###############################
     
@@ -19,24 +23,9 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
           $scope.clients = data
       )
 
-    resetForm = ->
-      $scope.new_client_form = {
-        name : null
-        dni : null
-      }
-
-    UpdateActivateInClient = (client,active_value) ->
-      clients.updateClient(client['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'client' : 
-          'id': client['id']
-          'dni': client['dni']
-          'active':active_value
-      }).then((response) ->
-        client['active'] = active_value
-      )
-
     ############################ Buttons operations ###########################
+
+    # List client
 
     $scope.CreateClient = ->
       clients.createClient({  
@@ -47,20 +36,51 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
       }).then((response) ->
         $scope.new_client = response
         $scope.clients.push($scope.new_client)
-        resetForm()
+        $scope.new_client_form = costumers_helpers.resetForm()
       )
 
     $scope.activate = (client) ->
-      UpdateActivateInClient(client,true)
+      costumers_helpers.UpdateActivateInClient(client,true)
 
     $scope.deactivate = (client) ->
-      UpdateActivateInClient(client,false)
+      costumers_helpers.UpdateActivateInClient(client,false)
 
     $scope.ExportList = ->
       console.log 'ExportList'
 
     $scope.orderCriteria = (order) ->
       $scope.order_selected = order
+
+    $scope.editClient = (client) ->
+      $scope.edit_client = {
+        id : client['id']
+        name : client['name']
+        dni : client['dni']
+      }
+      $scope.costumers_mode = 'client_edit'
+
+    # Edit client
+
+    $scope.EditClientCancel = ->
+      $scope.edit_client = costumers_helpers.resetForm()
+      $scope.costumers_mode = 'list'
+
+    $scope.EditClientUpdate = ->
+      clients.updateClient($scope.edit_client['id'],{  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'client' : 
+          'id': $scope.edit_client['id']
+          'name': $scope.edit_client['name']
+          'dni': $scope.edit_client['dni']
+      }).then((response) ->
+        for aux_client in $scope.clients
+          if aux_client['id'] == $scope.edit_client['id']
+            aux_client['name'] = $scope.edit_client['name']
+            aux_client['dni'] = $scope.edit_client['dni']
+            break
+        $scope.edit_client = costumers_helpers.resetForm()
+      )
+      $scope.costumers_mode = 'list'
 
     ###############################     Main     ##############################
 

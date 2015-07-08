@@ -21,7 +21,7 @@
       <td>{{client.balance}}</td>
       <td>{{client.subscription_date}}</td>
       <td ng-if="client.active">
-        <button type="button" class="btn btn-success">Edit</button>
+        <button type="button" class="btn btn-success" ng-click="editClient(client)">Edit</button>
         <button type="button" class="btn btn-danger" ng-click="deactivate(client)">X</button>
       </td>
       <td ng-if="! client.active">

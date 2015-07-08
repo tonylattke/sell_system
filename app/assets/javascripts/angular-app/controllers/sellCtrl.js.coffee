@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http','clients','combos','products','prices','bills','sell'
-  ($scope,$http,clients,combos,products,prices,bills,sell)->
+  '$scope','$http','clients','combos','products','prices','bills','sell','sell_helpers'
+  ($scope,$http,clients,combos,products,prices,bills,sell,sell_helpers)->
 
     ################################   Helpers  ###############################
 
@@ -38,7 +38,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
       $scope.new_client_dni = ""
       $scope.new_client_name = ""
 
-      rebootClient()
+      $scope.client = sell_helpers.rebootClient()
 
     setBestsellers = ->
       # Combos
@@ -85,14 +85,6 @@ angular.module('app.sellApp').controller("SellCtrl", [
       for product in $scope.cart_articles['products']
         $scope.total += product['amount']*product['price']['value']
       $scope.client_cash_used = $scope.total
-
-    rebootClient = ->
-      $scope.client = {
-        id : null
-        dni : "-"
-        name : "-"
-        balance : 0
-      }
 
     validOperation = ->      
       # Client Exist
@@ -152,7 +144,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
     # Search Client
     $scope.searchClient = ->
-      rebootClient()
+      $scope.client = sell_helpers.rebootClient()
       clients.searchClients($scope.data_client).then((data) ->
         if data['dni']
           $scope.client = {

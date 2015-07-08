@@ -2,8 +2,8 @@
 #  $('#table_inventory').dataTable()
 
 angular.module('app.sellApp').controller("InventoryCtrl", [
-  '$scope','$http','products','combos','prices','tags','providers','inventory'
-  ($scope,$http,products,combos,prices,tags,providers,inventory)->
+  '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers'
+  ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers)->
 
     ################################ Initialize ###############################
 
@@ -15,16 +15,6 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
     $scope.new_product = null
 
     ################################   Helpers  ###############################
-    
-    resetForm = ->
-      $scope.new_product_form = {
-        name : null
-        photo : null
-        price : null
-        stock_amount : null
-        tags : null
-        providers : null
-      }
       
     saveProduct = ->     
       products.createProduct({
@@ -40,14 +30,15 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         list_tags = $scope.new_product_form['tags'].split(",")
         list_providers = $scope.new_product_form['providers'].split(",")
 
-        tags_saved = saveTags($scope.new_product,list_tags)
-        providers_saved = saveProviders($scope.new_product,list_providers)
+        saveTags($scope.new_product,list_tags)
+        saveProviders($scope.new_product,list_providers)
 
-        createPriceToProduct()
+        createPriceToProduct($scope.new_product_form['price'],$scope.new_product["id"])
         
-        resetForm()
-      )
+        $scope.new_product_form = inventory_helpers.resetForm()
+      )    
 
+    
     saveTags = (product,list_tags) ->
       tags_saved = []
       inventory.createTagsWithProduct({
@@ -58,7 +49,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       }).then((response) ->
         tags_saved.push(response)
       )
-      return tags_saved
+      # TODO
 
     saveProviders = (product,list_providers) ->
       providers_saved = []
@@ -70,38 +61,18 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       }).then((response) ->
         providers_saved.push(response)
       )
-      return providers_saved
+      # TODO
 
-    createPriceToProduct = ->
+    createPriceToProduct = (value,product_id) ->
       prices.createPrice({
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'price' : 
           'type_option': 'p'
-          'value' : $scope.new_product_form['price']
-          'product_id' : $scope.new_product["id"]
+          'value' : value
+          'product_id' : product_id
       }).then((response) ->
         $scope.new_product['price'] = response
-      )
-
-    updateActiveInCombo = (combo,active_value) ->
-      combos.updateCombo(combo['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'combo' : 
-          'id': combo['id']
-          'active':active_value
-      }).then((response) ->
-        combo['active'] = active_value
-      )
-
-    updateActiveInProduct = (product,active_value) ->
-      products.updateProduct(product['id'],{  
-        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
-        'product' : 
-          'id': product['id']
-          'active': active_value
-      }).then((response) ->
-        product['active'] = active_value
-      )
+      )      
 
     ############################ Buttons operations ###########################
 
@@ -126,19 +97,16 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           i++
 
     $scope.ActivateCombo = (combo) ->
-      updateActiveInCombo(combo,true)
+      inventory_helpers.updateActiveInCombo(combo,true)
     
     $scope.DeactivateCombo = (combo) ->
-      updateActiveInCombo(combo,false)
+      inventory_helpers.updateActiveInCombo(combo,false)
 
     $scope.ActivateProduct = (product) ->
-      updateActiveInProduct(product,true)
+      inventory_helpers.updateActiveInProduct(product,true)
 
     $scope.DeactivateProduct = (product) ->
-      updateActiveInProduct(product,false)
-
-    $scope.DeleteCombo = (combo) ->
-      console.log 'Delete combo'
+      inventory_helpers.updateActiveInProduct(product,false)
 
     $scope.AddInventory = ->
       console.log 'AddInventory'

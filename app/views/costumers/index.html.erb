@@ -3,7 +3,9 @@
 <% end %>
 
 <% content_for :seach_navbar do %>
-  <%= render 'search_engine' %>
+  <li class="page-scroll" ng-if="costumers_mode == 'list'">
+    <%= render 'search_engine' %>
+  </li>
 <% end %>
 
 <div class="row">
@@ -13,14 +15,17 @@
       
       <!-- Options -->
       <div class="col-md-4">
-        <div class="row">
+        <div class="row" ng-if="costumers_mode == 'list'  || costumers_mode == 'client_edit'">
           <%= render 'options' %>
         </div>
       </div>
 
       <!-- Main content -->
-      <div class="col-md-8 main_content">
+      <div class="col-md-8 main_content" ng-if="costumers_mode == 'list'">
         <%= render 'client_list' %>
+      </div>
+      <div class="col-md-8 main_content" ng-if="costumers_mode == 'client_edit'">
+        <%= render 'client_edit' %>
       </div>
 
     </div>
