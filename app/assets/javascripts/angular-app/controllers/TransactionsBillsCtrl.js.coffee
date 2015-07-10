@@ -39,7 +39,7 @@ angular.module('app.sellApp').controller("TransactionsBillsCtrl", [
       )
 
     $scope.CreateTransaction = ->
-      console.log "Transaction Created"
+      alert "Transaction Created"
     
 
     ###############################     Main     ##############################

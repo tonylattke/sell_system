@@ -2,6 +2,27 @@ class InventoryController < ApplicationController
   def index
   end
 
+  def product_details
+    @tags = []
+
+    product_tags = ProductTag.search_by('product_id',params[:product_id])  
+    
+    for product_tag in product_tags
+      tag = Tag.find_by(id: product_tag.tag_id)
+      @tags.push(tag)
+    end
+
+    @providers = []
+
+    product_providers = ProductProvider.search_by('product_id',params[:product_id])  
+    
+    for product_provider in product_providers
+      provider = Provider.find_by(id: product_provider.provider_id)
+      @providers.push(provider)
+    end
+
+  end
+
   def save_product_tags
     product_id = params[:inventory][:product_id]
     @product_tags = []

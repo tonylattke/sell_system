@@ -1,3 +1,43 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{details_product.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img src="{{details_product.photo}}" class="img-responsive img-product img-thumbnail img-centered">
+        </div>
+        <h4>Stock amount: {{details_product.stock_amount}}</h4>
+        <h4>Sales amount: {{details_product.sales_amount}}</h4>
+        <h4>Prices</h4>
+        <ul>
+          <li ng-repeat="price in details_product.prices">
+            {{price.value}} at {{price.created_at | date:'medium'}}
+          </li>
+        </ul>
+        <h4>Tags</h4>
+        <ul>
+          <li ng-repeat="tag in details_product.tags">{{tag.name}}</li>
+        </ul>
+        <h4>Providers</h4>
+        <ul>
+          <li ng-repeat="provider in details_product.providers">{{provider.name}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <h2>Products</h2>
 
 <table id="table_products" class="table table-striped">
@@ -16,13 +56,14 @@
     <th>Options</th>
   </thead>
   <tbody>
-    <tr ng-repeat="product in articles.products | orderBy:order_selected | filter:articles_search">
+    <tr ng-repeat="product in articles.products | orderBy:order_selected | filter:articles_search" class="product_list">
       <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
       <td>{{product.name}}</td>
       <td>{{product.price.value}}</td>
       <td>{{product.stock_amount}}</td>
       <td>{{product.sales_amount}}</td>
       <td ng-if="product.active">
+        <button type="button" class="btn btn-primary" ng-click="ViewDetailsProduct(product)">Details</button>
         <button type="button" class="btn btn-success" ng-click="EditProduct(product)">Edit</button>
         <button type="button" class="btn btn-danger" ng-click="DeactivateProduct(product)">X</button>
       </td>

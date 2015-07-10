@@ -3,7 +3,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
   ($scope,$http,clients,combos,products,prices,bills,sell,sell_helpers)->
 
     ################################   Helpers  ###############################
-
+    
     Initialize = ->
       $scope.client = {
         id : null

@@ -11,6 +11,15 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.getProductDetails = (id) ->
+		def = $q.defer()
+		$http.get('/inventory/product_details/' + id).success((data) ->
+			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Product details cannot be found")
+		)
+		return def.promise
+
 	dataFactory.createProvidersWithProduct = (info) ->
 		def = $q.defer()
 		$http.post('/inventory/save_providers',info).success((data) ->

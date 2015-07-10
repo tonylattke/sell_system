@@ -1,4 +1,4 @@
-angular.module('app.sellApp').controller("InventoryCtrl", [
+angular.module('app.sellApp').controller("Inventory2Ctrl", [
   '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers'
   ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers)->
 
@@ -14,6 +14,8 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
     $scope.new_product = null
 
     $scope.edit_product = null
+
+    $scope.details_product = null
 
     ################################   Helpers  ###############################
       
@@ -122,7 +124,20 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     $scope.orderCriteria = (order) ->
       $scope.order_selected = order
-    
+
+    $scope.ViewDetailsProduct = (product) ->
+      $scope.details_product = product
+      
+      inventory.getProductDetails(product['id']).then((data) ->
+        if data
+          $scope.details_product['tags'] = data['tags']
+          $scope.details_product['providers'] = data['providers']
+      )
+
+      $("#myModal").modal('show');
+
+    # Edit Product
+
     $scope.EditProduct = (product) ->
       $scope.edit_product = {
         'id'    : product['id'],
@@ -140,14 +155,9 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       # Search Providers & Tags
       $scope.inventory_mode = 'product_edit'
 
-    # Edit Product
-
     $scope.EditProductCancel = ->
       $scope.edit_product = inventory_helpers.resetForm()
       $scope.inventory_mode = 'list'
-
-    $scope.ViewDetailsProduct = (product) ->
-      alert product
 
     $scope.EditProductSubmit = ->
       product_info = {
