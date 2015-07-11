@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'inventory' => 'inventory#index'
 
   get 'inventory/product_details/:product_id' => 'inventory#product_details', :defaults => {:format => "json"}
+  get 'inventory/tags_by_product/:product_id' => 'inventory#tags_by_product', :defaults => {:format => "json"}
+  get 'inventory/providers_by_product/:product_id' => 'inventory#providers_by_product', :defaults => {:format => "json"}
 
   post 'inventory/save_tags' => 'inventory#save_product_tags', :defaults => {:format => "json"}
   post 'inventory/save_providers' => 'inventory#save_product_providers', :defaults => {:format => "json"}

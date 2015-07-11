@@ -5,7 +5,7 @@ class InventoryController < ApplicationController
   def product_details
     @tags = []
 
-    product_tags = ProductTag.search_by('product_id',params[:product_id])  
+    product_tags = ProductTag.search_by('product_id',params[:product_id])
     
     for product_tag in product_tags
       tag = Tag.find_by(id: product_tag.tag_id)
@@ -21,6 +21,42 @@ class InventoryController < ApplicationController
       @providers.push(provider)
     end
 
+  end
+
+  def tags_by_product
+    @tags = []
+
+    product_tags = ProductTag.search_by('product_id',params[:product_id])
+
+    for product_tag in product_tags
+      tag = Tag.find_by(id: product_tag.tag_id)
+      aux_tag = {
+        'id'            => tag.id,
+        'name'          => tag.name,
+        'product_tag_id'=> product_tag.id
+      }
+      @tags.push(aux_tag)
+    end    
+
+    render json: @tags
+  end
+
+  def providers_by_product
+    @providers = []
+
+    product_providers = ProductProvider.search_by('product_id',params[:product_id])
+
+    for product_provider in product_providers
+      provider = Provider.find_by(id: product_provider.provider_id)
+      aux_provider = {
+        'id'            => provider.id,
+        'name'          => provider.name,
+        'product_provider_id'=> product_provider.id
+      }
+      @providers.push(aux_provider)
+    end    
+
+    render json: @providers
   end
 
   def save_product_tags

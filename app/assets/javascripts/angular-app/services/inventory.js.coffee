@@ -20,6 +20,24 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.searchTagsByProduct = (id) ->
+		def = $q.defer()
+		$http.get('/inventory/tags_by_product/' + id).success((data) ->
+			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Tags of product cannot be found")
+		)
+		return def.promise
+
+	dataFactory.searchProvidersByProduct = (id) ->
+		def = $q.defer()
+		$http.get('/inventory/providers_by_product/' + id).success((data) ->
+			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Tags of product cannot be found")
+		)
+		return def.promise
+
 	dataFactory.createProvidersWithProduct = (info) ->
 		def = $q.defer()
 		$http.post('/inventory/save_providers',info).success((data) ->

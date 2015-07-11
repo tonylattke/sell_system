@@ -14,21 +14,27 @@
         </div>
         <h4>Stock amount: {{details_product.stock_amount}}</h4>
         <h4>Sales amount: {{details_product.sales_amount}}</h4>
+        
         <h4>Prices</h4>
         <ul>
           <li ng-repeat="price in details_product.prices">
             {{price.value}} at {{price.created_at | date:'medium'}}
           </li>
         </ul>
+        
         <h4>Tags</h4>
-        <ul>
+        <ul ng-if="details_product.tags.length > 0">
           <li ng-repeat="tag in details_product.tags">{{tag.name}}</li>
         </ul>
+        <p ng-if="details_product.tags.length == 0">No tags associated to this product</p>
+
         <h4>Providers</h4>
-        <ul>
+        <ul ng-if="details_product.providers.length > 0">
           <li ng-repeat="provider in details_product.providers">{{provider.name}}</li>
         </ul>
+        <p ng-if="details_product.providers.length == 0">No providers associated to this product</p>
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>

@@ -17,6 +17,48 @@
       <img src="{{edit_product.photo}}" class="img-product img-thumbnail">
       <input class="form-control" type="url" class="form-control" placeholder="New Photo URL" accept="image/png,image/gif,image/jpeg" ng-model="edit_product.photo_new"/>
     </div>
+    <!-- Tags -->
+    <div class="col-md-12 form-group">
+      <h3>Tags</h3>
+      
+      <table class="table table-striped" ng-if="edit_product.tags.length > 0">
+        <thead>
+          <th>Name</th>
+          <th>Options</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="tag in edit_product.tags">
+            <td>{{tag.name}}</td>
+            <td>
+              <button type="button" class="btn btn-danger" ng-click="DeleteTagFromProduct(tag)">X</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p ng-if="edit_product.tags.length == 0">No tags associated to this product</p>
+    </div>
+    <!-- Providers -->
+    <div class="col-md-12 form-group">
+      <h3>Providers</h3>
+      
+      <table class="table table-striped" ng-if="edit_product.providers.length > 0">
+        <thead>
+          <th>Name</th>
+          <th>Options</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="provider in edit_product.providers">
+            <td>{{provider.name}}</td>
+            <td>
+              <button type="button" class="btn btn-danger" ng-click="DeleteProviderFromProduct(provider)">X</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p ng-if="edit_product.providers.length == 0">No providers associated to this product</p>
+    </div>
   </div>
   <!-- Done -->
   <div class="btn btn-lg btn-primary col-md-12" ng-disabled="edit_product_form.$invalid" ng-click="EditProductSubmit()">Done</div>

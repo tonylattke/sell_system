@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("Inventory2Ctrl", [
-  '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers'
-  ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers)->
+  '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers','product_tags','product_providers'
+  ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers,product_tags,product_providers)->
 
     ################################ Initialize ###############################
 
@@ -136,6 +136,26 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
       $("#myModal").modal('show');
 
+    $scope.DeleteTagFromProduct = (tag) ->
+      product_tags.deleteProductTag(tag['product_tag_id']).then((data) ->
+        i = 0
+        for aux_item in $scope.edit_product['tags']
+          if aux_item['id'] == tag['id']
+            $scope.edit_product['tags'].splice(i, 1)
+            break
+          i++
+      )
+
+    $scope.DeleteProviderFromProduct = (provider) ->
+      product_providers.deleteProductProvider(provider['product_provider_id']).then((data) ->
+        i = 0
+        for aux_item in $scope.edit_product['providers']
+          if aux_item['id'] == provider['id']
+            $scope.edit_product['providers'].splice(i, 1)
+            break
+          i++
+      )
+
     # Edit Product
 
     $scope.EditProduct = (product) ->
@@ -152,7 +172,16 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         }
       }
       $scope.edit_product_backup = product
+      
       # Search Providers & Tags
+      inventory.searchTagsByProduct(product['id']).then((data) ->
+        if data
+          $scope.edit_product['tags'] = data
+      )
+      inventory.searchProvidersByProduct(product['id']).then((data) ->
+        if data
+          $scope.edit_product['providers'] = data
+      )
       $scope.inventory_mode = 'product_edit'
 
     $scope.EditProductCancel = ->
