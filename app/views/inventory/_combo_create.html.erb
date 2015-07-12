@@ -1,0 +1,29 @@
+<h2>Create a combo</h2>
+
+<form role="form" name="new_combo_form">
+  <div class="row">
+    <!-- Name -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': new_combo_form.comboName.$invalid, 'has-success': new_combo_form.comboName.$valid}">
+      <input class="form-control" type="text" placeholder="Name" ng-model="new_combo.name" required/>
+    </div>
+    <!-- Price -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': new_combo_form.comboPrice.$invalid, 'has-success': new_combo_form.comboPrice.$valid}">
+      <input class="form-control" type="number" placeholder="Price" ng-model="new_combo.price.value" min="0" required/>
+    </div>
+    <!-- Stock amount -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': new_combo_form.comboStockAmount.$invalid, 'has-success': new_combo_form.comboStockAmount.$valid}">
+      <input class="form-control" type="number" placeholder="Stock Amount" ng-model="new_combo.stock_amount.value" min="0" required/>
+    </div>
+    <!-- Photo -->
+    <div class="col-md-12 form-group">
+      <input class="form-control" type="url" class="form-control" placeholder="New Photo URL" accept="image/png,image/gif,image/jpeg" ng-model="new_combo.photo" required/>
+    </div>
+    <!-- Associated products -->
+    <div class="col-md-12">
+      products
+    </div>
+  <!-- Done -->
+  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="new_combo_form.$invalid" ng-click="CreateComboSubmit()">Done</div>
+  <!-- Cancel -->
+  <div class="btn btn-lg btn-danger col-md-12" ng-click="CreateComboCancel()">Cancel</div>
+</form>

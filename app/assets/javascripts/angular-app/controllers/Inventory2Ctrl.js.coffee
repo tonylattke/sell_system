@@ -17,6 +17,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     $scope.details_product = null
 
+    $scope.new_combo = null
+
     ################################   Helpers  ###############################
       
     saveProduct = ->
@@ -39,32 +41,27 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         createPriceToProduct($scope.new_product_form['price'],$scope.new_product["id"])
         
         $scope.new_product_form = inventory_helpers.resetForm()
-      )    
-
+      )
     
     saveTags = (product,list_tags) ->
-      tags_saved = []
       inventory.createTagsWithProduct({
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'inventory':
           'tags': list_tags
           'product_id': product['id']
       }).then((response) ->
-        tags_saved.push(response)
+        console.log "Tag saved"
       )
-      # TODO
 
     saveProviders = (product,list_providers) ->
-      providers_saved = []
       inventory.createProvidersWithProduct({
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'inventory':
           'providers': list_providers
           'product_id': product['id']
       }).then((response) ->
-        providers_saved.push(response)
+        console.log "Provider saved"
       )
-      # TODO
 
     createPriceToProduct = (value,product_id) ->
       prices.createPrice({
@@ -75,7 +72,18 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'product_id' : product_id
       }).then((response) ->
         $scope.new_product['price'] = response
-      )      
+      )
+
+    createPriceToCombo = (value,combo_id) ->
+      prices.createPrice({
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'price' : 
+          'type_option': 'c'
+          'value' : value
+          'combo_id' : combo_id
+      }).then((response) ->
+        $scope.new_combo['price'] = response
+      )
 
     ############################ Buttons operations ###########################
 
@@ -84,6 +92,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
     $scope.CreateProduct = ->
       console.log 'Create Product'
       saveProduct()
+      $scope.inventory_mode = "list"
       console.log 'Operation finished'
 
     $scope.DeleteProduct = (product) ->
@@ -117,7 +126,13 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       alert 'AddInventory'
 
     $scope.CreateCombo = ->
-      console.log 'CreateCombo'
+      $scope.new_combo = {
+        'name': "",
+        'stock_amount': 0,
+        'price': 0,
+        'photo': 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
+      }
+      $scope.inventory_mode = 'combo_create'
 
     $scope.ExportList = ->
       console.log 'ExportList'
@@ -185,8 +200,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       $scope.inventory_mode = 'product_edit'
 
     $scope.EditProductCancel = ->
-      $scope.edit_product = inventory_helpers.resetForm()
-      $scope.inventory_mode = 'list'
+      aux_confirm = confirm("Are you sure?")
+      if aux_confirm
+        $scope.edit_product = inventory_helpers.resetForm()
+        $scope.inventory_mode = 'list'
 
     $scope.EditProductSubmit = ->
       product_info = {
@@ -233,6 +250,35 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       )
 
       $scope.inventory_mode = 'list'
+
+    $scope.ValidateStockAmount = (product) ->
+      product['stock_amount'] = parseInt(product['stock_amount'], 10);
+
+    $scope.CreateComboSubmit = ->
+      combos.createCombo({
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'combo' : 
+          'name': $scope.new_combo['name']
+          'stock_amount' : $scope.new_combo['stock_amount']
+          'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
+      }).then((response) ->
+        $scope.new_combo = response
+        $scope.articles['combos'].push($scope.new_combo)
+        
+        # createComboProduct
+        
+        
+        createPriceToCombo($scope.new_combo['price'],$scope.new_combo["id"])
+        
+        # resetForm
+
+        $scope.inventory_mode = "list"
+      )
+
+    $scope.CreateComboCancel = ->
+      aux_confirm = confirm("Are you sure?")
+      if aux_confirm
+        $scope.inventory_mode = "list"
 
     ###############################     Main     ##############################
 

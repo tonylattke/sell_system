@@ -29,7 +29,7 @@
               </div>
               <!-- Stock amount -->
               <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productStockAmount.$invalid, 'has-success': product_form.productStockAmount.$valid}">
-                <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_form.stock_amount" min="0" required/>
+                <input class="form-control" type="number" placeholder="Stock amount" ng-model="new_product_form.stock_amount" ng-change="ValidateStockAmount(new_product_form)" min="0" integer required/>
               </div>
               <!-- Tags -->
               <div class="col-md-12 form-group" ng-class="{'has-error': product_form.productTags.$invalid, 'has-success': product_form.productTags.$valid}">
@@ -53,7 +53,7 @@
         <div class="col-md-12 panel_options">
           <!-- Add product to inventory -->
           <div class="text-center">
-            <div class="btn btn-lg btn-primary col-md-12" ng-click="AddInventory()">Add product to inventory</div>
+            <div class="btn btn-lg btn-primary col-md-12" ng-click="AddInventory()">Add article to inventory</div>
           </div>
         </div>
         <div class="col-md-12 panel_options">
@@ -78,7 +78,9 @@
       <div class="col-md-8 main_content" ng-if="inventory_mode == 'product_edit'">
         <%= render 'product_edit' %>
       </div>
-
+      <div class="col-md-8 main_content" ng-if="inventory_mode == 'combo_create'">
+        <%= render 'combo_create' %>
+      </div>
     </div>
   </div>
 

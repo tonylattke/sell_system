@@ -74,6 +74,7 @@
         <button type="button" class="btn btn-danger" ng-click="DeactivateProduct(product)">X</button>
       </td>
       <td ng-if="! product.active">
+        <button type="button" class="btn btn-primary" ng-click="ViewDetailsProduct(product)">Details</button>
         <button type="button" class="btn btn-success" ng-click="ActivateProduct(product)">Activate</button>
       </td>
     </tr>
