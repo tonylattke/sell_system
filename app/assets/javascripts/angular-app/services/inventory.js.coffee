@@ -20,6 +20,15 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.getComboDetails = (id) ->
+		def = $q.defer()
+		$http.get('/inventory/combo_details/' + id).success((data) ->
+			def.resolve(data)
+		).error((data) ->
+			alert("No conection - Combo details cannot be found")
+		)
+		return def.promise
+
 	dataFactory.searchTagsByProduct = (id) ->
 		def = $q.defer()
 		$http.get('/inventory/tags_by_product/' + id).success((data) ->

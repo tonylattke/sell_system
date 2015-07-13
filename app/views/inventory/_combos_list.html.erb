@@ -1,3 +1,54 @@
+<!-- Modal -->
+<div class="modal fade" id="myModalCombo" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{details_combo.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img src="{{details_combo.photo}}" class="img-responsive img-product img-thumbnail img-centered">
+        </div>
+        <h4>Stock amount: {{details_combo.stock_amount}}</h4>
+        <h4>Sales amount: {{details_combo.sales_amount}}</h4>
+        
+        <h4>Prices</h4>
+        <ul>
+          <li ng-repeat="price in details_combo.prices">
+            {{price.value}} at {{price.created_at | date:'medium'}}
+          </li>
+        </ul>
+
+        <h4>Products associated</h4>
+        <table class="table table-striped">
+          <thead>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Amount</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="product in details_combo.products">
+              <td><img src="{{product.photo}}" class="img-combo img-thumbnail"></td>
+              <td>{{product.name}}</td>
+              <td>{{product.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <h2>Combos</h2>
 
 <table id="table_combos" class="table table-striped">
@@ -23,10 +74,12 @@
       <td>{{combo.stock_amount}}</td>
       <td>{{combo.sales_amount}}</td>
       <td ng-if="combo.active">
+        <button type="button" class="btn btn-primary" ng-click="ViewDetailsCombo(combo)">Details</button>
         <button type="button" class="btn btn-success">Edit</button>
         <button type="button" class="btn btn-danger"  ng-click="DeactivateCombo(combo)">X</button>
       </td>
       <td ng-if="! combo.active">
+        <button type="button" class="btn btn-primary" ng-click="ViewDetailsCombo(combo)">Details</button>
         <button type="button" class="btn btn-success" ng-click="ActivateCombo(combo)">Activate</button>
       </td>
     </tr>

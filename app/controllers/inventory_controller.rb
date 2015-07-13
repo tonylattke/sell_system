@@ -23,6 +23,24 @@ class InventoryController < ApplicationController
 
   end
 
+  def combo_details
+    @products = []
+
+    combo_products = ComboProduct.search_by('combo_id',params[:combo_id])
+    
+    for combo_product in combo_products
+      product = Product.find_by(id: combo_product.product_id)
+      aux_product = {
+        'id'     => product.id,
+        'name'   => product.name,
+        'photo'   => product.photo,
+        'amount' => combo_product.product_amount
+      }
+      @products.push(aux_product)
+    end
+    render json: @products
+  end
+
   def tags_by_product
     @tags = []
 

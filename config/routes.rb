@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'inventory' => 'inventory#index'
 
   get 'inventory/product_details/:product_id' => 'inventory#product_details', :defaults => {:format => "json"}
+  get 'inventory/combo_details/:combo_id' => 'inventory#combo_details', :defaults => {:format => "json"}
   get 'inventory/tags_by_product/:product_id' => 'inventory#tags_by_product', :defaults => {:format => "json"}
   get 'inventory/providers_by_product/:product_id' => 'inventory#providers_by_product', :defaults => {:format => "json"}
 

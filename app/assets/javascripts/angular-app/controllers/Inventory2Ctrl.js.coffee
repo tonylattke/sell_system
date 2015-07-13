@@ -19,6 +19,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     $scope.new_combo = null
 
+    $scope.details_combo = null
+
     $scope.search_products = ""
 
     $scope.founded_products = []
@@ -184,7 +186,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           $scope.details_product['providers'] = data['providers']
       )
 
-      $("#myModal").modal('show')
+      $("#myModalProduct").modal('show')
+      return $scope.details_product
 
     $scope.DeleteTagFromProduct = (tag) ->
       product_tags.deleteProductTag(tag['product_tag_id']).then((data) ->
@@ -342,6 +345,15 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           $scope.new_combo['products'].splice(i, 1)
           break
         i++
+
+    $scope.ViewDetailsCombo = (combo) ->
+      $scope.details_combo = combo
+      inventory.getComboDetails(combo['id']).then((data) ->
+        if data
+          $scope.details_combo['products'] = data
+      )
+      $("#myModalCombo").modal('show')
+      return $scope.details_combo
 
     ###############################     Main     ##############################
 
