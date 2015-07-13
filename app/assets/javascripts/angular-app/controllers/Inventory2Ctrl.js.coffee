@@ -19,6 +19,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     $scope.new_combo = null
 
+    $scope.search_products = ""
+
+    $scope.founded_products = []
+
     ################################   Helpers  ###############################
       
     saveProduct = ->
@@ -131,7 +135,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         'stock_amount': 0,
         'price': 0,
         'photo': 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
+        'products':[]
       }
+      $scope.search_products = ""
+      $scope.founded_products = []
       $scope.inventory_mode = 'combo_create'
 
     $scope.ExportList = ->
@@ -267,7 +274,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         
         # createComboProduct
         
-        
+
         createPriceToCombo($scope.new_combo['price'],$scope.new_combo["id"])
         
         # resetForm
@@ -279,6 +286,40 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       aux_confirm = confirm("Are you sure?")
       if aux_confirm
         $scope.inventory_mode = "list"
+
+    $scope.SearchProducts = ->
+      # Products
+      $scope.search_products
+      products.searchProducts("f").then((data) ->
+        if data
+          $scope.founded_products = data
+          for aux_product in $scope.founded_products
+            aux_product['amount'] = 1
+            aux_product['price'] = aux_product['prices'][0]
+      )
+
+    $scope.AddProductToCombo = (product) ->
+      exist = false
+      for aux_item in $scope.new_combo['products']
+        if aux_item['id'] == product['id']
+          exist = true
+          if aux_item['amount'] < aux_item['stock_amount']
+            aux_item['amount'] = aux_item['amount'] + 1
+          break
+      if not exist
+        $scope.new_combo['products'].push(product)
+
+    $scope.UpdateAmountProduct = (product) ->
+      product['amount'] = parseInt(product['amount'], 10);
+
+    $scope.DeleteProductOfCombo = (product) ->
+      product['amount'] = 1
+      i = 0
+      for aux_item in $scope.new_combo['products']
+        if aux_item['id'] == product['id']
+          $scope.new_combo['products'].splice(i, 1)
+          break
+        i++
 
     ###############################     Main     ##############################
 

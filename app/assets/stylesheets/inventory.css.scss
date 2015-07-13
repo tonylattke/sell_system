@@ -5,3 +5,14 @@
 .product_list {
 	cursor: pointer;
 }
+
+.product-searched {
+	background-color: #999;
+	color: white;
+	cursor: pointer;
+}
+
+.product-searched:hover {
+	background-color: #ccc;
+	color: black;
+}

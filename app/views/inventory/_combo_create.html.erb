@@ -16,11 +16,61 @@
     </div>
     <!-- Photo -->
     <div class="col-md-12 form-group">
-      <input class="form-control" type="url" class="form-control" placeholder="New Photo URL" accept="image/png,image/gif,image/jpeg" ng-model="new_combo.photo" required/>
+      <input class="form-control" type="url" placeholder="New Photo URL" accept="image/png,image/gif,image/jpeg" ng-model="new_combo.photo" required/>
     </div>
-    <!-- Associated products -->
-    <div class="col-md-12">
-      products
+    <!-- Associated products panel -->
+    <div class="col-md-12 form-group">
+      <div class="row">
+        <!-- Products founded -->
+        <div class="col-md-5">
+          <input class="form-control" type="text" placeholder="Search products to associate whit this combo" ng-model="search_products" ng-change="SearchProducts()"/>
+          <div class="row text-center" ng-if="founded_products.length > 0">
+            <div ng-repeat="product in founded_products" class="col-md-12 product-searched" ng-click="AddProductToCombo(product)">
+              <div class="row">
+                <div class="col-md-5">
+                  <img src="{{product.photo}}" class="img-product img-thumbnail">
+                </div>
+                <div class="col-md-7">
+                  <br>
+                    <h4>{{product.name |limitTo:9}}</h4>
+                    <h4>{{product.price.value}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="founded_products.length == 0 && search_products.length != 0"  class="row text-center">
+            <div class="col-md-12 product-searched">
+              no founded
+            </div>
+          </div>
+        </div>
+        <!-- Associated products -->
+        <div class="col-md-7">
+          <table id="table_cart" class="table table-striped">
+            <thead>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="product in new_combo.products">
+                <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
+                <td>{{product.name}}</td>
+                <td>
+                  <div class="col-md-12 form-group" ng-class="{'has-error': sell_form.article_number.$invalid, 'has-success': sell_form.article_number.$valid}">
+                    <input class="form-control" type="number" min="1"placeholder="amount" ng-model="product.amount" ng-change="UpdateAmountProduct(product)" integer required/>
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger" ng-click="DeleteProductOfCombo(product)">X</button  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   <!-- Done -->
   <div class="btn btn-lg btn-primary col-md-12" ng-disabled="new_combo_form.$invalid" ng-click="CreateComboSubmit()">Done</div>
