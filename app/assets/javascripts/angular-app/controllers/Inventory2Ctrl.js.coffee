@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("Inventory2Ctrl", [
-  '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers','product_tags','product_providers'
-  ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers,product_tags,product_providers)->
+  '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers','product_tags','product_providers','combo_products'
+  ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers,product_tags,product_providers,combo_products)->
 
     ################################ Initialize ###############################
 
@@ -24,7 +24,35 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
     $scope.founded_products = []
 
     ################################   Helpers  ###############################
-      
+
+    getCombosInit = ->
+      combos.getCombos().then((data) ->
+        if data
+          $scope.articles['combos'] = data
+          for aux_combo in $scope.articles['combos']
+            aux_combo['price'] = aux_combo['prices'][0]
+      )
+
+    getProductsInit = ->
+      products.getProducts().then((data) ->
+        if data
+          $scope.articles['products'] = data
+          for aux_product in $scope.articles['products']
+            aux_product['price'] = aux_product['prices'][0]
+      )
+
+    createComboProducts = (combo_id,products) ->
+      for product in products
+        combo_products.createComboProduct({
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'combo_product' : 
+            'combo_id': combo_id
+            'product_id': product['id']
+            'product_amount': product['amount']
+        }).then((response) ->
+          console.log response
+        )
+
     saveProduct = ->
       products.createProduct({
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
@@ -156,7 +184,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           $scope.details_product['providers'] = data['providers']
       )
 
-      $("#myModal").modal('show');
+      $("#myModal").modal('show')
 
     $scope.DeleteTagFromProduct = (tag) ->
       product_tags.deleteProductTag(tag['product_tag_id']).then((data) ->
@@ -249,17 +277,12 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       
       $scope.edit_product = inventory_helpers.resetForm()
 
-      products.getProducts().then((data) ->
-        if data
-          $scope.articles['products'] = data
-          for aux_product in $scope.articles['products']
-            aux_product['price'] = aux_product['prices'][0]
-      )
+      getProductsInit()
 
       $scope.inventory_mode = 'list'
 
     $scope.ValidateStockAmount = (product) ->
-      product['stock_amount'] = parseInt(product['stock_amount'], 10);
+      product['stock_amount'] = parseInt(product['stock_amount'], 10)
 
     $scope.CreateComboSubmit = ->
       combos.createCombo({
@@ -269,15 +292,14 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'stock_amount' : $scope.new_combo['stock_amount']
           'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       }).then((response) ->
-        $scope.new_combo = response
-        $scope.articles['combos'].push($scope.new_combo)
+        aux_new_combo = response        
+        $scope.articles['combos'].push(aux_new_combo)
         
-        # createComboProduct
-        
+        createComboProducts(aux_new_combo['id'],$scope.new_combo['products'])
 
-        createPriceToCombo($scope.new_combo['price'],$scope.new_combo["id"])
-        
-        # resetForm
+        createPriceToCombo(aux_new_combo['price'],aux_new_combo["id"])
+
+        getCombosInit()
 
         $scope.inventory_mode = "list"
       )
@@ -288,9 +310,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         $scope.inventory_mode = "list"
 
     $scope.SearchProducts = ->
-      # Products
-      $scope.search_products
-      products.searchProducts("f").then((data) ->
+      $scope.founded_products = []
+      $scope.search_products = "f"
+      products.searchProducts($scope.search_products).then((data) ->
         if data
           $scope.founded_products = data
           for aux_product in $scope.founded_products
@@ -310,7 +332,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         $scope.new_combo['products'].push(product)
 
     $scope.UpdateAmountProduct = (product) ->
-      product['amount'] = parseInt(product['amount'], 10);
+      product['amount'] = parseInt(product['amount'], 10)
 
     $scope.DeleteProductOfCombo = (product) ->
       product['amount'] = 1
@@ -323,18 +345,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     ###############################     Main     ##############################
 
-    combos.getCombos().then((data) ->
-      if data
-        $scope.articles['combos'] = data
-        for aux_combo in $scope.articles['combos']
-          aux_combo['price'] = aux_combo['prices'][0]
-    )
-
-    products.getProducts().then((data) ->
-      if data
-        $scope.articles['products'] = data
-        for aux_product in $scope.articles['products']
-          aux_product['price'] = aux_product['prices'][0]
-    )
+    getCombosInit()
+    getProductsInit()
 
 ])

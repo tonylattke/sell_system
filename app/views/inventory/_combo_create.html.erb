@@ -73,7 +73,7 @@
       </div>
     </div>
   <!-- Done -->
-  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="new_combo_form.$invalid" ng-click="CreateComboSubmit()">Done</div>
+  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="new_combo_form.$invalid || new_combo.products.length == 0" ng-click="CreateComboSubmit()">Done</div>
   <!-- Cancel -->
   <div class="btn btn-lg btn-danger col-md-12" ng-click="CreateComboCancel()">Cancel</div>
 </form>

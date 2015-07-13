@@ -45,15 +45,8 @@ class ComboProductsController < ApplicationController
 
   # POST /combo_products
   def create
-    @combo_product  = nil
-    aux_combo_products = ComboProduct.search(params[:combo_id],params[:product_id])
-    if aux_combo_products
-      respond_with @combo_product
-    else
-      @combo_product = ComboProduct.new(combo_product_params)
-      @combo_product.save
-      respond_with @combo_product
-    end
+    @combo_product = ComboProduct.new(combo_product_params)
+    @combo_product.save
   end
 
   # POST /combo_products
@@ -83,6 +76,6 @@ class ComboProductsController < ApplicationController
     end
 
     def combo_product_params
-      params.require(:combo_product).permit(:id, :product_id, :combo_id)
+      params.require(:combo_product).permit(:id, :product_id, :combo_id, :product_amount)
     end
 end
