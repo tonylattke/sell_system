@@ -44,13 +44,14 @@ class CombosController < ApplicationController
 
   # POST /combos
   def update
-    aux_combo = Combo.find_by(name: combo_params[:name])
-    if aux_combo && (aux_combo[:id] != combo_params[:id])
-      respond_with @combo
-    else
-      @combo.update(combo_params)
-      respond_with @combo  
-    end
+    # aux_combo = Combo.find_by(name: combo_params[:name])
+    # if aux_combo && (aux_combo[:id] != combo_params[:id])
+    #   respond_with @combo
+    # else
+    #   @combo.update(combo_params)
+    #   respond_with @combo  
+    # end
+    @combo.update(combo_params)
   end
 
   # Delete

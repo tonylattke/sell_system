@@ -35,7 +35,10 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combo cannot be updated")
+			bad_news = {
+				'error' : true
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

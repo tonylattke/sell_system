@@ -71,6 +71,9 @@
       </div>
 
       <!-- Main content -->
+      <div class="col-md-8 main_content" ng-if="inventory_mode == 'combo_edit'">
+        <%= render 'combo_edit' %>
+      </div>
       <div class="col-md-8 main_content" ng-if="inventory_mode == 'list'">
         <%= render 'combos_list' %>
         <%= render 'products_list' %>
@@ -81,6 +84,7 @@
       <div class="col-md-8 main_content" ng-if="inventory_mode == 'combo_create'">
         <%= render 'combo_create' %>
       </div>
+      
     </div>
   </div>
 

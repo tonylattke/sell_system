@@ -75,7 +75,7 @@
       <td>{{combo.sales_amount}}</td>
       <td ng-if="combo.active">
         <button type="button" class="btn btn-primary" ng-click="ViewDetailsCombo(combo)">Details</button>
-        <button type="button" class="btn btn-success">Edit</button>
+        <button type="button" class="btn btn-success" ng-click="EditCombo(combo)">Edit</button>
         <button type="button" class="btn btn-danger"  ng-click="DeactivateCombo(combo)">X</button>
       </td>
       <td ng-if="! combo.active">

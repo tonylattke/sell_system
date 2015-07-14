@@ -35,10 +35,10 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			malasnoticias = {
+			bad_news = {
 				'error' : true
 			}
-			def.resolve(malasnoticias)
+			def.resolve(bad_news)
 		)
 		return def.promise
 

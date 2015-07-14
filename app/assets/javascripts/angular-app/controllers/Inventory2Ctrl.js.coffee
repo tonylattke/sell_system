@@ -11,19 +11,26 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       'combos' : []
     }
 
+    $scope.search_products = ""
+
+    $scope.founded_products = []
+
+    # Product variables for operations
+
     $scope.new_product = null
 
     $scope.edit_product = null
 
     $scope.details_product = null
 
+    # Combo variables for operations
+
     $scope.new_combo = null
+
+    $scope.edit_combo = null
 
     $scope.details_combo = null
 
-    $scope.search_products = ""
-
-    $scope.founded_products = []
 
     ################################   Helpers  ###############################
 
@@ -354,6 +361,88 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       )
       $("#myModalCombo").modal('show')
       return $scope.details_combo
+
+    $scope.EditCombo = (combo) ->
+      $scope.edit_combo = {
+        'id'    : combo['id'],
+        'name'  : combo['name'],
+        'photo'  : combo['photo'],
+        'active'  : combo['active'],
+        'stock_amount': combo['stock_amount'],
+        'sales_amount': combo['sales_amount'],
+        'price' : {
+          'id'    : combo['price']['id'],
+          'value'  : combo['price']['value']
+        }
+      }
+      $scope.edit_combo_backup = combo
+      
+      $scope.inventory_mode = 'combo_edit'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $scope.EditComboCancel = ->
+      aux_confirm = confirm("Are you sure?")
+      if aux_confirm
+        $scope.inventory_mode = 'list'
+
+    $scope.EditComboSubmit = ->
+      combo_info = {
+        'id': $scope.edit_combo['id']
+      }
+      combo_change = false
+      
+      combo_info['name'] =  $scope.edit_combo['name']
+      if ($scope.edit_combo['name'] != $scope.edit_combo_backup['name'])
+        combo_change = true
+      
+      if $scope.edit_combo['photo_new'] 
+        combo_info['photo'] = $scope.edit_combo['photo_new'] 
+        combo_change = true
+      
+      if combo_change
+        combos.updateCombo($scope.edit_combo['id'],{  
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'combo' : combo_info
+        }).then((response) ->
+          if response['error']
+            alert 'Update name or photo is not posible. Name is unique and photo must be valid'
+        )
+      
+      if ($scope.edit_combo['price']['value'] != $scope.edit_combo_backup['price']['value'])
+        prices.createPrice({
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'price' :
+            'type_option' : 'c'
+            'value' : $scope.edit_combo['price']['value']
+            'combo_id' : $scope.edit_combo['id']
+        }).then((response) ->
+          if response['error']
+            alert 'Update price is not posible'
+        )
+      
+
+      getCombosInit()
+
+      $scope.inventory_mode = 'list'
+
 
     ###############################     Main     ##############################
 
