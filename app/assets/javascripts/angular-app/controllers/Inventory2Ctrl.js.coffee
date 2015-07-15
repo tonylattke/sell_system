@@ -128,13 +128,35 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     ############################ Buttons operations ###########################
 
-    # List products & combos
+    # ------------------------ Panel - Create product ------------------------#
 
     $scope.CreateProduct = ->
       console.log 'Create Product'
       saveProduct()
       $scope.inventory_mode = "list"
       console.log 'Operation finished'
+
+    $scope.AddInventory = ->
+      alert 'AddInventory'
+
+    $scope.ExportList = ->
+      console.log 'ExportList'
+
+    # ------------------------  Main content - List --------------------------#
+
+    $scope.orderCriteria = (order) ->
+      $scope.order_selected = order
+
+    $scope.ViewDetailsProduct = (product) ->
+      $scope.details_product = product
+
+    # Product options
+
+    $scope.ActivateProduct = (product) ->
+      inventory_helpers.updateActiveInProduct(product,true)
+
+    $scope.DeactivateProduct = (product) ->
+      inventory_helpers.updateActiveInProduct(product,false)
 
     $scope.DeleteProduct = (product) ->
       console.log 'Delete product'
@@ -151,72 +173,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
             break
           i++
 
-    $scope.ActivateCombo = (combo) ->
-      inventory_helpers.updateActiveInCombo(combo,true)
-    
-    $scope.DeactivateCombo = (combo) ->
-      inventory_helpers.updateActiveInCombo(combo,false)
-
-    $scope.ActivateProduct = (product) ->
-      inventory_helpers.updateActiveInProduct(product,true)
-
-    $scope.DeactivateProduct = (product) ->
-      inventory_helpers.updateActiveInProduct(product,false)
-
-    $scope.AddInventory = ->
-      alert 'AddInventory'
-
-    $scope.CreateCombo = ->
-      $scope.new_combo = {
-        'name': "",
-        'stock_amount': 0,
-        'price': 0,
-        'photo': 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
-        'products':[]
-      }
-      $scope.search_products = ""
-      $scope.founded_products = []
-      $scope.inventory_mode = 'combo_create'
-
-    $scope.ExportList = ->
-      console.log 'ExportList'
-
-    $scope.orderCriteria = (order) ->
-      $scope.order_selected = order
-
-    $scope.ViewDetailsProduct = (product) ->
-      $scope.details_product = product
-      
-      inventory.getProductDetails(product['id']).then((data) ->
-        if data
-          $scope.details_product['tags'] = data['tags']
-          $scope.details_product['providers'] = data['providers']
-      )
-
-      $("#myModalProduct").modal('show')
-      return $scope.details_product
-
-    $scope.DeleteTagFromProduct = (tag) ->
-      product_tags.deleteProductTag(tag['product_tag_id']).then((data) ->
-        i = 0
-        for aux_item in $scope.edit_product['tags']
-          if aux_item['id'] == tag['id']
-            $scope.edit_product['tags'].splice(i, 1)
-            break
-          i++
-      )
-
-    $scope.DeleteProviderFromProduct = (provider) ->
-      product_providers.deleteProductProvider(provider['product_provider_id']).then((data) ->
-        i = 0
-        for aux_item in $scope.edit_product['providers']
-          if aux_item['id'] == provider['id']
-            $scope.edit_product['providers'].splice(i, 1)
-            break
-          i++
-      )
-
-    # Edit Product
+    # Open menu - Edit Product
 
     $scope.EditProduct = (product) ->
       $scope.edit_product = {
@@ -243,6 +200,85 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           $scope.edit_product['providers'] = data
       )
       $scope.inventory_mode = 'product_edit'
+
+    # Combo options
+
+    $scope.ActivateCombo = (combo) ->
+      inventory_helpers.updateActiveInCombo(combo,true)
+    
+    $scope.DeactivateCombo = (combo) ->
+      inventory_helpers.updateActiveInCombo(combo,false)
+
+    $scope.ViewDetailsCombo = (combo) ->
+      $scope.details_combo = combo
+      inventory.getComboDetails(combo['id']).then((data) ->
+        if data
+          $scope.details_combo['products'] = data
+      )
+      $("#myModalCombo").modal('show')
+      return $scope.details_combo
+
+    $scope.EditCombo = (combo) ->
+      $scope.edit_combo = {
+        'id'    : combo['id'],
+        'name'  : combo['name'],
+        'photo'  : combo['photo'],
+        'active'  : combo['active'],
+        'stock_amount': combo['stock_amount'],
+        'sales_amount': combo['sales_amount'],
+        'price' : {
+          'id'    : combo['price']['id'],
+          'value'  : combo['price']['value']
+        }
+      }
+      $scope.edit_combo_backup = combo
+      
+      $scope.inventory_mode = 'combo_edit'
+
+    # ---------------------- Main content - Create Combo ---------------------#
+
+    $scope.CreateCombo = ->
+      $scope.new_combo = {
+        'name': "",
+        'stock_amount': 0,
+        'price': 0,
+        'photo': 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
+        'products':[]
+      }
+      $scope.search_products = ""
+      $scope.founded_products = []
+      $scope.inventory_mode = 'combo_create'
+      
+      inventory.getProductDetails(product['id']).then((data) ->
+        if data
+          $scope.details_product['tags'] = data['tags']
+          $scope.details_product['providers'] = data['providers']
+      )
+
+      $("#myModalProduct").modal('show')
+      return $scope.details_product
+
+    # ---------------------- Main content - Edit Product ---------------------#
+
+    $scope.DeleteTagFromProduct = (tag) ->
+      product_tags.deleteProductTag(tag['product_tag_id']).then((data) ->
+        i = 0
+        for aux_item in $scope.edit_product['tags']
+          if aux_item['id'] == tag['id']
+            $scope.edit_product['tags'].splice(i, 1)
+            break
+          i++
+      )
+
+    $scope.DeleteProviderFromProduct = (provider) ->
+      product_providers.deleteProductProvider(provider['product_provider_id']).then((data) ->
+        i = 0
+        for aux_item in $scope.edit_product['providers']
+          if aux_item['id'] == provider['id']
+            $scope.edit_product['providers'].splice(i, 1)
+            break
+          i++
+      )
 
     $scope.EditProductCancel = ->
       aux_confirm = confirm("Are you sure?")
@@ -290,6 +326,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       getProductsInit()
 
       $scope.inventory_mode = 'list'
+
+    # ---------------------- Main content - Create Combo -------------------- #
 
     $scope.ValidateStockAmount = (product) ->
       product['stock_amount'] = parseInt(product['stock_amount'], 10)
@@ -353,50 +391,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           break
         i++
 
-    $scope.ViewDetailsCombo = (combo) ->
-      $scope.details_combo = combo
-      inventory.getComboDetails(combo['id']).then((data) ->
-        if data
-          $scope.details_combo['products'] = data
-      )
-      $("#myModalCombo").modal('show')
-      return $scope.details_combo
-
-    $scope.EditCombo = (combo) ->
-      $scope.edit_combo = {
-        'id'    : combo['id'],
-        'name'  : combo['name'],
-        'photo'  : combo['photo'],
-        'active'  : combo['active'],
-        'stock_amount': combo['stock_amount'],
-        'sales_amount': combo['sales_amount'],
-        'price' : {
-          'id'    : combo['price']['id'],
-          'value'  : combo['price']['value']
-        }
-      }
-      $scope.edit_combo_backup = combo
-      
-      $scope.inventory_mode = 'combo_edit'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # ----------------------- Main content - Edit Combo --------------------- #
 
     $scope.EditComboCancel = ->
       aux_confirm = confirm("Are you sure?")
@@ -438,7 +433,6 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
             alert 'Update price is not posible'
         )
       
-
       getCombosInit()
 
       $scope.inventory_mode = 'list'

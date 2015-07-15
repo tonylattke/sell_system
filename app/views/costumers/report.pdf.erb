@@ -1,0 +1,26 @@
+\section*{Clients} 
+
+\begin{center}
+\begin{longtable}{|l|l|l|}
+
+\hline \multicolumn{1}{|c|}{\textbf{DNI}} & \multicolumn{1}{c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Balance}} \\ \hline 
+\endfirsthead
+
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{|c|}{\textbf{DNI}} &
+\multicolumn{1}{c|}{\textbf{Name}} &
+\multicolumn{1}{c|}{\textbf{Balance}} \\ \hline 
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+<% @clients.each do |client| %>
+	<%= client.dni %> & <%= client.name %> & <%= client.balance %> \\
+<% end %>
+
+\end{longtable}
+\end{center}

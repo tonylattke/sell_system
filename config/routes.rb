@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   # Costumers
   get 'costumers' => 'costumers#index'
+  get 'costumers/report' => 'costumers#report'
+  #get 'costumers/barcode' => "costumers#barcode"
 
   # Manager
   get 'manager' => 'sell#index'

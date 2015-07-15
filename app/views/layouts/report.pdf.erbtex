@@ -1,0 +1,22 @@
+\documentclass[12pt,a4paper,sloppy]{article}
+<% @latex_config={:command => 'pdflatex',:parse_twice => true} # you can override the defaults if you wish; see LatexToPdf#config %>
+\usepackage{lastpage}
+\usepackage{graphics}
+\usepackage[right=30mm,top=30mm,bottom=30mm]{geometry}
+
+
+\usepackage{longtable}
+
+\title {Lattke Sell System}
+
+\author {Report generator}
+
+\begin{document}
+
+\maketitle
+
+%\includegraphics[width=64pt]{<%= File.join(Rails.root,'public/logo-tony.png') %>}
+
+<%= yield %>
+
+\end{document}

@@ -54,3 +54,6 @@ gem 'bootstrap_form'
 gem 'paperclip'
 gem 'angularjs-file-upload-rails', '~> 1.1.6'
 gem 'carrierwave'
+
+#Latex
+gem 'rails-latex'
