@@ -46,7 +46,6 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
       costumers_helpers.UpdateActivateInClient(client,false)
 
     $scope.ExportList = ->
-      console.log 'ExportList'
       window.location.href = "/costumers/report";
 
     $scope.orderCriteria = (order) ->

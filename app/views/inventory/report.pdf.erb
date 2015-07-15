@@ -1,0 +1,49 @@
+\section*{Combos} 
+
+\begin{center}
+\begin{longtable}{|l|l|l|}
+
+\hline \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Sales amount}} & \multicolumn{1}{c|}{\textbf{Stock amount}} \\ \hline 
+\endfirsthead
+
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Sales amount}} & \multicolumn{1}{c|}{\textbf{Stock amount}} \\ \hline 
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+<% @combos.each do |combo| %>
+	<%= combo.name %> & <%= combo.sales_amount %> & <%= combo.stock_amount %> \\
+<% end %>
+
+\end{longtable}
+\end{center}
+
+\section*{Products} 
+
+\begin{center}
+\begin{longtable}{|l|l|l|}
+
+\hline \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Sales amount}} & \multicolumn{1}{c|}{\textbf{Stock amount}} \\ \hline 
+\endfirsthead
+
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Sales amount}} & \multicolumn{1}{c|}{\textbf{Stock amount}} \\ \hline 
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+<% @products.each do |product| %>
+	<%= product.name %> & <%= product.sales_amount %> & <%= product.stock_amount %> \\
+<% end %>
+
+\end{longtable}
+\end{center}

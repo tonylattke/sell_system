@@ -4,7 +4,6 @@
 \usepackage{graphics}
 \usepackage[right=30mm,top=30mm,bottom=30mm]{geometry}
 
-
 \usepackage{longtable}
 
 \title {Lattke Sell System}
@@ -16,7 +15,6 @@
 \maketitle
 
 %\includegraphics[width=64pt]{<%= File.join(Rails.root,'public/logo-tony.png') %>}
-
 <%= yield %>
 
 \end{document}

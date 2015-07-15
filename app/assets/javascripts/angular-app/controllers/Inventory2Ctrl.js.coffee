@@ -140,7 +140,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       alert 'AddInventory'
 
     $scope.ExportList = ->
-      console.log 'ExportList'
+      window.location.href = "/inventory/report";
 
     # ------------------------  Main content - List --------------------------#
 

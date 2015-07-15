@@ -161,4 +161,10 @@ class InventoryController < ApplicationController
     end
   end
 
+  def report
+    @products = Product.all
+    @combos = Combo.all
+    render :layout => 'report', formats: [:pdf]
+  end
+
 end
