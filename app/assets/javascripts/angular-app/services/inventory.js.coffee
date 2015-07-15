@@ -7,7 +7,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.post('/inventory/save_tags',info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tags cannot be associated with product")
+			bad_news = {
+				'error' : true
+				'msg' : "Tags cannot be associated with product"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -16,7 +20,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.get('/inventory/product_details/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Product details cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Product details cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -25,7 +33,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.get('/inventory/combo_details/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combo details cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Combo details cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -34,7 +46,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.get('/inventory/tags_by_product/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tags of product cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Tags of product cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -43,7 +59,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.get('/inventory/providers_by_product/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tags of product cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Tags of product cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -52,7 +72,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.post('/inventory/save_providers',info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Providers cannot be associated with product")
+			bad_news = {
+				'error' : true
+				'msg' : "Providers cannot be associated with product"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -61,7 +85,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.delete('/inventory/delete_tags/' + product).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tag product association cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Tag product association cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -70,7 +98,11 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		$http.delete('/inventory/delete_providers/' + product).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Provider product association cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Provider product association cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

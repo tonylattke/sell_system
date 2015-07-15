@@ -8,7 +8,11 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tags cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Tags cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -17,7 +21,11 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tag cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Tag cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -26,7 +34,11 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		$http.post(urlBase,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tag cannot be created")
+			bad_news = {
+				'error' : true
+				'msg' : "Tag cannot be created"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -35,7 +47,11 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tag cannot be updated")
+			bad_news = {
+				'error' : true
+				'msg' : "Tag cannot be updated"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -44,7 +60,11 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		$http.delete(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tag cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Tag cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -53,7 +73,11 @@ sellApp.factory 'tags', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/search/' + info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Tags cannot be searched")
+			bad_news = {
+				'error' : true
+				'msg' : "Tags cannot be searched"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

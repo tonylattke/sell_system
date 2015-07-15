@@ -7,7 +7,11 @@ sellApp.factory 'sell', ['$http','$q', ($http,$q) ->
 		$http.get('/sell/search_articles_by_tag/' + info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Articles cannot be searched by Tag")
+			bad_news = {
+				'error' : true
+				'msg' : "Articles cannot be searched by Tag"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -16,7 +20,11 @@ sellApp.factory 'sell', ['$http','$q', ($http,$q) ->
 		$http.post('/sell/generate_sell', info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Sell transaction cannot be realized")
+			bad_news = {
+				'error' : true
+				'msg' : "Sell transaction cannot be realized"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

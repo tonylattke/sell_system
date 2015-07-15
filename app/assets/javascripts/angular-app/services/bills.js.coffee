@@ -8,7 +8,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bills cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Bills cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -17,7 +21,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bill cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Bill cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -26,7 +34,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.post(urlBase,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bill cannot be created")
+			bad_news = {
+				'error' : true
+				'msg' : "Bill cannot be created"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -35,7 +47,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bill cannot be updated")
+			bad_news = {
+				'error' : true
+				'msg' : "Bill cannot be updated"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -44,7 +60,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.delete(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bill cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Bill cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -53,7 +73,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/today').success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bills of today cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Bills of today cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -62,7 +86,11 @@ sellApp.factory 'bills', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/from/' + from + '/to/' + to).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bills in a range cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Bills in a range cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

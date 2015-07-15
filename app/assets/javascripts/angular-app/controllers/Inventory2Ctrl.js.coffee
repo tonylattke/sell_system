@@ -149,6 +149,14 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     $scope.ViewDetailsProduct = (product) ->
       $scope.details_product = product
+      inventory.getProductDetails(product['id']).then((data) ->
+        if data
+          $scope.details_product['tags'] = data['tags']
+          $scope.details_product['providers'] = data['providers']
+      )
+
+      $("#myModalProduct").modal('show')
+      return $scope.details_product
 
     # Product options
 
@@ -248,15 +256,6 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       $scope.search_products = ""
       $scope.founded_products = []
       $scope.inventory_mode = 'combo_create'
-      
-      inventory.getProductDetails(product['id']).then((data) ->
-        if data
-          $scope.details_product['tags'] = data['tags']
-          $scope.details_product['providers'] = data['providers']
-      )
-
-      $("#myModalProduct").modal('show')
-      return $scope.details_product
 
     # ---------------------- Main content - Edit Product ---------------------#
 

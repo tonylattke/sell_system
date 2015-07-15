@@ -8,7 +8,11 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Products cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Products cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -17,7 +21,11 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Product cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Product cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -26,7 +34,11 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.post(urlBase,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Product cannot be created")
+			bad_news = {
+				'error' : true
+				'msg' : "Product cannot be created"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -37,6 +49,7 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		).error((data) ->
 			bad_news = {
 				'error' : true
+				'msg'	: "Product cannot be updated"
 			}
 			def.resolve(bad_news)
 		)
@@ -47,7 +60,11 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.delete(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Product cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Product cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -56,7 +73,11 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.get('/api/products_bestsellers').success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Best seller products cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Best seller products cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -65,7 +86,11 @@ sellApp.factory 'products', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/search/' + info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Products cannot be searched")
+			bad_news = {
+				'error' : true
+				'msg' : "Products cannot be searched"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

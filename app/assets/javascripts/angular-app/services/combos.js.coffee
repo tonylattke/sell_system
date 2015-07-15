@@ -8,7 +8,11 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combo cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Combos cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -17,7 +21,11 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combo cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Combo cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -26,7 +34,11 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.post(urlBase,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combo cannot be created")
+			bad_news = {
+				'error' : true
+				'msg' : "Combo cannot be created"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -37,6 +49,7 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		).error((data) ->
 			bad_news = {
 				'error' : true
+				'msg' : "Combo data cannot be updated"
 			}
 			def.resolve(bad_news)
 		)
@@ -47,7 +60,11 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.delete(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combo cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Combo cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -56,7 +73,11 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.get('/api/combos_bestsellers').success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Best seller combos cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Best seller combos cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -65,7 +86,11 @@ sellApp.factory 'combos', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/search/' + info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Combos cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Combos cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

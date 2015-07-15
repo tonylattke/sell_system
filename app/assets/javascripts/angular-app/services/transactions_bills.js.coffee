@@ -7,7 +7,11 @@ sellApp.factory 'transactions_bills', ['$http','$q', ($http,$q) ->
 		$http.get('/transactions_bills/consult_bill/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Bill cannot be consulted")
+			bad_news = {
+				'error' : true
+				'msg' : "Bill cannot be consulted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 

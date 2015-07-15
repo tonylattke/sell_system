@@ -8,7 +8,11 @@ sellApp.factory 'providers', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Providers cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Providers cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -17,7 +21,11 @@ sellApp.factory 'providers', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Provider cannot be found")
+			bad_news = {
+				'error' : true
+				'msg' : "Provider cannot be found"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -26,7 +34,11 @@ sellApp.factory 'providers', ['$http','$q', ($http,$q) ->
 		$http.post(urlBase,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Provider cannot be created")
+			bad_news = {
+				'error' : true
+				'msg' : "Provider cannot be created"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -35,7 +47,11 @@ sellApp.factory 'providers', ['$http','$q', ($http,$q) ->
 		$http.put(urlBase + '/' + id,info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Provider cannot be updated")
+			bad_news = {
+				'error' : true
+				'msg' : "Provider cannot be updated"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -44,7 +60,11 @@ sellApp.factory 'providers', ['$http','$q', ($http,$q) ->
 		$http.delete(urlBase + '/' + id).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Provider cannot be deleted")
+			bad_news = {
+				'error' : true
+				'msg' : "Provider cannot be deleted"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
@@ -53,7 +73,11 @@ sellApp.factory 'providers', ['$http','$q', ($http,$q) ->
 		$http.get(urlBase + '/search/' + info).success((data) ->
 			def.resolve(data)
 		).error((data) ->
-			alert("No conection - Providers cannot be listed")
+			bad_news = {
+				'error' : true
+				'msg' : "Providers cannot be listed"
+			}
+			def.resolve(bad_news)
 		)
 		return def.promise
 
