@@ -6,16 +6,36 @@ class SellController < ApplicationController
 
   def search_articles_by_tag
     @products = []
+    @combos = []
+
     tags = Tag.search(params[:data])
     for tag in tags
       product_tags = ProductTag.search_by('tag_id',tag.id)
       for product_tag in product_tags
+        # Add Product
         product = Product.find_by(id: product_tag.product_id)
         @products.push(product)
+
+        # Add Combo
+        combo_products = ComboProduct.search_by('product_id',product.id)
+        for combo_product in combo_products
+          combo = Combo.find_by(id: combo_product.combo_id)
+          if not_in(combo, @combos)
+            @combos.push(combo)
+          end
+        end
       end
     end
+    
+  end
 
-    @combos = []
+  def not_in (combo,combos)
+    for aux_combo in combos
+      if aux_combo.id == combo.id
+        return false
+      end
+    end
+    return true
   end
 
   def generate_sell
