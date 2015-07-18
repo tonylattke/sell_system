@@ -73,8 +73,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         $scope.new_product = response
         $scope.articles['products'].push($scope.new_product)
         
-        list_tags = $scope.new_product_form['tags'].split(",")
-        list_providers = $scope.new_product_form['providers'].split(",")
+        list_tags = $scope.new_product_form['tags'].replace(" ","").split(",")
+        list_providers = $scope.new_product_form['providers'].replace(" ","").split(",")
 
         saveTags($scope.new_product,list_tags)
         saveProviders($scope.new_product,list_providers)
@@ -191,6 +191,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         'active'  : product['active'],
         'stock_amount': product['stock_amount'],
         'sales_amount': product['sales_amount'],
+        'new_tags': "",
+        'new_providers': "",
         'price' : {
           'id'    : product['price']['id'],
           'value'  : product['price']['value']
@@ -320,6 +322,14 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
             alert 'Update price is not posible'
         )
       
+      if $scope.edit_product['new_tags']
+        new_tags = $scope.edit_product['new_tags'].replace(" ","").split(",")
+        saveTags(product_info,new_tags)
+
+      if $scope.edit_product['new_providers']
+        new_providers = $scope.edit_product['new_providers'].replace(" ","").split(",")
+        saveProviders(product_info,new_providers)
+
       $scope.edit_product = inventory_helpers.resetForm()
 
       getProductsInit()
