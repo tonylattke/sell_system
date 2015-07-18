@@ -36,7 +36,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     getCombosInit = ->
       combos.getCombos().then((data) ->
-        if data
+        if data['error']
+          alert data['msg']
+        else
           $scope.articles['combos'] = data
           for aux_combo in $scope.articles['combos']
             aux_combo['price'] = aux_combo['prices'][0]
@@ -44,7 +46,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     getProductsInit = ->
       products.getProducts().then((data) ->
-        if data
+        if data['error']
+          alert data['msg']
+        else
           $scope.articles['products'] = data
           for aux_product in $scope.articles['products']
             aux_product['price'] = aux_product['prices'][0]
@@ -59,7 +63,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
             'product_id': product['id']
             'product_amount': product['amount']
         }).then((response) ->
-          console.log response
+          if response['error']
+            alert response['msg']
+          else
+            console.log response
         )
 
     saveProduct = ->
@@ -70,18 +77,21 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'stock_amount' : $scope.new_product_form['stock_amount']
           'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       }).then((response) ->
-        $scope.new_product = response
-        $scope.articles['products'].push($scope.new_product)
-        
-        list_tags = $scope.new_product_form['tags'].replace(" ","").split(",")
-        list_providers = $scope.new_product_form['providers'].replace(" ","").split(",")
+        if response['error']
+            alert response['msg']
+        else
+          $scope.new_product = response
+          $scope.articles['products'].push($scope.new_product)
+          
+          list_tags = $scope.new_product_form['tags'].replace(" ","").split(",")
+          list_providers = $scope.new_product_form['providers'].replace(" ","").split(",")
 
-        saveTags($scope.new_product,list_tags)
-        saveProviders($scope.new_product,list_providers)
+          saveTags($scope.new_product,list_tags)
+          saveProviders($scope.new_product,list_providers)
 
-        createPriceToProduct($scope.new_product_form['price'],$scope.new_product["id"])
-        
-        $scope.new_product_form = inventory_helpers.resetForm()
+          createPriceToProduct($scope.new_product_form['price'],$scope.new_product["id"])
+          
+          $scope.new_product_form = inventory_helpers.resetForm()
       )
     
     saveTags = (product,list_tags) ->
@@ -91,7 +101,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'tags': list_tags
           'product_id': product['id']
       }).then((response) ->
-        console.log "Tag saved"
+        if response['error']
+          alert response['msg']
+        else
+          console.log "Tag saved"
       )
 
     saveProviders = (product,list_providers) ->
@@ -101,7 +114,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'providers': list_providers
           'product_id': product['id']
       }).then((response) ->
-        console.log "Provider saved"
+        if response['error']
+          alert response['msg']
+        else
+          console.log "Provider saved"
       )
 
     createPriceToProduct = (value,product_id) ->
@@ -112,7 +128,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'value' : value
           'product_id' : product_id
       }).then((response) ->
-        $scope.new_product['price'] = response
+        if response['error']
+          alert response['msg']
+        else
+          $scope.new_product['price'] = response
       )
 
     createPriceToCombo = (value,combo_id) ->
@@ -123,7 +142,10 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'value' : value
           'combo_id' : combo_id
       }).then((response) ->
-        $scope.new_combo['price'] = response
+        if response['error']
+          alert response['msg']
+        else
+          $scope.new_combo['price'] = response
       )
 
     ############################ Buttons operations ###########################
@@ -222,7 +244,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
     $scope.ViewDetailsCombo = (combo) ->
       $scope.details_combo = combo
       inventory.getComboDetails(combo['id']).then((data) ->
-        if data
+        if data['error']
+          alert data['msg']
+        else
           $scope.details_combo['products'] = data
       )
       $("#myModalCombo").modal('show')
@@ -349,16 +373,19 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           'stock_amount' : $scope.new_combo['stock_amount']
           'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       }).then((response) ->
-        aux_new_combo = response        
-        $scope.articles['combos'].push(aux_new_combo)
-        
-        createComboProducts(aux_new_combo['id'],$scope.new_combo['products'])
+        if response['error']
+          alert response['msg']
+        else
+          aux_new_combo = response        
+          $scope.articles['combos'].push(aux_new_combo)
+          
+          createComboProducts(aux_new_combo['id'],$scope.new_combo['products'])
 
-        createPriceToCombo(aux_new_combo['price'],aux_new_combo["id"])
+          createPriceToCombo(aux_new_combo['price'],aux_new_combo["id"])
 
-        getCombosInit()
+          getCombosInit()
 
-        $scope.inventory_mode = "list"
+          $scope.inventory_mode = "list"
       )
 
     $scope.CreateComboCancel = ->
@@ -370,7 +397,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       $scope.founded_products = []
       $scope.search_products = "f"
       products.searchProducts($scope.search_products).then((data) ->
-        if data
+        if data['error']
+          alert data['msg']
+        else
           $scope.founded_products = data
           for aux_product in $scope.founded_products
             aux_product['amount'] = 1
