@@ -4,7 +4,7 @@
   <li ng-repeat="bill in bills" ng-click="ConsultBill(bill)">
     <div class="btn btn-lg btn-primary col-md-12 bill">
       {{bill.id}} - {{bill.created_at | date:'medium'}}
-    </div>  
+    </div>
     <div ng-if="bill.extra_data" class="data_extra">
       <h4 ng-if="bill.extra_data.client_name">
         <b>Client:</b> {{bill.extra_data.client_name}}
@@ -32,6 +32,9 @@
         </tbody>
       </table>
       <div class="text-center"><b>Total:</b> {{bill.total | number: 2}} </div>
+      <div class="btn btn-lg btn-danger col-md-12 bill" ng-click="DeleteBill(bill)">
+        X
+      </div>  
     </div>
   </li>
 </ul>

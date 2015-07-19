@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   get 'transactions_bills' => 'transactions_bills#index'
   get 'transactions_bills/consult_bill/:id' => 'transactions_bills#consult_bill', :defaults => {:format => "json"}
 
+  delete 'transactions_bills/delete_bill/:id' => 'transactions_bills#delete_bill', :defaults => {:format => "json"}
+
   # Costumers
   get 'costumers' => 'costumers#index'
   get 'costumers/report' => 'costumers#report'

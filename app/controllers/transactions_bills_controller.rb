@@ -51,5 +51,38 @@ class TransactionsBillsController < ApplicationController
     render json: @data_exit
 
   end
-  
+
+  def delete_bill
+    bill_id = params[:id].to_i
+    bill = Bill.find_by(id: bill_id)
+
+    client = nil
+    if bill.client_id
+      client = Client.find_by(id: bill.client_id)
+    end
+
+    for bill_article in bill.bill_articles
+      price = Price.find_by(id: bill_article[:price_id])
+      if price.type_option == 'c'
+        combo = Combo.find_by(id: price.combo_id)
+        combo.stock_amount += bill_article.amount
+        combo.sales_amount -= 1
+        combo.save
+      elsif price.type_option == 'p'
+        product = Product.find_by(id: price.product_id)
+        product.stock_amount += bill_article.amount
+        product.sales_amount -= 1
+        product.save
+      end
+      bill_article.destroy
+    end
+
+    bill.destroy
+
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Bill was successfully destroyed.' }
+      format.json { head :no_content }
+    end 
+  end
+
 end

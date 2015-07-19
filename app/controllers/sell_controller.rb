@@ -112,7 +112,6 @@ class SellController < ApplicationController
       end
     end
 
-
   end
 
 end

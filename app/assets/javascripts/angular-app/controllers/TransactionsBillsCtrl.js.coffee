@@ -38,6 +38,19 @@ angular.module('app.sellApp').controller("TransactionsBillsCtrl", [
           $scope.bills = data
       )
 
+    $scope.DeleteBill = (bill) ->
+      transactions_bills.DeleteBill(bill['id']).then((data) ->
+        if data['error']
+          alert data['msg']
+        else
+          i = 0
+          for aux_bill in $scope.bills
+            if aux_bill['id'] == bill['id']
+              $scope.bills.splice(i, 1)
+              break
+            i++
+      )
+
     $scope.CreateTransaction = ->
       alert "Transaction Created"
     

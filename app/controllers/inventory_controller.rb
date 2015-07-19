@@ -142,7 +142,7 @@ class InventoryController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to products_url, notice: 'Product tags was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -156,7 +156,7 @@ class InventoryController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to products_url, notice: 'Product providers was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
