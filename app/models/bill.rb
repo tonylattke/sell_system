@@ -3,5 +3,5 @@ class Bill < ActiveRecord::Base
 
   belongs_to :client, :class_name => 'Client'
 
-  default_scope { order('created_at DESC') }  
+  default_scope { order('created_at DESC') }
 end
