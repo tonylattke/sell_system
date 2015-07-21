@@ -177,16 +177,6 @@ angular.module('app.sellApp').controller("SellCtrl", [
         }
 
         data['client_new'] = false
-        # New Client ?
-        if $scope.new_client_dni and $scope.new_client_name
-          data['client_new'] = true
-          data['client'] = {
-            'client' : 
-              'dni' : $scope.new_client_dni
-              'name': $scope.new_client_name
-          }
-        data['recharge_amount'] = $scope.recharge_amount
-        data['use_from_account'] = $scope.use_from_account
 
         if $scope.client['id']
           data['client'] = {
@@ -194,6 +184,17 @@ angular.module('app.sellApp').controller("SellCtrl", [
           }
         else
           data['client'] = null
+
+        # New Client ?
+        if $scope.new_client_dni and $scope.new_client_name
+          data['client_new'] = true
+          data['client'] = {
+            'dni' : $scope.new_client_dni
+            'name': $scope.new_client_name
+          }
+        data['recharge_amount'] = $scope.recharge_amount
+        data['use_from_account'] = $scope.use_from_account
+        data['client_cash_used'] = $scope.client_cash_used
 
         data['cart'] = $scope.cart_articles
 
@@ -230,12 +231,16 @@ angular.module('app.sellApp').controller("SellCtrl", [
       UpdateTotal()
       $scope.cashUsed()
 
+    $scope.NewClientDataUpdate = ->
+      $scope.cashUsed()
+
     $scope.cashUsed = ->
       $scope.use_from_account = 0
       $scope.recharge_amount = 0
       if $scope.client['id']
         if $scope.client_cash_used < $scope.total && ($scope.client['balance'] >= $scope.total - $scope.client_cash_used)
           $scope.use_from_account = $scope.total - $scope.client_cash_used
+      if $scope.client['id'] || ($scope.new_client_dni.length > 0 && $scope.new_client_name.length > 0)
         if $scope.client_cash_used - $scope.total > 0
           $scope.recharge_amount = $scope.client_cash_used - $scope.total
 

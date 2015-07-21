@@ -17,4 +17,6 @@ class Client < ActiveRecord::Base
       scoped
     end
   end
+
+  default_scope { order('subscription_date DESC') }
 end

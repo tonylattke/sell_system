@@ -77,6 +77,21 @@ class TransactionsBillsController < ApplicationController
       bill_article.destroy
     end
 
+    if client
+      for sale_transaction in bill.sale_transactions
+        if sale_transaction.type_t == 'u_recharge'
+          client.balance += sale_transaction.amount 
+        elsif sale_transaction.type_t == 'u_balance'
+          client.balance -= sale_transaction.amount 
+        end
+        sale_transaction.destroy
+      end
+    else
+      for sale_transaction in bill.sale_transactions
+        sale_transaction.destroy
+      end
+    end
+
     bill.destroy
 
     respond_to do |format|

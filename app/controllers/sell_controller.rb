@@ -40,14 +40,20 @@ class SellController < ApplicationController
 
   def generate_sell
     
+    recharge_amount =  params[:recharge_amount]
+    use_from_account = params[:use_from_account]
+    client_cash_used = params[:client_cash_used]
+
     # Client
     if params[:client_new]
-      @client = client_create(params[:client])
+      @client = Client.new(:dni => params[:client][:dni], :name => params[:client][:name])
+      @client.balance += recharge_amount
+      @client.save
     else
       if params[:client]
         @client = Client.find_by(id: params[:client][:id])
-        @client.balance += params[:recharge_amount].to_i
-        @client.balance -= params[:use_from_account].to_i
+        @client.balance += recharge_amount
+        @client.balance -= use_from_account
         @client.save
       else
         @client = nil
@@ -110,6 +116,23 @@ class SellController < ApplicationController
           aux_BA.save
         end
       end
+    end
+
+    if @client
+      if recharge_amount > 0
+        recharge = SaleTransaction.new(:bill_id => @bill.id,:amount => recharge_amount, :type_t => 'u_recharge')
+        recharge.save
+      end
+      
+      if use_from_account > 0
+        use_balance = SaleTransaction.new(:bill_id => @bill.id,:amount => use_from_account, :type_t => 'u_balance')
+        use_balance.save
+      end
+    end
+
+    if client_cash_used > 0
+      cash = SaleTransaction.new(:bill_id => @bill.id,:amount => (client_cash_used - recharge_amount), :type_t => 'cash')
+      cash.save
     end
 
   end
