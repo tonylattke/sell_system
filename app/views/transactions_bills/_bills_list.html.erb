@@ -1,6 +1,6 @@
 <h2>Bills</h2>
 
-<ul>
+<ul ng-if="bills.length > 0">
   <li ng-repeat="bill in bills" ng-click="ConsultBill(bill)">
     <div class="btn btn-lg btn-primary col-md-12 bill">
       {{bill.id}} - {{bill.created_at | date:'medium'}}
@@ -38,3 +38,7 @@
     </div>
   </li>
 </ul>
+
+<div ng-if="bills.length == 0">
+  No bills available
+</div>

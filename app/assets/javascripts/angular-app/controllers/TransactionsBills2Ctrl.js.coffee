@@ -1,4 +1,4 @@
-angular.module('app.sellApp').controller("TransactionsBillsCtrl", [
+angular.module('app.sellApp').controller("TransactionsBills2Ctrl", [
   '$scope','$http','bills','cash_transactions','transactions_bills'
   ($scope,$http,bills,cash_transactions,transactions_bills)->
 

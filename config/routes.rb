@@ -93,6 +93,11 @@ Rails.application.routes.draw do
 
     # Sale Transactions
     resources :sale_transactions, :defaults => {:format => "json"}
+
+    # Cash Transactions
+    get 'cash_transactions/today'  => 'cash_transactions#today', :defaults => {:format => "json"}
+    get 'cash_transactions/from/:fy-:fm-:fd/to/:ty-:tm-:td' => 'cash_transactions#from_to', :defaults => {:format => "json"}
+    resources :cash_transactions, :defaults => {:format => "json"}
   end  
 
   # Root

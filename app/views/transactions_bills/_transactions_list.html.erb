@@ -1,1 +1,27 @@
 <h2>Transactions</h2>
+
+<div ng-if="cash_transactions.length > 0">
+  <table class="table table-striped">
+    <thead>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th>Option</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="cash_transaction in cash_transactions">
+        <td>{{cash_transaction.id}}</td>
+        <td>{{cash_transaction.description}}</td>
+        <td ng-if="cash_transaction.type_t == 'deposit'">+{{cash_transaction.amount | number: 2}}</td>
+        <td ng-if="cash_transaction.type_t == 'withdraw'">-{{cash_transaction.amount | number: 2}}</td>
+        <td>
+          <button type="button" class="btn btn-danger" ng-click="DeleteTransaction(cash_transaction)">X</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div ng-if="cash_transactions.length == 0">
+  No transactions available
+</div>

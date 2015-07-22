@@ -5,5 +5,5 @@ class SaleTransaction < ActiveRecord::Base
   validates :bill, :presence => true
   validates :type_t, :presence => true
 
-  default_scope { order('bill_id DESC') }  
+  default_scope { order('bill_id DESC') }
 end
