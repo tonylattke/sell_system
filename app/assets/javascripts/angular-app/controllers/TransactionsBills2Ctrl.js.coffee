@@ -78,8 +78,18 @@ angular.module('app.sellApp').controller("TransactionsBills2Ctrl", [
       )
 
     $scope.CreateTransaction = ->
-      alert $scope.new_cash_transaction_form.type
-    
+      cash_transactions.createCashTransaction({  
+        'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+        'cash_transaction' : 
+          'description': $scope.new_cash_transaction_form['description']
+          'amount': $scope.new_cash_transaction_form['amount']
+          'type_t': $scope.new_cash_transaction_form['type']
+      }).then((response) ->
+        $scope.cash_transactions.push(response)
+        $scope.new_cash_transaction_form['description'] = ''
+        $scope.new_cash_transaction_form['amount'] = ''
+        $scope.new_cash_transaction_form['type'] = ''
+      )    
 
     ###############################     Main     ##############################
 

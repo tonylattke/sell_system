@@ -18,7 +18,7 @@
         <h4>Prices</h4>
         <ul>
           <li ng-repeat="price in details_combo.prices">
-            {{price.value}} at {{price.created_at | date:'medium'}}
+            {{price.value | number: 2}} at {{price.created_at | date:'medium'}}
           </li>
         </ul>
 
@@ -70,7 +70,7 @@
     <tr ng-repeat="combo in articles.combos | orderBy:order_selected | filter:articles_search">
       <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
       <td>{{combo.name}}</td>
-      <td>{{combo.price.value}}</td>
+      <td>{{combo.price.value | number: 2}}</td>
       <td>{{combo.stock_amount}}</td>
       <td>{{combo.sales_amount}}</td>
       <td ng-if="combo.active">

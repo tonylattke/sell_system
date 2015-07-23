@@ -18,7 +18,7 @@
     <tr ng-repeat="client in clients | orderBy:order_selected | filter:clients_search">
       <td>{{client.name}}</td>
       <td>{{client.dni}}</td>
-      <td>{{client.balance}}</td>
+      <td>{{client.balance | number: 2}}</td>
       <td>{{client.subscription_date}}</td>
       <td ng-if="client.active">
         <button type="button" class="btn btn-success" ng-click="editClient(client)">Edit</button>
