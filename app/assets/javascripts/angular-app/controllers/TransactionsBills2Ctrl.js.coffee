@@ -64,6 +64,19 @@ angular.module('app.sellApp').controller("TransactionsBills2Ctrl", [
             i++
       )
 
+    $scope.DeleteTransaction = (cash_transaction) ->
+      cash_transactions.deleteCashTransaction(cash_transaction['id']).then((data) ->
+        if data['error']
+          alert data['msg']
+        else
+          i = 0
+          for aux_transaction in $scope.cash_transactions
+            if aux_transaction['id'] == cash_transaction['id']
+              $scope.cash_transactions.splice(i, 1)
+              break
+            i++
+      )
+
     $scope.CreateTransaction = ->
       alert "Transaction Created"
     
