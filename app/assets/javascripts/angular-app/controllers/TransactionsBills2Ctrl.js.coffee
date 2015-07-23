@@ -78,7 +78,7 @@ angular.module('app.sellApp').controller("TransactionsBills2Ctrl", [
       )
 
     $scope.CreateTransaction = ->
-      alert "Transaction Created"
+      alert $scope.new_cash_transaction_form.type
     
 
     ###############################     Main     ##############################

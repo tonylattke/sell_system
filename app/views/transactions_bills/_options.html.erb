@@ -22,9 +22,23 @@
 
 <div class="col-md-12 panel_options ">
   <h3>Create a cash transaction</h3>
-  <form role="form" name="consult_form">
+  <form role="form" name="transaction_form">
     <div class="row">
-      <!-- -->
+      <!-- Description -->
+      <div class="col-md-12 form-group" ng-class="{'has-error': transaction_form.cashTransactionDescription.$invalid, 'has-success': client_form.cashTransactionDescription.$valid}">
+        <textarea class="form-control" type="text" placeholder="Description" ng-model="new_cash_transaction_form.description" required></textarea>
+      </div>
+      <!-- Amount -->
+      <div class="col-md-12 form-group" ng-class="{'has-error': transaction_form.cashTransactionAmount.$invalid, 'has-success': transaction_form.cashTransactionAmount.$valid}">
+        <input class="form-control" type="number" placeholder="Amount" ng-model="new_cash_transaction_form.amount" min="0" required/>
+      </div>
+      <!-- Type -->
+      <div class="col-md-12 form-group" ng-class="{'has-error': transaction_form.cashTransactionType.$invalid, 'has-success': transaction_form.cashTransactionType.$valid}">
+        <select class="form-control" type="text" placeholder="Type" ng-model="new_cash_transaction_form.type" required>
+          <option value="deposit">Deposit</option>
+          <option value="withdraw">Withdraw</option>
+        </select>
+      </div>
     </div>
     <!-- Done -->
     <div class="text-center">
