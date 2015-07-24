@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   #get 'costumers/barcode' => "costumers#barcode"
 
   # Manager
-  get 'manager' => 'sell#index'
+  get 'manager' => 'manager#index'
 
   scope "api" do
     # Clients
