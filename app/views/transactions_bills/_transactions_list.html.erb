@@ -12,6 +12,8 @@
       <tr ng-repeat="cash_transaction in cash_transactions">
         <td>{{cash_transaction.created_at | date:'medium'}}</td>
         <td>{{cash_transaction.description}}</td>
+        <td ng-if="cash_transaction.type_t == 'begin_day'">{{cash_transaction.amount | number: 2}}</td>
+        <td ng-if="cash_transaction.type_t == 'adjust_day'">{{cash_transaction.amount | number: 2}}</td>
         <td ng-if="cash_transaction.type_t == 'deposit'">+{{cash_transaction.amount | number: 2}}</td>
         <td ng-if="cash_transaction.type_t == 'withdraw'">-{{cash_transaction.amount | number: 2}}</td>
         <td>

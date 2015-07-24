@@ -44,7 +44,7 @@ angular.module('app.sellApp').controller("TransactionsBills2Ctrl", [
           $scope.bills = data
       )
 
-      bills.getCashTransactionsFromTo(from,to).then((data) ->
+      cash_transactions.getCashTransactionsFromTo(from,to).then((data) ->
         if data['error']
           alert data['msg']
         else

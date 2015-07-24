@@ -1,0 +1,46 @@
+<h2>Manager - Day End</h2>
+
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <td><b>Sells:</b></td>
+      <td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td>
+        Cash sell:
+      </td>
+      <td>
+        {{cash_sell}}
+      </td>
+      <td>
+        Recharge:
+      </td>
+      <td>
+        {{cash_recharge}}
+      </td>
+    </tr>
+    <tr>
+      <td><b>Cash Transactions:</b></td>
+      <td></td><td></td><td></td>
+    </tr>
+    <tr>
+      <td>
+        Deposits & Withdraws:
+      </td>
+      <td>
+        {{cash_transaction}}
+      </td>
+      <td>
+        Adjust:
+      </td>
+      <td>
+        {{adjust_transaction}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-center"><label>Total system:</label> {{total_system}}</div>    
+<%= render 'count_cash' %>

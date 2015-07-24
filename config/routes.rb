@@ -36,6 +36,8 @@ Rails.application.routes.draw do
 
   # Manager
   get 'manager' => 'manager#index'
+  get 'manager/sale_transactions/today' => 'manager#sale_transactions_today', :defaults => {:format => "json"}
+  get 'manager/sale_transactions/from/:fy-:fm-:fd/to/:ty-:tm-:td' => 'manager#sale_transactions_from_to', :defaults => {:format => "json"}
 
   scope "api" do
     # Clients

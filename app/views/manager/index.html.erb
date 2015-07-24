@@ -13,12 +13,15 @@
       
       <!-- Options -->
       <div class="col-md-4">
-        <h2>Options</h2>
+        <%= render 'options' %>
       </div>
 
       <!-- Main content -->
-      <div class="col-md-8 main_content">
-        <h2>Manager</h2>
+      <div class="col-md-8 main_content" ng-if="manager_mode == 'day_begin'">
+        <%= render 'day_begin' %>
+      </div>
+      <div class="col-md-8 main_content" ng-if="manager_mode == 'day_end'">
+        <%= render 'day_end' %>
       </div>
 
     </div>
