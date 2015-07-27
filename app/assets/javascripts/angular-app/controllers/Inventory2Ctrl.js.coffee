@@ -11,8 +11,6 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       'combos' : []
     }
 
-    $scope.search_products = ""
-
     $scope.founded_products = []
 
     # Product variables for operations
@@ -278,8 +276,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         'price': 0,
         'photo': 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
         'products':[]
+        'search_products':""
       }
-      $scope.search_products = ""
       $scope.founded_products = []
       $scope.inventory_mode = 'combo_create'
 
@@ -395,8 +393,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     $scope.SearchProducts = ->
       $scope.founded_products = []
-      $scope.search_products = "f"
-      products.searchProducts($scope.search_products).then((data) ->
+      products.searchProducts($scope.new_combo.search_products).then((data) ->
         if data['error']
           alert data['msg']
         else
@@ -416,6 +413,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           break
       if not exist
         $scope.new_combo['products'].push(product)
+      $("#search_products_create").focus()
 
     $scope.UpdateAmountProduct = (product) ->
       product['amount'] = parseInt(product['amount'], 10)
