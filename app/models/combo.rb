@@ -11,7 +11,6 @@ class Combo < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
 
   validates :name, :presence => true, :length => { :minimum => 1 }
-  validates :stock_amount, :presence => true
   validates :sales_amount, :presence => true
 
   def to_s
@@ -20,14 +19,14 @@ class Combo < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where('name ILIKE ? and active=true and stock_amount > 0', "%#{search}%")
+      where('name ILIKE ? and active=true', "%#{search}%")
     else
       scoped
     end
   end
 
   def self.searchBestsellers()
-    return where('active=true and stock_amount > 0')
+    return where('active=true')
   end
 
   default_scope { order('sales_amount DESC') }  

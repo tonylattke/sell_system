@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  stock_amount: 1
   sales_amount: 1
 
 two:
   name: MyString
-  stock_amount: 1
   sales_amount: 1

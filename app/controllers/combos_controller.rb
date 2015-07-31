@@ -70,7 +70,7 @@ class CombosController < ApplicationController
     end
 
     def combo_params
-      params.require(:combo).permit(:id, :name, :stock_amount, :sales_amount, :photo, :active)
+      params.require(:combo).permit(:id, :name, :sales_amount, :photo, :active)
     end
 
 end

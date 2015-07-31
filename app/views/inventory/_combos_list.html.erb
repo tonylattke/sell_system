@@ -12,7 +12,6 @@
         <div>
           <img src="{{details_combo.photo}}" class="img-responsive img-product img-thumbnail img-centered">
         </div>
-        <h4>Stock amount: {{details_combo.stock_amount}}</h4>
         <h4>Sales amount: {{details_combo.sales_amount}}</h4>
         
         <h4>Prices</h4>
@@ -62,7 +61,6 @@
       <span class="caret" ng-click="orderCriteria('-name')"></span>
     </th>
     <th>Price</th>
-    <th>Stock</th>
     <th>Sales</th>
     <th>Options</th>
   </thead>
@@ -71,7 +69,6 @@
       <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
       <td>{{combo.name}}</td>
       <td>{{combo.price.value | number: 2}}</td>
-      <td>{{combo.stock_amount}}</td>
       <td>{{combo.sales_amount}}</td>
       <td ng-if="combo.active">
         <button type="button" class="btn btn-primary" ng-click="ViewDetailsCombo(combo)">Details</button>

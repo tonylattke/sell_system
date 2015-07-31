@@ -368,7 +368,6 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'combo' : 
           'name': $scope.new_combo['name']
-          'stock_amount' : $scope.new_combo['stock_amount']
           'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       }).then((response) ->
         if response['error']
