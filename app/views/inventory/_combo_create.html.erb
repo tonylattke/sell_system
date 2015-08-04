@@ -10,10 +10,6 @@
     <div class="col-md-12 form-group" ng-class="{'has-error': new_combo_form.comboPrice.$invalid, 'has-success': new_combo_form.comboPrice.$valid}">
       <input class="form-control" type="number" placeholder="Price" ng-model="new_combo.price.value" min="0" required/>
     </div>
-    <!-- Stock amount -->
-    <div class="col-md-12 form-group" ng-class="{'has-error': new_combo_form.comboStockAmount.$invalid, 'has-success': new_combo_form.comboStockAmount.$valid}">
-      <input class="form-control" type="number" placeholder="Stock Amount" ng-model="new_combo.stock_amount.value" min="0" required/>
-    </div>
     <!-- Photo -->
     <div class="col-md-12 form-group">
       <input class="form-control" type="url" placeholder="New Photo URL" accept="image/png,image/gif,image/jpeg" ng-model="new_combo.photo" required/>

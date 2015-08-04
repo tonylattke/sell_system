@@ -1,6 +1,6 @@
 angular.module('app.sellApp').controller("SellCtrl", [
-  '$scope','$http','clients','combos','products','prices','bills','sell','sell_helpers'
-  ($scope,$http,clients,combos,products,prices,bills,sell,sell_helpers)->
+  '$scope','$http','clients','combos','products','prices','bills','sell','sell_helpers', 'cash_transactions'
+  ($scope,$http,clients,combos,products,prices,bills,sell,sell_helpers,cash_transactions)->
 
     ################################   Helpers  ###############################
     
@@ -50,13 +50,13 @@ angular.module('app.sellApp').controller("SellCtrl", [
             aux_combo['price'] = aux_combo['prices'][0]
       )
       # Products
-      products.getProductsBestsellers().then((data) ->
-        if data
-          $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
-          for aux_product in $scope.top_articles['products']
-            aux_product['amount'] = 1
-            aux_product['price'] = aux_product['prices'][0]
-      )
+      #products.getProductsBestsellers().then((data) ->
+      #  if data
+      #    $scope.top_articles['products'] = data.slice(0,5 - $scope.top_articles['combos'].length)
+      #    for aux_product in $scope.top_articles['products']
+      #      aux_product['amount'] = 1
+      #      aux_product['price'] = aux_product['prices'][0]
+      #)
     
     AddItemToCart = (item,list) ->
       exist = false
@@ -86,7 +86,15 @@ angular.module('app.sellApp').controller("SellCtrl", [
         $scope.total += product['amount']*product['price']['value']
       $scope.client_cash_used = $scope.total
 
-    validOperation = ->      
+    validOperation = ->  
+      aux_status = false
+
+      # Cash transactions exists
+      for c_t in $scope.cash_transactions_today
+        if c_t.type_t == 'begin_day'
+          aux_status = true
+          break      
+
       # Client Exist
       if $scope.client['id'] and ($scope.new_client_dni or $scope.new_client_name)
         return false
@@ -96,7 +104,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
         return false
         alert 'New User need DNI and Name!'
 
-      return true
+      return aux_status
 
     ############################ Buttons operations ###########################
 
@@ -140,18 +148,17 @@ angular.module('app.sellApp').controller("SellCtrl", [
                   aux_product['price'] = aux_product['prices'][0]
                   $scope.articles_founded['products'].push(aux_product)
             for aux_combo in data['combos']
-              if aux_combo['stock_amount'] > 0
-                exists = false
-                i = 0
-                for aux_item in $scope.articles_founded['combos']
-                  if aux_item['id'] == aux_combo['id']
-                    exists = true
-                    break
-                  i++
-                if not exists
-                  aux_combo['amount'] = 1
-                  aux_combo['price'] = aux_combo['prices'][0]
-                  $scope.articles_founded['combos'].push(aux_combo)
+              exists = false
+              i = 0
+              for aux_item in $scope.articles_founded['combos']
+                if aux_item['id'] == aux_combo['id']
+                  exists = true
+                  break
+                i++
+              if not exists
+                aux_combo['amount'] = 1
+                aux_combo['price'] = aux_combo['prices'][0]
+                $scope.articles_founded['combos'].push(aux_combo)
         )
 
     # Search Client
@@ -205,6 +212,9 @@ angular.module('app.sellApp').controller("SellCtrl", [
         # Reboot    
         Initialize()
         setBestsellers()
+      else
+        alert "You need start"
+        window.location.href = "/manager"
 
     $scope.AddComboToCart = (item) ->
       AddItemToCart(item,$scope.cart_articles['combos'])
@@ -249,4 +259,11 @@ angular.module('app.sellApp').controller("SellCtrl", [
     Initialize()
     setBestsellers()
     
+    cash_transactions.getCashTransactionsToday().then((data) ->
+      if data['error']
+        alert data['msg']
+      else
+        $scope.cash_transactions_today = data
+    )
+
 ])

@@ -89,7 +89,7 @@ angular.module('app.sellApp').controller("TransactionsBills2Ctrl", [
         $scope.new_cash_transaction_form['description'] = ''
         $scope.new_cash_transaction_form['amount'] = ''
         $scope.new_cash_transaction_form['type'] = ''
-      )    
+      )
 
     ###############################     Main     ##############################
 

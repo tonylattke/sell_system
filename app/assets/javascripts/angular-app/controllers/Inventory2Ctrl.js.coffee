@@ -256,7 +256,6 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
         'name'  : combo['name'],
         'photo'  : combo['photo'],
         'active'  : combo['active'],
-        'stock_amount': combo['stock_amount'],
         'sales_amount': combo['sales_amount'],
         'price' : {
           'id'    : combo['price']['id'],
@@ -272,7 +271,6 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
     $scope.CreateCombo = ->
       $scope.new_combo = {
         'name': "",
-        'stock_amount': 0,
         'price': 0,
         'photo': 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
         'products':[]
