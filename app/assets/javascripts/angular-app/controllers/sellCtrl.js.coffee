@@ -82,7 +82,7 @@ angular.module('app.sellApp').controller("SellCtrl", [
       for c_t in $scope.cash_transactions_today
         if c_t.type_t == 'begin_day'
           aux_status = true
-          break      
+          break
 
       # Client Exist
       if $scope.client['id'] and ($scope.new_client_dni or $scope.new_client_name)

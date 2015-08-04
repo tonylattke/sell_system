@@ -4,6 +4,7 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
 
     $scope.bills = []  
     $scope.cash_transactions = []
+    $scope.sale_transactions = []
 
     $scope.consult_from = new Date().toISOString().split("T")[0]
     $scope.consult_to = new Date().toISOString().split("T")[0]
@@ -31,6 +32,19 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
       'v_100' : 0
       'v_500' : 0
     }
+
+    manager.getSaleTransactionsToday().then((data) ->
+      if data['error']
+        alert data['msg']
+      else
+        $scope.sale_transactions = data
+    )
+    cash_transactions.getCashTransactionsToday().then((data) ->
+      if data['error']
+        alert data['msg']
+      else
+        $scope.cash_transactions = data
+    )
 
     ###############################   Helpers  ################################
     
@@ -97,28 +111,30 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
       aux += $scope.cash.v_500 * 500
       $scope.total = aux
 
+      $scope.diference = $scope.total - $scope.total_system
+
     ########################### Buttons operations ############################
 
     $scope.ConsultDay = ->
       from = $scope.consult_from
-      to = $scope.consult_to
+      # to = $scope.consult_to
       
       $scope.sale_transactions = []
       $scope.cash_transactions = []
 
-      manager.getSaleTransactionsFromTo(from,to).then((data) ->
+      manager.getSaleTransactionsFromTo(from,from).then((data) ->
         if data['error']
           alert data['msg']
         else
           $scope.sale_transactions = data
       )
-      cash_transactions.getCashTransactionsFromTo(from,to).then((data) ->
+      cash_transactions.getCashTransactionsFromTo(from,from).then((data) ->
         if data['error']
           alert data['msg']
         else
           $scope.cash_transactions = data
       )
-      $scope.manager_mode = 'day_end'
+      $scope.manager_mode = 'days_consult'
 
     $scope.DayBegin = ->
       $scope.initializeCashAmounts()
@@ -128,44 +144,42 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
       $scope.manager_mode = 'day_begin'
 
     $scope.DayEnd = ->
-      $scope.sale_transactions = []
-      $scope.cash_transactions = []
+      $scope.cash_sell = 0
+      $scope.cash_recharge = 0
+      $scope.cash_transaction = 0
+      $scope.adjust_transaction = 0
 
-      aux_total_sytem = 0
+      $scope.total_system = 0
+      for s_t in $scope.sale_transactions
+        if s_t.type_t == 'cash'
+          $scope.total_system += s_t.amount
+          $scope.cash_sell += s_t.amount
+        if s_t.type_t == 'u_recharge'
+          $scope.total_system += s_t.amount
+          $scope.cash_recharge += s_t.amount
+        # if s_t.type_t == 'u_balance'
+          # $scope.total_system
 
-      manager.getSaleTransactionsToday().then((data) ->
-        if data['error']
-          alert data['msg']
-        else
-          $scope.sale_transactions = data
-          for s_t in $scope.sale_transactions
-            if s_t.type_t == 'cash'
-              aux_total_sytem += s_t.amount
-            if s_t.type_t == 'u_recharge'
-              aux_total_sytem += s_t.amount
-            # if s_t.type_t == 'u_balance'
-          # aux_total_sytem
-      )
-      cash_transactions.getCashTransactionsToday().then((data) ->
-        if data['error']
-          alert data['msg']
-        else
-          $scope.cash_transactions = data
-          for c_t in $scope.sale_transactions
-            if c_t.type_t == 'begin_day'
-              aux_total_sytem += c_t.amount
-            if c_t.type_t == 'adjust_day'
-              aux_total_sytem += c_t.amount
-            if c_t.type_t == 'deposit'
-              aux_total_sytem += c_t.amount
-            if c_t.type_t == 'withdraw'
-              aux_total_sytem -= c_t.amount
-      )
+      for c_t in $scope.cash_transactions
+        if c_t.type_t == 'begin_day'
+          $scope.total_system += c_t.amount
+          $scope.cash_transaction += c_t.amount
+        if c_t.type_t == 'adjust_day'
+          $scope.total_system += c_t.amount
+          $scope.adjust_transaction += c_t.amount
+        if c_t.type_t == 'deposit'
+          $scope.total_system += c_t.amount
+          $scope.cash_transaction += c_t.amount
+        if c_t.type_t == 'withdraw'
+          $scope.total_system -= c_t.amount
+          $scope.cash_transaction -= c_t.amount
       
+      $scope.total_system = $scope.cash_transaction + $scope.adjust_transaction + $scope.cash_sell + $scope.cash_recharge
+
       $scope.initializeCashAmounts()
 
       $scope.total = 0
-      $scope.diference = $scope.total - aux_total_sytem
+      $scope.diference = $scope.total - $scope.total_system
 
       $scope.manager_mode = 'day_end'
 
@@ -178,9 +192,20 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
         window.location.href = "/transactions_bills"
       )
 
+    validOperation = ->
+      aux_status = false
+
+      # Cash transactions exists
+      for c_t in $scope.cash_transactions
+        if c_t.type_t == 'begin_day'
+          aux_status = true
+          break
+
+      return aux_status
+
     $scope.CountCashEndDone = ->
-      if $scope.diference != 0
-        manager.createCashTransactionBegin({
+      if validOperation() and $scope.diference != 0
+        manager.createCashTransactionEnd({
           'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
           'cash_transaction' : 
             'amount': $scope.diference
@@ -188,14 +213,16 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
           window.location.href = "/transactions_bills"
         )
       else
-        alert "Adjust is not necessary"
+        alert "You need to initialize or an adjust is not necessary"
 
     $scope.GenerateReport = ->
-      alert "Generate Report on interval"
+      alert "Generate Report on consult"
+
+    $scope.GenerateReportToday = ->
+      alert "Generate Report of today"
 
     ############################## Initialize #################################
 
     $scope.DayBegin()
-    
     
 ])
