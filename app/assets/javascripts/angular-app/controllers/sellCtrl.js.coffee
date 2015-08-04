@@ -57,17 +57,6 @@ angular.module('app.sellApp').controller("SellCtrl", [
       #      aux_product['amount'] = 1
       #      aux_product['price'] = aux_product['prices'][0]
       #)
-    
-    AddItemToCart = (item,list) ->
-      exist = false
-      for aux_item in list
-        if aux_item['id'] == item['id']
-          exist = true
-          if aux_item['amount'] < aux_item['stock_amount']
-            aux_item['amount'] = aux_item['amount'] + 1
-          break
-      if not exist
-        list.push(item)
 
     DeleteItemOfCart = (item,list) ->
       item['amount'] = 1
@@ -217,12 +206,31 @@ angular.module('app.sellApp').controller("SellCtrl", [
         window.location.href = "/manager"
 
     $scope.AddComboToCart = (item) ->
-      AddItemToCart(item,$scope.cart_articles['combos'])
+      # AddItemToCart
+      exist = false
+      for aux_item in $scope.cart_articles['combos']
+        if aux_item['id'] == item['id']
+          exist = true
+          aux_item['amount'] = aux_item['amount'] + 1
+          break
+      if not exist
+        $scope.cart_articles['combos'].push(item)
+
       UpdateTotal()
       $scope.cashUsed()
 
     $scope.AddProductToCart = (item) ->
-      AddItemToCart(item,$scope.cart_articles['products'])
+      # AddItemToCart
+      exist = false
+      for aux_item in $scope.cart_articles['products']
+        if aux_item['id'] == item['id']
+          exist = true
+          if aux_item['amount'] < aux_item['stock_amount']
+            aux_item['amount'] = aux_item['amount'] + 1
+          break
+      if not exist
+        $scope.cart_articles['products'].push(item)
+
       UpdateTotal()
       $scope.cashUsed()
 
