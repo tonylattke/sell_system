@@ -133,6 +133,10 @@ class InventoryController < ApplicationController
 
   end
 
+  def add_inventory
+    # TODO
+  end
+
   def delete_product_tags
     product_id = params[:product].to_i
 

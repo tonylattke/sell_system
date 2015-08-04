@@ -1,0 +1,73 @@
+<h2>Add article to inventory</h2>
+
+<form role="form" name="new_inventory_form">
+  <div class="row">
+    <!-- Bill -->
+    <div class="col-md-12 form-group" ng-class="{'has-error': new_inventory_form.providerName.$invalid, 'has-success': new_inventory_form.providerName.$valid}">
+      <input class="form-control" type="text" placeholder="Provider Name" ng-model="new_inventory_bill.provider_name" required/>
+    </div>
+    <!-- Bill -->
+    <div class="col-md-12 form-group">
+      <input class="form-control" type="text" placeholder="Provider Bill number - Optional" ng-model="new_inventory_bill.provider_bill_number"/>
+    </div>
+    <!-- Associated products panel -->
+    <div class="col-md-12 form-group">
+      <div class="row">
+        <!-- Products founded -->
+        <div class="col-md-5">
+          <input class="form-control" type="text" placeholder="Search products" ng-model="new_inventory_bill.search_products" ng-change="SearchProducts(new_inventory_bill.search_products)" id="search_products_inventory"/>
+          <div class="row text-center" ng-if="founded_products.length > 0">
+            <div ng-repeat="product in founded_products" class="col-md-12 product-searched" ng-click="AddProductToInventory(product)">
+              <div class="row">
+                <div class="col-md-5">
+                  <img src="{{product.photo}}" class="img-product img-thumbnail">
+                </div>
+                <div class="col-md-7">
+                  <br>
+                    <h4>{{product.name |limitTo:9}}</h4>
+                    <h4>{{product.price.value}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="founded_products.length == 0 && new_inventory_bill.search_products != null"  class="row text-center">
+            <div class="col-md-12 product-searched">
+              no founded
+            </div>
+          </div>
+        </div>
+        <!-- Associated products -->
+        <div class="col-md-7">
+          <table id="table_cart" class="table table-striped">
+            <thead>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Actual Price</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="product in new_inventory_bill.products">
+                <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
+                <td>{{product.name}}</td>
+                <td>
+                    <input class="form-control" type="number" min="1"placeholder="Amount" ng-model="product.amount" ng-change="UpdateAmountProduct(product)" integer required/>
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="1"placeholder="Price" ng-model="product.price.new_value" ng-change="UpdatePriceProduct(product)" number required/>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger" ng-click="DeleteProductOfBill(product)">X</button  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <!-- Done -->
+  <div class="btn btn-lg btn-primary col-md-12" ng-disabled="new_inventory_form.$invalid || new_inventory_bill.products.length == 0" ng-click="AddInventorySubmit()">Done</div>
+  <!-- Cancel -->
+  <div class="btn btn-lg btn-danger col-md-12" ng-click="AddInventoryCancel()">Cancel</div>
+</form>

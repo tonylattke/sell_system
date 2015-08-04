@@ -106,5 +106,19 @@ sellApp.factory 'inventory', ['$http','$q', ($http,$q) ->
 		)
 		return def.promise
 
+	dataFactory.AddInventory = (info) ->
+		def = $q.defer()
+		$http.post('/inventory/add',info).success((data) ->
+			def.resolve(data)
+		).error((data) ->
+			bad_news = {
+				'error' : true
+				'msg' : "New inventory cannot be added"
+			}
+			def.resolve(bad_news)
+		)
+		return def.promise
+
+
 	return dataFactory
 ]

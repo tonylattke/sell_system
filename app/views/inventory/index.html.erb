@@ -1,5 +1,5 @@
 <% content_for :app_controller do %>
-  ng-app='app.sellApp' ng-controller='Inventory2Ctrl'
+  ng-app='app.sellApp' ng-controller='InventoryCtrl'
 <% end %>
 
 <% content_for :seach_navbar do %>
@@ -78,13 +78,16 @@
         <%= render 'combos_list' %>
         <%= render 'products_list' %>
       </div>
+      <div class="col-md-8 main_content" ng-if="inventory_mode == 'add_article'">
+        <%= render 'add_article' %>
+      </div>
       <div class="col-md-8 main_content" ng-if="inventory_mode == 'product_edit'">
         <%= render 'product_edit' %>
       </div>
       <div class="col-md-8 main_content" ng-if="inventory_mode == 'combo_create'">
         <%= render 'combo_create' %>
-      </div>
-      
+      </div>      
+
     </div>
   </div>
 

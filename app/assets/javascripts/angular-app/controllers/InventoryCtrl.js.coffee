@@ -1,4 +1,4 @@
-angular.module('app.sellApp').controller("Inventory2Ctrl", [
+angular.module('app.sellApp').controller("InventoryCtrl", [
   '$scope','$http','products','combos','prices','tags','providers','inventory','inventory_helpers','product_tags','product_providers','combo_products'
   ($scope,$http,products,combos,prices,tags,providers,inventory,inventory_helpers,product_tags,product_providers,combo_products)->
 
@@ -29,6 +29,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
 
     $scope.details_combo = null
 
+    # Add products to inventory variables for operations
+
+    $scope.new_inventory_bill = null
 
     ################################   Helpers  ###############################
 
@@ -157,7 +160,8 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       console.log 'Operation finished'
 
     $scope.AddInventory = ->
-      alert 'AddInventory'
+      createBillInventory()
+      $scope.inventory_mode = "add_article"
 
     $scope.ExportList = ->
       window.location.href = "/inventory/report";
@@ -265,6 +269,46 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       $scope.edit_combo_backup = combo
       
       $scope.inventory_mode = 'combo_edit'
+
+    # ---------------------- Main content - Add inventory --------------------#
+
+    createBillInventory = ->
+      $scope.new_inventory_bill = {
+        'provider_name': "",
+        'provider_bill_number': "",
+        'products':[]
+        'search_products':""
+      }
+      $scope.founded_products = []
+
+    $scope.DeleteProductOfBill = (product) ->
+      product['amount'] = 1
+      i = 0
+      for aux_item in $scope.new_inventory_bill['products']
+        if aux_item['id'] == product['id']
+          $scope.new_inventory_bill['products'].splice(i, 1)
+          break
+        i++
+
+    $scope.UpdatePriceProduct = (product) ->
+      product['price']['new_value'] = parseFloat(product['price']['new_value'])
+
+    $scope.AddInventorySubmit = ->
+        inventory.AddInventory({
+          'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          'products' : $scope.new_inventory_bill.products
+          'provider' : 
+            'name' : $scope.new_inventory_bill.provider_name
+            'bill_number' : $scope.new_inventory_bill.provider_bill_number
+        }).then((response) ->
+          if response['error']
+            alert 'Add inventory is not posible'
+        )
+
+    $scope.AddInventoryCancel = ->
+      aux_confirm = confirm("Are you sure?")
+      if aux_confirm
+        $scope.inventory_mode = 'list'
 
     # ---------------------- Main content - Create Combo ---------------------#
 
@@ -388,9 +432,9 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       if aux_confirm
         $scope.inventory_mode = "list"
 
-    $scope.SearchProducts = ->
+    $scope.SearchProducts = (value) ->
       $scope.founded_products = []
-      products.searchProducts($scope.new_combo.search_products).then((data) ->
+      products.searchProducts(value).then((data) ->
         if data['error']
           alert data['msg']
         else
@@ -398,6 +442,7 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
           for aux_product in $scope.founded_products
             aux_product['amount'] = 1
             aux_product['price'] = aux_product['prices'][0]
+            aux_product['price']['new_value'] = aux_product['price']['value']
       )
 
     $scope.AddProductToCombo = (product) ->
@@ -411,6 +456,16 @@ angular.module('app.sellApp').controller("Inventory2Ctrl", [
       if not exist
         $scope.new_combo['products'].push(product)
       $("#search_products_create").focus()
+
+    $scope.AddProductToInventory = (product) ->
+      exist = false
+      for aux_item in $scope.new_inventory_bill['products']
+        if aux_item['id'] == product['id']
+          exist = true
+          break
+      if not exist
+        $scope.new_inventory_bill['products'].push(product)
+      $("#search_products_inventory").focus()
 
     $scope.UpdateAmountProduct = (product) ->
       product['amount'] = parseInt(product['amount'], 10)
