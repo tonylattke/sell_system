@@ -65,7 +65,7 @@
     <th>Options</th>
   </thead>
   <tbody>
-    <tr ng-repeat="combo in articles.combos | orderBy:order_selected | filter:articles_search">
+    <tr ng-repeat="combo in articles.combos | orderBy:order_selected | filter:articles.search">
       <td><img src="{{combo.photo}}" class="img-combo img-thumbnail"></td>
       <td>{{combo.name}}</td>
       <td>{{combo.price.value | number: 2}}</td>

@@ -7,6 +7,7 @@ sellApp.service 'costumers_helpers', [
         name : null
         dni : null
         id : null
+        search : ""
       }
       return f
 

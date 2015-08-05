@@ -62,7 +62,7 @@
     <th>Options</th>
   </thead>
   <tbody>
-    <tr ng-repeat="product in articles.products | orderBy:order_selected | filter:articles_search" class="product_list">
+    <tr ng-repeat="product in articles.products | orderBy:order_selected | filter:articles.search" class="product_list">
       <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
       <td>{{product.name}}</td>
       <td>{{product.price.value | number: 2}}</td>

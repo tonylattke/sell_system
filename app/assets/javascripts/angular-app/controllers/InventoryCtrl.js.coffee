@@ -9,6 +9,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
     $scope.articles = {
       'products' : []
       'combos' : []
+      'search' : ""
     }
 
     $scope.founded_products = []

@@ -15,6 +15,8 @@ angular.module('app.sellApp').controller("CostumersCtrl", [
 
     $scope.edit_client = null
 
+    $scope.new_client_form = costumers_helpers.resetForm()
+
     ################################   Helpers  ###############################
     
     getClients = ->

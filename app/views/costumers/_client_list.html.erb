@@ -15,7 +15,7 @@
     <th>Options</th>
   </thead>
   <tbody>
-    <tr ng-repeat="client in clients | orderBy:order_selected | filter:clients_search">
+    <tr ng-repeat="client in clients | orderBy:order_selected | filter:new_client_form.search">
       <td>{{client.name}}</td>
       <td>{{client.dni}}</td>
       <td>{{client.balance | number: 2}}</td>
