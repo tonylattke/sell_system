@@ -278,6 +278,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         'provider_name': "",
         'provider_bill_number': "",
         'products':[]
+        'price':""
         'search_products':""
       }
       $scope.founded_products = []
@@ -301,6 +302,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           'provider' : 
             'name' : $scope.new_inventory_bill.provider_name
             'bill_number' : $scope.new_inventory_bill.provider_bill_number
+            'price' : $scope.new_inventory_bill.provider_bill_price
         }).then((response) ->
           if response['error']
             alert 'Add inventory is not posible'

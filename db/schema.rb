@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731113253) do
+ActiveRecord::Schema.define(version: 20150805120430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "add_product_inventories", force: true do |t|
+    t.integer "product_id",                   null: false
+    t.integer "bill_provider_id",             null: false
+    t.integer "amount",           default: 1, null: false
+  end
+
+  add_index "add_product_inventories", ["bill_provider_id"], name: "index_add_product_inventories_on_bill_provider_id", using: :btree
+  add_index "add_product_inventories", ["product_id"], name: "index_add_product_inventories_on_product_id", using: :btree
 
   create_table "bill_articles", force: true do |t|
     t.integer "bill_id",              null: false
@@ -24,6 +33,16 @@ ActiveRecord::Schema.define(version: 20150731113253) do
 
   add_index "bill_articles", ["bill_id"], name: "index_bill_articles_on_bill_id", using: :btree
   add_index "bill_articles", ["price_id"], name: "index_bill_articles_on_price_id", using: :btree
+
+  create_table "bill_providers", force: true do |t|
+    t.string   "number"
+    t.float    "price"
+    t.integer  "provider_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bill_providers", ["provider_id"], name: "index_bill_providers_on_provider_id", using: :btree
 
   create_table "bills", force: true do |t|
     t.integer  "client_id"

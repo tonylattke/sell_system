@@ -2,13 +2,17 @@
 
 <form role="form" name="new_inventory_form">
   <div class="row">
-    <!-- Bill -->
+    <!-- Provider Name -->
     <div class="col-md-12 form-group" ng-class="{'has-error': new_inventory_form.providerName.$invalid, 'has-success': new_inventory_form.providerName.$valid}">
       <input class="form-control" type="text" placeholder="Provider Name" ng-model="new_inventory_bill.provider_name" required/>
     </div>
-    <!-- Bill -->
+    <!-- Bill number -->
     <div class="col-md-12 form-group">
       <input class="form-control" type="text" placeholder="Provider Bill number - Optional" ng-model="new_inventory_bill.provider_bill_number"/>
+    </div>
+    <!-- Bill price -->
+    <div class="col-md-12 form-group">
+      <input class="form-control" type="text" placeholder="Provider Bill price - Optional" ng-model="new_inventory_bill.provider_bill_price" number/>
     </div>
     <!-- Associated products panel -->
     <div class="col-md-12 form-group">

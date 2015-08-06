@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: MyString
+  price: 1.5
+  provider_id: 
+
+two:
+  number: MyString
+  price: 1.5
+  provider_id: 
