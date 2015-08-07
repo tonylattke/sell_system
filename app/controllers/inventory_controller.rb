@@ -133,8 +133,45 @@ class InventoryController < ApplicationController
 
   end
 
-  def add_inventory
-    # TODO
+  def add
+    providers = Provider.search(params[:provider][:name])
+    if providers.length > 0
+      provider = providers[0]
+    else
+      provider = Provider.new(:name => params[:provider][:name])
+      provider.save
+    end
+
+    bill_number = params[:bill_number]
+
+    price = params[:price]
+    if params[:price] == ""
+      price = 0
+    end
+
+    bill_provider = BillProvider.new(:provider_id => provider.id, :number => bill_number, :price => price)
+    bill_provider.save
+
+    for aux_product in params[:products]
+      product = Product.find_by(id: aux_product[:id])
+      
+      add_product_inventory = AddProductInventory.new(:product_id => product.id, :bill_provider_id => bill_provider.id, :amount => aux_product[:amount])
+      add_product_inventory.save
+
+      # Product - update stock amount
+      product.stock_amount += aux_product[:amount]
+      product.save
+
+      # Product - update price
+      if aux_product[:price][:value] != aux_product[:new_price][:value]
+        aux_price = Price.new(:product_id =>  product.id, :value => aux_product[:new_price][:value], :type_option => "p")
+        aux_price.save
+      end
+      
+    end
+
+    @result= []
+    render json: @result
   end
 
   def delete_product_tags

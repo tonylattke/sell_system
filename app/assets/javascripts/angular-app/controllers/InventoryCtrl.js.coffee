@@ -306,6 +306,10 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         }).then((response) ->
           if response['error']
             alert 'Add inventory is not posible'
+          else
+            getCombosInit()
+            getProductsInit()
+            $scope.inventory_mode = 'list'
         )
 
     $scope.AddInventoryCancel = ->
@@ -445,7 +449,8 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           for aux_product in $scope.founded_products
             aux_product['amount'] = 1
             aux_product['price'] = aux_product['prices'][0]
-            aux_product['price']['new_value'] = aux_product['price']['value']
+            aux_product['new_price'] = aux_product['prices'][0]
+        a = 1
       )
 
     $scope.AddProductToCombo = (product) ->
@@ -469,6 +474,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
       if not exist
         $scope.new_inventory_bill['products'].push(product)
       $("#search_products_inventory").focus()
+      return true
 
     $scope.UpdateAmountProduct = (product) ->
       product['amount'] = parseInt(product['amount'], 10)
