@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805120430) do
+ActiveRecord::Schema.define(version: 20150807155452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,11 @@ ActiveRecord::Schema.define(version: 20150805120430) do
 
   add_index "products", ["name"], name: "index_products_on_name", unique: true, using: :btree
 
+  create_table "products_withdraws", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "providers", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
@@ -139,6 +144,15 @@ ActiveRecord::Schema.define(version: 20150805120430) do
   end
 
   add_index "providers", ["name"], name: "index_providers_on_name", unique: true, using: :btree
+
+  create_table "remove_product_inventories", force: true do |t|
+    t.integer "product_id",                      null: false
+    t.integer "product_withdraw_id",             null: false
+    t.integer "amount",              default: 1, null: false
+  end
+
+  add_index "remove_product_inventories", ["product_id"], name: "index_remove_product_inventories_on_product_id", using: :btree
+  add_index "remove_product_inventories", ["product_withdraw_id"], name: "index_remove_product_inventories_on_product_withdraw_id", using: :btree
 
   create_table "sale_transactions", force: true do |t|
     t.string  "type_t",  limit: 10, default: "cash", null: false

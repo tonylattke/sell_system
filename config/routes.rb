@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'sell' => 'sell#index'
   post 'sell/generate_sell' => 'sell#generate_sell', :defaults => {:format => "json"}
   get 'sell/search_articles_by_tag/:data' => 'sell#search_articles_by_tag', :defaults => {:format => "json"}
+  post 'sell/retire_products' => 'sell#retire_products', :defaults => {:format => "json"}
 
   # Inventory
   get 'inventory' => 'inventory#index'

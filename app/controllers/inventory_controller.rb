@@ -163,8 +163,8 @@ class InventoryController < ApplicationController
       product.save
 
       # Product - update price
-      if aux_product[:price][:value] != aux_product[:new_price][:value]
-        aux_price = Price.new(:product_id =>  product.id, :value => aux_product[:new_price][:value], :type_option => "p")
+      if product.prices[0].value != aux_product[:new_price]
+        aux_price = Price.new(:product_id =>  product.id, :value => aux_product[:new_price], :type_option => "p")
         aux_price.save
       end
       

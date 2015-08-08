@@ -40,6 +40,8 @@ angular.module('app.sellApp').controller("SellCtrl", [
 
       $scope.client = sell_helpers.rebootClient()
 
+      $scope.retire_products = false
+
     setBestsellers = ->
       # Combos
       combos.getCombosBestsellers().then((data) ->
@@ -165,45 +167,63 @@ angular.module('app.sellApp').controller("SellCtrl", [
       )    
 
     # Sell
-    $scope.sell = ->      
-      
-      if validOperation()
+    $scope.sell = ->
+      valid_operation = validOperation()
+
+      if $scope.retire_products and valid_operation
         data = {
           'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         }
 
-        data['client_new'] = false
-
-        if $scope.client['id']
-          data['client'] = {
-            'id' : $scope.client['id']
-          }
-        else
-          data['client'] = null
-
-        # New Client ?
-        if $scope.new_client_dni and $scope.new_client_name
-          data['client_new'] = true
-          data['client'] = {
-            'dni' : $scope.new_client_dni
-            'name': $scope.new_client_name
-          }
-        data['recharge_amount'] = $scope.recharge_amount
-        data['use_from_account'] = $scope.use_from_account
-        data['client_cash_used'] = $scope.client_cash_used
-
         data['cart'] = $scope.cart_articles
 
-        sell.generateSell(data).then((response) ->
+        sell.retireProducts(data).then((response) ->
           console.log 'Bill registered'
         )
 
         # Reboot    
         Initialize()
         setBestsellers()
+
       else
-        alert "You need start"
-        window.location.href = "/manager"
+
+        if valid_operation
+          data = {
+            'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
+          }
+
+          data['client_new'] = false
+
+          if $scope.client['id']
+            data['client'] = {
+              'id' : $scope.client['id']
+            }
+          else
+            data['client'] = null
+
+          # New Client ?
+          if $scope.new_client_dni and $scope.new_client_name
+            data['client_new'] = true
+            data['client'] = {
+              'dni' : $scope.new_client_dni
+              'name': $scope.new_client_name
+            }
+          data['recharge_amount'] = $scope.recharge_amount
+          data['use_from_account'] = $scope.use_from_account
+          data['client_cash_used'] = $scope.client_cash_used
+
+          data['cart'] = $scope.cart_articles
+
+          sell.generateSell(data).then((response) ->
+            console.log 'Bill registered'
+          )
+
+          # Reboot    
+          Initialize()
+          setBestsellers()
+        else
+          alert "You need start"
+          window.location.href = "/manager"
 
     $scope.AddComboToCart = (item) ->
       # AddItemToCart

@@ -38,6 +38,26 @@ class SellController < ApplicationController
     return true
   end
 
+  def retire_products
+    product_withdraw = ProductsWithdraw.new()
+    product_withdraw.save
+
+    for aux_product in params[:cart][:products]
+      product = Product.find_by(id: aux_product[:id])
+      
+      if aux_product[:amount] <= product.stock_amount
+        remove_product_inventory = RemoveProductInventory.new(:product_id => product.id, :product_withdraw_id => product_withdraw.id, :amount => aux_product[:amount])
+        remove_product_inventory.save
+
+        product.stock_amount -= aux_product[:amount]
+        product.save        
+      end 
+    end
+
+    @result = []
+    render json: @result
+  end
+
   def generate_sell
     
     recharge_amount =  params[:recharge_amount]

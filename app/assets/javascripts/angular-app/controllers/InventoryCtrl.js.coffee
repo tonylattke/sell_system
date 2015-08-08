@@ -293,7 +293,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         i++
 
     $scope.UpdatePriceProduct = (product) ->
-      product['price']['new_value'] = parseFloat(product['price']['new_value'])
+      product['new_price'] = parseFloat(product['new_price'])
 
     $scope.AddInventorySubmit = ->
         inventory.AddInventory({
@@ -449,7 +449,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
           for aux_product in $scope.founded_products
             aux_product['amount'] = 1
             aux_product['price'] = aux_product['prices'][0]
-            aux_product['new_price'] = aux_product['prices'][0]
+            aux_product['new_price'] = null
         a = 1
       )
 
@@ -467,6 +467,7 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
 
     $scope.AddProductToInventory = (product) ->
       exist = false
+      product['new_price'] = product['price']['value']
       for aux_item in $scope.new_inventory_bill['products']
         if aux_item['id'] == product['id']
           exist = true

@@ -30,7 +30,7 @@
       </div>
       <!-- Amount -->
       <div class="col-md-12 form-group" ng-class="{'has-error': transaction_form.cashTransactionAmount.$invalid, 'has-success': transaction_form.cashTransactionAmount.$valid}">
-        <input class="form-control" type="number" placeholder="Amount" ng-model="new_cash_transaction_form.amount" min="0" required/>
+        <input class="form-control" type="number" placeholder="Amount" ng-model="new_cash_transaction_form.amount" min="0"  ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
       </div>
       <!-- Type -->
       <div class="col-md-12 form-group" ng-class="{'has-error': transaction_form.cashTransactionType.$invalid, 'has-success': transaction_form.cashTransactionType.$valid}">

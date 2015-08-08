@@ -48,18 +48,18 @@
               <th>Photo</th>
               <th>Name</th>
               <th>Amount</th>
-              <th>Actual Price</th>
+              <th>Actual </br>Price</th>
               <th>Options</th>
             </thead>
             <tbody>
               <tr ng-repeat="product in new_inventory_bill.products">
                 <td><img src="{{product.photo}}" class="img-product img-thumbnail"></td>
-                <td>{{product.name}}</td>
+                <td>{{product.name |limitTo:9}}</td>
                 <td>
                     <input class="form-control" type="number" min="1"placeholder="Amount" ng-model="product.amount" ng-change="UpdateAmountProduct(product)" integer required/>
                 </td>
                 <td>
-                    <input class="form-control" type="number" min="1"placeholder="Price" ng-model="product.new_price.value" ng-change="UpdatePriceProduct(product)" number required/>
+                    <input class="form-control" type="number" min="1"placeholder="Price" ng-model="product.new_price" ng-change="UpdatePriceProduct(product)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
                 </td>
                 <td>
                   <button type="button" class="btn btn-danger" ng-click="DeleteProductOfBill(product)">X</button  >
