@@ -33,23 +33,21 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
       'v_500' : 0
     }
 
-    manager.getSaleTransactionsToday().then((data) ->
-      if data['error']
-        alert data['msg']
-      else
-        $scope.sale_transactions = data
-    )
-    cash_transactions.getCashTransactionsToday().then((data) ->
-      if data['error']
-        alert data['msg']
-      else
-        $scope.cash_transactions = data
-    )
-
     ###############################   Helpers  ################################
     
-    $scope.initializeCashAmounts = ->
+    initializeCashAmounts = ->
       $scope.cash = cash_init_values
+
+    getTransactionsToday = ->
+      manager.getTransactionsToday().then((data) ->
+        if data['error']
+          alert data['msg']
+        else
+          $scope.cash_transactions = data['cash_transactions']
+          $scope.sale_transactions = data['sale_transactions']
+          
+          sellsCashTransactionsUpdate()
+      )
 
     $scope.cash1Update = ->
       if $scope.cash.v_1 == null or isNaN($scope.cash.v_1)
@@ -113,37 +111,7 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
 
       $scope.diference = $scope.total - $scope.total_system
 
-    ########################### Buttons operations ############################
-
-    $scope.ConsultDay = ->
-      from = $scope.consult_from
-      # to = $scope.consult_to
-      
-      $scope.sale_transactions = []
-      $scope.cash_transactions = []
-
-      manager.getSaleTransactionsFromTo(from,from).then((data) ->
-        if data['error']
-          alert data['msg']
-        else
-          $scope.sale_transactions = data
-      )
-      cash_transactions.getCashTransactionsFromTo(from,from).then((data) ->
-        if data['error']
-          alert data['msg']
-        else
-          $scope.cash_transactions = data
-      )
-      $scope.manager_mode = 'days_consult'
-
-    $scope.DayBegin = ->
-      $scope.initializeCashAmounts()
-
-      $scope.total = 0
-      
-      $scope.manager_mode = 'day_begin'
-
-    $scope.DayEnd = ->
+    sellsCashTransactionsUpdate = ->
       $scope.cash_sell = 0
       $scope.cash_recharge = 0
       $scope.cash_transaction = 0
@@ -176,7 +144,38 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
       
       $scope.total_system = $scope.cash_transaction + $scope.adjust_transaction + $scope.cash_sell + $scope.cash_recharge
 
-      $scope.initializeCashAmounts()
+    ########################### Buttons operations ############################
+
+    $scope.ConsultDay = ->
+      from = $scope.consult_from
+      # to = $scope.consult_to
+      
+      $scope.sale_transactions = []
+      $scope.cash_transactions = []
+
+      manager.getTransactionsFromTo(from,from).then((data) ->
+        if data['error']
+          alert data['msg']
+        else
+          $scope.cash_transactions = data['cash_transactions']
+          $scope.sale_transactions = data['sale_transactions']
+          
+          sellsCashTransactionsUpdate()
+
+          $scope.manager_mode = 'days_consult'
+      )
+
+    $scope.DayBegin = ->
+      initializeCashAmounts()
+
+      $scope.total = 0
+      
+      $scope.manager_mode = 'day_begin'
+
+    $scope.DayEnd = ->
+      getTransactionsToday()
+
+      initializeCashAmounts()
 
       $scope.total = 0
       $scope.diference = $scope.total - $scope.total_system
@@ -216,13 +215,11 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
         alert "You need to initialize or an adjust is not necessary"
 
     $scope.GenerateReport = ->
-      alert "Generate Report on consult"
-
-    $scope.GenerateReportToday = ->
-      alert "Generate Report of today"
+      window.location.href = "/manager/report/" + $scope.consult_from
 
     ############################## Initialize #################################
 
     $scope.DayBegin()
+    getTransactionsToday()
     
 ])

@@ -3,22 +3,22 @@ sellApp.factory 'manager', ['$http','$q', ($http,$q) ->
   dataFactory = {}
   urlBase = 'manager'
 
-  dataFactory.getSaleTransactionsFromTo = (from,to) ->
+  dataFactory.getTransactionsFromTo = (from,to) ->
     def = $q.defer()
-    $http.get(urlBase + '/sale_transactions/from/' + from + '/to/' + to).success((data) ->
+    $http.get(urlBase + '/transactions/from/' + from + '/to/' + to).success((data) ->
       def.resolve(data)
     ).error((data) ->
       bad_news = {
         'error' : true
-        'msg' : "Sale transactions cannot be listed"
+        'msg' : "Transactions cannot be listed"
       }
       def.resolve(bad_news)
     )
     return def.promise
 
-  dataFactory.getSaleTransactionsToday = ->
+  dataFactory.getTransactionsToday = ->
     def = $q.defer()
-    $http.get(urlBase + '/sale_transactions/today').success((data) ->
+    $http.get(urlBase + '/transactions/today').success((data) ->
       def.resolve(data)
     ).error((data) ->
       bad_news = {
