@@ -57,3 +57,6 @@ gem 'carrierwave'
 
 #Latex
 gem 'rails-latex'
+
+# User
+gem 'devise'
