@@ -3,7 +3,7 @@
   <form role="form" name="consult_form">
     <div class="row">
       <!-- Date -->
-      <div class="col-md-12 form-group" ng-class="{'has-error': consult_form.dateFrom.$invalid, 'has-success': consult_form.dateFrom.$valid}">
+      <div class="col-md-12 form-group" ng-class="{'has-error': consult_form.date.$invalid, 'has-success': consult_form.date.$valid}">
         <input type="date" class="form-control" ng-model="consult_from" required>
       </div>
     </div>
@@ -11,9 +11,25 @@
     <div class="text-center">
       <div class="btn btn-lg btn-primary col-md-12" ng-disabled="consult_form.$invalid" ng-click="ConsultDay()">Done</div>
     </div>
+  </form>
+</div>
+
+<div class="col-md-12 panel_options ">
+  <h3>Report</h3>
+  <form role="form" name="report_form">
+    <div class="row">
+      <!-- From Date -->
+      <div class="col-md-12 form-group" ng-class="{'has-error': report_form.dateFrom.$invalid, 'has-success': report_form.dateFrom.$valid}">
+        <input type="date" class="form-control" ng-model="report_from" required>
+      </div>
+      <!-- To Date -->
+      <div class="col-md-12 form-group" ng-class="{'has-error': report_form.dateTo.$invalid, 'has-success': report_form.dateTo.$valid}">
+        <input type="date" class="form-control" ng-model="report_to" required>
+      </div>
+    </div>
     <!-- Generate Report -->
     <div class="text-center">
-      <div class="btn btn-lg btn-primary col-md-12" ng-disabled="consult_form.$invalid" ng-click="GenerateReport()">Generate Report of Day</div>
+      <div class="btn btn-lg btn-primary col-md-12" ng-disabled="report_form.$invalid" ng-click="GenerateReport()">Generate</div>
     </div>
   </form>
 </div>

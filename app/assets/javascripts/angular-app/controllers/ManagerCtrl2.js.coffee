@@ -9,6 +9,9 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
     $scope.consult_from = new Date().toISOString().split("T")[0]
     $scope.consult_to = new Date().toISOString().split("T")[0]
 
+    $scope.report_from = new Date().toISOString().split("T")[0]
+    $scope.report_to = new Date().toISOString().split("T")[0]
+
     $scope.manager_mode = 'day_begin'
 
     $scope.total = 0
@@ -215,7 +218,7 @@ angular.module('app.sellApp').controller("ManagerCtrl2", [
         alert "You need to initialize or an adjust is not necessary"
 
     $scope.GenerateReport = ->
-      window.location.href = "/manager/report/" + $scope.consult_from
+      window.location.href = "/manager/report/" + $scope.report_from + "/" + $scope.report_to
 
     ############################## Initialize #################################
 
