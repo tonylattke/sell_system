@@ -60,3 +60,6 @@ gem 'rails-latex'
 
 # User
 gem 'devise'
+
+# Auth for admin access
+gem 'cancan'
