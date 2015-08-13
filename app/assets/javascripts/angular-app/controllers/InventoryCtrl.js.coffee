@@ -72,12 +72,14 @@ angular.module('app.sellApp').controller("InventoryCtrl", [
         )
 
     saveProduct = ->
+      if not $scope.new_product_form['photo']
+        $scope.new_product_form['photo'] = 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
       products.createProduct({
         'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content')
         'product' : 
           'name': $scope.new_product_form['name']
           'stock_amount' : $scope.new_product_form['stock_amount']
-          'photo' : 'https://dl.dropboxusercontent.com/u/6144287/man-profile.png'
+          'photo' : $scope.new_product_form['photo']
       }).then((response) ->
         if response['error']
             alert response['msg']
